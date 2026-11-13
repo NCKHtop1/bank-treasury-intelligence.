@@ -208,7 +208,7 @@ async function refreshPublic(){
 }
 async function checkModel(){state.llm=false;$('#aiBackend').textContent='Phân tích trên thiết bị';$('#modelState').textContent='PHÂN TÍCH TRÊN THIẾT BỊ'}
 
-function bind(){document.addEventListener('click',ev=>{const btn=ev.target.closest('[data-nav]');if(btn){pageTo(btn.dataset.nav);return}const rate=ev.target.closest('[data-toggle-rate]');if(rate){const key=rate.dataset.toggleRate;state.activeRates.has(key)?state.activeRates.delete(key):state.activeRates.add(key);renderRateCharts();return}const p=ev.target.closest('[data-period]');if(p){state.period=p.dataset.period;$$('[data-period]').forEach(x=>x.classList.toggle('selected',x.dataset.period===state.period));render()}});$('#importBtn').addEventListener('click',()=>$('#filePicker').click());$('#qualityImportBtn').addEventListener('click',()=>$('#filePicker').click());$('#importBtnQuality').addEventListener('click',()=>$('#filePicker').click());$('#filePicker').addEventListener('change',ev=>importFile(ev.target.files?.[0]));$('#exportBtn').addEventListener('click',csvExport);$('#freqSelect').addEventListener('change',ev=>{state.freq=ev.target.value;render()});$('#themeBtn').addEventListener('click',()=>{document.body.classList.toggle('dark');$('#themeBtn').textContent=document.body.classList.contains('dark')?'☀':'☾'});$('#mobileMenu').addEventListener('click',()=>$('#sidebar').classList.toggle('open'));$('#refreshMarket').addEventListener('click',refreshPublic);$('#refreshMarketTop')?.addEventListener('click',refreshPublic);$('#chatForm').addEventListener('submit',ev=>{ev.preventDefault();ask($('#chatInput').value)});$$('.question-chip').forEach(b=>b.addEventListener('click',()=>ask(b.textContent)));window.addEventListener('resize',()=>{if(state.data)renderRateCharts()})}
+function bind(){document.addEventListener('click',ev=>{const btn=ev.target.closest('[data-nav]');if(btn){pageTo(btn.dataset.nav);return}const rate=ev.target.closest('[data-toggle-rate]');if(rate){const key=rate.dataset.toggleRate;state.activeRates.has(key)?state.activeRates.delete(key):state.activeRates.add(key);renderRateCharts();return}const p=ev.target.closest('[data-period]');if(p){state.period=p.dataset.period;$$('[data-period]').forEach(x=>x.classList.toggle('selected',x.dataset.period===state.period));render()}});$('#importBtn').addEventListener('click',()=>$('#filePicker').click());$('#qualityImportBtn').addEventListener('click',()=>$('#filePicker').click());$('#importBtnQuality').addEventListener('click',()=>$('#filePicker').click());$('#filePicker').addEventListener('change',async ev=>{const files=[...(ev.target.files||[])];for(const file of files)await importFile(file)});$('#exportBtn').addEventListener('click',csvExport);$('#freqSelect').addEventListener('change',ev=>{state.freq=ev.target.value;render()});$('#themeBtn').addEventListener('click',()=>{document.body.classList.toggle('dark');$('#themeBtn').textContent=document.body.classList.contains('dark')?'☀':'☾'});$('#mobileMenu').addEventListener('click',()=>$('#sidebar').classList.toggle('open'));$('#refreshMarket').addEventListener('click',refreshPublic);$('#refreshMarketTop')?.addEventListener('click',refreshPublic);$('#chatForm').addEventListener('submit',ev=>{ev.preventDefault();ask($('#chatInput').value)});$$('.question-chip').forEach(b=>b.addEventListener('click',()=>ask(b.textContent)));window.addEventListener('resize',()=>{if(state.data)renderRateCharts()})}
 async function main(){
  bind();
  try{
@@ -383,14 +383,14 @@ async function refreshPublicV13(){
 }
 
 async function checkModelV13(){
- state.llm=false;$('#aiBackend').textContent='Sẵn sàng';$('#modelState').textContent='TREASURY ANALYST';
+ state.llm=false;$('#aiBackend').textContent='Phân tích số liệu';$('#modelState').textContent='TREASURY ANALYST';
  $('#chatModeDesc').textContent='Phân tích lãi suất, danh mục, chênh lệch và nguồn dữ liệu';
 }
 
 async function mainV13(){
  bind();
  const picker=$('#filePicker');picker.setAttribute('multiple','');
- picker.addEventListener('change',async event=>{if(event.target.files?.length>1){for(const f of [...event.target.files].slice(1))await importFileV13(f)}});
+ // The shared file input queues every workbook sequentially through bind().
  document.addEventListener('dragover',event=>{if([...event.dataTransfer?.types||[]].includes('Files')){event.preventDefault();document.body.classList.add('file-dragging')}});
  document.addEventListener('dragleave',event=>{if(event.target===document.documentElement)document.body.classList.remove('file-dragging')});
  document.addEventListener('drop',async event=>{const files=[...(event.dataTransfer?.files||[])].filter(f=>/\.(xlsx|xlsm|json|csv)$/i.test(f.name));if(!files.length)return;event.preventDefault();document.body.classList.remove('file-dragging');for(const file of files)await importFileV13(file)});
