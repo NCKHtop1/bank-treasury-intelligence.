@@ -1,4 +1,5 @@
 import { readUserFile } from './loader.js';
+import {saveLastWorkbook,loadLastWorkbook,clearLastWorkbook} from './device-cache.mjs';
 import {renderTreasuryWorkspace,mmAnalystAnswer} from './treasury-workspace.mjs';
 import {mmAggregate} from './treasury-analytics.mjs';
 
@@ -308,8 +309,8 @@ function renderMetadataV13(){
  $('#asOfDate').textContent=shortDate(latest);
  $('#sourceBadge').textContent=local?'◉ WORKBOOK ĐÃ NẠP':'◉ DỮ LIỆU THỊ TRƯỜNG';
  $('#sourceBadge').className='source-badge '+(local?'local':'market-real');
- $('#dataBannerTitle').textContent=local?'Bộ dữ liệu của bạn':'Nguồn thị trường đã xác minh';
- $('#dataBannerDetail').textContent=local?`${state.data.series.length} phiên · ${meta.source_file||'Workbook'}`:`NHNN ${shortDate(latest)} · FX ${shortDate(state.publicMarket.fx?.date)} · Thông tin mỗi nguồn theo ngày công bố`;
+ $('#dataBannerTitle').textContent=local?'Danh mục đang theo dõi':'Dữ liệu thị trường';
+ $('#dataBannerDetail').textContent=local?`${state.data.series.length} phiên · ${(meta.files||[]).length||1} tệp đã lưu trên thiết bị`:`Lãi suất ${shortDate(latest)} · USD/VND ${shortDate(state.publicMarket.fx?.date)}`;
  $('#aiDataMode').textContent=local?'Workbook đang phân tích':'Thị trường';
  $('#aiAsOf').textContent=shortDate(latest);
  $('#aiMarketMode').textContent=state.publicMarket.interbank?.length?'Đã nạp':'Đang tải';
@@ -401,7 +402,10 @@ async function importFileV13(file){
   state.activeRates=new Set(['itb_on_public','itb_1w_public','itb_1m_public','itb_on','vbma_swap_on','vbma_itb_on']);
   state.period='3M';state.freq='daily';$('#freqSelect').value='daily';
   $('[data-period]').forEach(x=>x.classList.toggle('selected',x.dataset.period==='3M'));
-  render();if(result.meta?.hasBooks)pageTo('books');toast(`Đã cập nhật ${series.length} ngày · ${Object.keys(state.data.mapping||{}).length} trường được nhận diện`);
+  render();
+  let stored=false;try{await saveLastWorkbook(state.data);stored=true;}catch(err){console.warn('Local workbook cache is unavailable:',err?.message)}
+  if(result.meta?.hasBooks)pageTo('books');
+  toast(stored?`Đã cập nhật ${series.length} ngày và lưu trên thiết bị`:`Đã cập nhật ${series.length} ngày · chưa lưu được trên thiết bị`);
  }catch(err){toast('Không thể nhập Excel: '+(err?.message||String(err)))}finally{state.importing=false;$('#filePicker').value=''}
 }
 
@@ -435,19 +439,34 @@ async function mainV13(){
  document.addEventListener('dragover',event=>{if([...event.dataTransfer?.types||[]].includes('Files')){event.preventDefault();document.body.classList.add('file-dragging')}});
  document.addEventListener('dragleave',event=>{if(event.target===document.documentElement)document.body.classList.remove('file-dragging')});
  document.addEventListener('drop',async event=>{const files=[...(event.dataTransfer?.files||[])].filter(f=>/\.(xlsx|xlsm|json|csv)$/i.test(f.name));if(!files.length)return;event.preventDefault();document.body.classList.remove('file-dragging');for(const file of files)await importFileV13(file)});
+ let restored=null;
+ try{restored=await loadLastWorkbook()}catch(_){}
  try{
-  const response=await fetch(new URL('../data/public_snapshot.json',import.meta.url));
-  if(!response.ok)throw Error('Không đọc được nguồn thị trường');
-  state.publicMarket=await response.json();state.data=makePublicSeries(state.publicMarket);
-  render();
- }catch(err){toast('Không thể mở dữ liệu thị trường: '+err.message)}
- await refreshPublicV13();checkModelV13();
+  const response=await fetch(new URL('../data/public_snapshot.json',import.meta.url),{cache:'no-store'});
+  if(!response.ok)throw Error('Không đọc được dữ liệu thị trường');
+  state.publicMarket=await response.json();
+ }catch(err){console.warn('Public market snapshot is unavailable:',err?.message)}
+ state.data=restored||(state.publicMarket.interbank.length?makePublicSeries(state.publicMarket):null);
+ if(restored){
+  state.activeRates=new Set(['itb_on_public','itb_1w_public','itb_1m_public','itb_on','vbma_swap_on','vbma_itb_on']);
+  if(restored.meta?.hasBooks)state.activePage='overview';
+ }
+ if(state.data)render();
+ else toast('Chưa tải được dữ liệu thị trường. Thử làm mới trang.');
+ if(state.publicMarket.interbank.length)await refreshPublicV13();
+ checkModelV13();
  window.setInterval(()=>refreshPublicV13(),60*60*1000);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-state.lastMarketFetch>60*60*1000)refreshPublicV13()});
 }
 const _previousRenderKpis=renderKpis,_previousRenderDonut=renderDonut,_previousRenderPortfolio=renderPortfolio,_previousRenderBondsFx=renderBondsFx,_previousRenderQuality=renderQuality;
 renderKpis=renderKpisV13;renderDonut=renderDonutV13;renderPortfolio=renderPortfolioV13;renderBondsFx=renderBondsFxV13;renderQuality=renderQualityV13;renderMetadata=renderMetadataV13;localAnswer=(q)=>mmAnalystAnswer(q,state.data)||localAnswerV13(q);importFile=importFileV13;refreshPublic=refreshPublicV13;checkModel=checkModelV13;
 function renderBooksV14(){
+ const hasBookRows=(state.data?.series||[]).some(row=>Object.keys(row).some(key=>key.startsWith('book_')));
+ document.body.classList.toggle('market-only',!hasBookRows);
+ const intro=document.querySelector('.book-intro-panel');if(intro)intro.hidden=!hasBookRows;
+ const bookLink=document.querySelector('.sidebar .nav-link[data-nav="books"]');if(bookLink)bookLink.hidden=!hasBookRows;
+ if(!hasBookRows){if(state.activePage==='books')pageTo('overview');return}
+
  const bk=[
   {id:'itb',label:'ITB tổng',hint:'Tổng Interbank · số kiểm soát',kind:'control',color:'#255f9e'},
   {id:'ld_itb',label:'L&D Interbank',hint:'Cho vay và đi vay liên ngân hàng',kind:'part',color:'#158f91'},
