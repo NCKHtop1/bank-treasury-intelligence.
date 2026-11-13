@@ -1,0 +1,69 @@
+name: TreasuryIQ - hourly public-market sync
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/sync_public_market.cjs'
+      - '.github/workflows/sync-market.yml'
+  schedule:
+    # 07:00–19:00 Asia/Ho_Chi_Minh, weekdays (UTC 00–12).
+    - cron: '0 0-12 * * 1-5'
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: treasuryiq-github-pages
+  cancel-in-progress: false
+jobs:
+  refresh:
+    name: Refresh public market observations
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout market update code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: source
+          persist-credentials: false
+      - name: Checkout public website
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+          persist-credentials: true
+      - name: Match market parser to current live snapshot
+        run: cp site/data/public_snapshot.json source/data/public_snapshot.json
+      - name: Scan and validate market updates
+        run: node source/scripts/sync_public_market.cjs site/data/public_snapshot.json
+      - name: Commit only if verified observations changed
+        id: update
+        run: |
+          if git -C site diff --quiet -- data/public_snapshot.json; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+            echo "No new verified observations"
+          else
+            git -C site config user.name "github-actions[bot]"
+            git -C site config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git -C site add data/public_snapshot.json
+            git -C site commit -m "data: refresh public TreasuryIQ market observations"
+            git -C site push origin HEAD:gh-pages
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Configure Pages
+        if: steps.update.outputs.changed == 'true'
+        uses: actions/configure-pages@v5
+      - name: Upload refreshed public site
+        if: steps.update.outputs.changed == 'true'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+      - name: Deploy refreshed public site
+        if: steps.update.outputs.changed == 'true'
+        id: deployment
+        uses: actions/deploy-pages@v4
