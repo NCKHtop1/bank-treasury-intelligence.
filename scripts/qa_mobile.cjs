@@ -99,6 +99,42 @@ async function run(){
     await page.locator('#clearDeviceCache').evaluate(el=>el.click());
     await page.waitForFunction(()=>document.body.classList.contains('market-only'));
     assert.ok(await page.locator('.book-intro-panel').isHidden(),'Book introduction remained after clearing cache');
+
+    const handoffData={meta:{kind:'private-local',hasBooks:true,source_file:'browser-qa-only',asOf:'2026-10-21'},series:[
+      {date:'2026-10-20',book_itb_asset_vnd_bn:101,book_itb_fund_vnd_bn:-40,book_swp_net_vnd_bn:5,book_swp_asset_vnd_bn:16,book_swp_fund_vnd_bn:-11,book_ld_itb_asset_vnd_bn:26,book_ld_itb_fund_vnd_bn:-10,invest_gtcg_bn:54,gtcg_scale_bn:49,ld_nim_pct:2.4,loan_bn:101},
+      {date:'2026-10-21',book_itb_asset_vnd_bn:105,book_itb_fund_vnd_bn:-44,book_swp_net_vnd_bn:9,book_swp_asset_vnd_bn:24,book_swp_fund_vnd_bn:-15,book_ld_itb_asset_vnd_bn:38,book_ld_itb_fund_vnd_bn:-20,invest_gtcg_bn:65,gtcg_scale_bn:55,ld_nim_pct:2.7,loan_bn:105}
+    ],monthlyBooks:[],mapping:{},warnings:[],source_freshness:{}};
+    await page.evaluate(data=>{
+      const btn=document.createElement('button');btn.id='qaHandoffLaunch';btn.textContent='QA handoff';
+      const nonce='aabbccddeeff00112233445566778899';
+      let child=null;
+      window.addEventListener('message',ev=>{
+        if(ev.source!==child||ev.data?.nonce!==nonce)return;
+        if(ev.data?.type==='TREASURYIQ_LOCAL_READY_V1')child.postMessage({type:'TREASURYIQ_LOCAL_DATA_V1',nonce,payload:data},location.origin);
+        if(ev.data?.type==='TREASURYIQ_LOCAL_ACK_V1')document.body.dataset.qaHandoff=ev.data.ok?'ok':ev.data.error;
+      });
+      btn.addEventListener('click',()=>{child=window.open(location.origin+'/?local_handoff='+nonce,'_blank')});
+      document.body.append(btn);
+    },handoffData);
+    const popupOpened=ctx.waitForEvent('page');
+    await page.click('#qaHandoffLaunch');
+    const personalPage=await popupOpened;
+    await personalPage.locator('#personalCards .personal-stat').first().waitFor({timeout:20000});
+    await page.waitForFunction(()=>document.body.dataset.qaHandoff==='ok',{timeout:12000});
+    assert.equal(await personalPage.locator('#personalCards .personal-stat').count(),8,'Private KPIs not integrated');
+    for(const id of ['#personalLoanChart','#personalSwapChart','#personalLDChart','#personalGTCGChart']){
+      assert.ok(await personalPage.locator(id+' svg').count()>0,id+' missing chart');
+    }
+    const amounts=await personalPage.locator('#personalCards').innerText();
+    assert.ok(amounts.includes('105')&&amounts.includes('44')&&amounts.includes('9'),'Loan Deposit Swap values not visible');
+    await personalPage.screenshot({path:'mobile-390-loan-deposit-swap.png',fullPage:true});
+    const personalOverflow=await personalPage.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+    assert.ok(personalOverflow<=6,'Integrated book panels overflow mobile by '+personalOverflow);
+    await personalPage.goto('http://127.0.0.1:8765/',{waitUntil:'domcontentloaded'});
+    await personalPage.locator('#personalCards .personal-stat').first().waitFor({timeout:20000});
+    assert.equal(await personalPage.locator('#personalCards .personal-stat').count(),8,'Private dashboard did not persist');
+    await personalPage.close();
+    console.log('LIVE HANDOFF: pass (8 KPIs, 4 charts, private save and reopen)');
     console.log('ENCRYPTED DEVICE CACHE: pass (save, restore, clear)');
    }else if(width===360){
     await page.screenshot({path:'mobile-360-public.png',fullPage:true});
