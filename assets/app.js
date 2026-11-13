@@ -188,7 +188,7 @@ function render(){if(!state.data)return;renderMetadata();renderKpis();renderDonu
 function csvExport(){const rows=dataFiltered();if(!rows.length)return toast('Chưa có dữ liệu để xuất.');const keys=Object.keys(rows[0]);const csv='\ufeff'+[keys.join(','),...rows.map(row=>keys.map(k=>row[k]===null||row[k]===undefined?'':String(row[k])).join(','))].join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`treasury_session_${new Date().toISOString().slice(0,10)}.csv`;a.click();URL.revokeObjectURL(url);toast('Đã xuất CSV từ dữ liệu hiện có trong trình duyệt.')}
 function localAnswer(q){const question=q.toLowerCase();const r=last();const on=latestValid('itb_on'),prev=olderValid('itb_on',20),p=publicLatest('ON'),d=state.data?.meta?.kind==='synthetic'?'Số liệu MM là mô phỏng.':'Số liệu MM được nạp trong trình duyệt.';const fmt=v=>v==null?'chưa có quan sát hợp lệ':rateText(v);if(/nim|biên lãi|lợi nhuận/.test(question))return `${d}\nNIM L&D = Lãi suất cho vay bình quân VND – Lãi suất đi vay bình quân VND; chỉ tính khi dư nợ cho vay VND khác 0.\nNIM gần nhất: ${fmt(r.ld_nim_pct)} tại ${shortDate(r.date)}.\nLưu ý NIM không đồng nghĩa P&L, chưa phản ánh FTP, MTM, hedge cost hoặc impairment.`;if(/on|qua đêm|liên ngân|lãi suất|rate|kỳ hạn/.test(question))return `${d}\nITB ON nội bộ: ${fmt(on?.value)} (${shortDate(on?.date)}). ${prev!=null&&on?.value!=null?`Thay đổi khoảng 20 phiên: ${n(on.value-prev,{d:2})} điểm %.`:''}\nNHNN ON công khai: ${fmt(p?.rate_pct)} (${shortDate(p?.date)}), nguồn: ${p?.source||'chưa kết nối'}.\nHai chuỗi có thể khác định nghĩa; không tự gộp để lấp khoảng trống.`;if(/lỗi|thiếu|chất lượng|quality|qc|nguồn|cũ/.test(question)){const dates=state.data?.source_freshness||{},old=Object.entries(dates).filter(([k,v])=>calcDays(v,r.date)>7).map(([k,v])=>`${k} (${shortDate(v)})`);return `Kiểm tra tại ${shortDate(r.date)}:\n${old.length?'Nguồn cũ hơn 7 ngày: '+old.join(', '):'Không phát hiện nguồn cũ hơn 7 ngày từ metadata.'}\n${(state.data?.warnings||[]).slice(0,3).join('\n')||'Không có cảnh báo từ bộ xử lý.'}\nKhông có dữ liệu sẽ để trống thay vì tự bịa hoặc gán benchmark khác loại.`}if(/fx|usd|tỷ giá|swap/.test(question))return `${d}\nUSD/VND Mid: ${n(r.fx_mid,{d:0})} tại ${shortDate(r.date)}.\nSwap residual: ${n(r.swap_bn,{d:2})} tỷ VND = Loan – GTCG – RESO – TSĐB – Tín chấp.\nĐối với trạng thái FX, cần xác định book, đơn vị tiền tệ và ngày giá trước khi đánh giá rủi ro.`;if(/mm|quy mô|loan|dư nợ|gtcg|thanh khoản/.test(question))return `${d}\nTổng dư nợ MM tại ${shortDate(r.date)}: ${n(r.loan_bn,{d:2})} tỷ VND.\nĐầu tư GTCG: ${n(r.invest_gtcg_bn,{d:2})} tỷ; Có TSĐB: ${n(r.secured_bn,{d:2})} tỷ; Tín chấp: ${n(r.unsecured_bn,{d:2})} tỷ.\nGTCG ròng = BOND Trading + BOND PAP – CD đáo hạn (khác chỉ tiêu Đầu tư GTCG).\nDùng số dư theo ngày để tính BQ, không thay bằng snapshot cuối tháng.`;return `Tôi có thể trả lời câu hỏi về ON, lãi suất theo kỳ hạn, NIM, quy mô MM, GTCG, tỷ giá, Swap residual và cảnh báo nguồn.\n${d} Tại ${shortDate(r.date)}, dư nợ MM là ${n(r.loan_bn,{d:1})} tỷ và lãi suất ON nội bộ là ${fmt(on?.value)}.\nVui lòng hỏi thêm một chỉ tiêu cụ thể; mọi kết quả cần đối chiếu nguồn gốc trước khi sử dụng.`}
 async function assistantRequest(question){return {answer:localAnswer(question),mode:'local'}}
-function addBubble(type,text){const m=$('#chatMessages');const node=document.createElement('div');node.className='chat-bubble '+type;if(type==='assistant'){const label=document.createElement('div');label.className='bubble-label';label.textContent='TREASURY ANALYST';node.appendChild(label)}node.appendChild(document.createTextNode(text));m.appendChild(node);m.scrollTop=m.scrollHeight}
+function addBubble(type,text){const m=$('#chatMessages');const node=document.createElement('div');node.className='chat-bubble '+type;if(type==='assistant'){const label=document.createElement('div');label.className='bubble-label';label.textContent='PHÂN TÍCH';node.appendChild(label)}node.appendChild(document.createTextNode(text));m.appendChild(node);m.scrollTop=m.scrollHeight}
 async function ask(q){const question=(q||'').trim();if(!question)return;pageTo('assistant');addBubble('user',question);const input=$('#chatInput');input.value='';input.disabled=true;const out=await assistantRequest(question);addBubble('assistant',out.answer);input.disabled=false;input.focus()}
 async function importFile(file){if(!file)return;state.importing=true;toast('Đang phân tích file trên thiết bị; không tải lên máy chủ.');try{const result=await readUserFile(file);if(!Array.isArray(result.series)||result.series.length<2)throw Error('Không tìm thấy đủ chuỗi ngày hợp lệ.');result.series.sort((a,b)=>dateCompare(a.date,b.date));result.meta=result.meta||{};result.meta.kind='private-local';result.meta.asOf=result.series.at(-1).date;state.data=result;state.activeRates=new Set(['itb_on','itb_1w','itb_1m','itb_on_public','itb_1w_public']);state.period='3M';state.freq='daily';$('#freqSelect').value='daily';$$('[data-period]').forEach(x=>x.classList.toggle('selected',x.dataset.period==='3M'));render();toast(`Đã nạp ${result.series.length} quan sát từ ${file.name}. Dữ liệu chỉ nằm trong tab này.`)}catch(err){toast('Không nạp được file: '+(err.message||String(err)))}finally{state.importing=false;$('#filePicker').value=''}}
 async function refreshPublic(){
@@ -361,7 +361,7 @@ function bookAnswerV14(question){
  const key=(id,m)=>id==='trading'||id==='afs'?(m==='asset_vnd_bn'?'book_cd_'+(id==='trading'?'trading_vnd_bn':'afs_vnd_bn'):'unavailable_'+id+'_'+m):'book_'+id+'_'+m;
  const find=(id)=>[...records].reverse().find(x=>Object.keys(x).some(k=>k.startsWith('book_'+(['trading','afs'].includes(id)?'cd':id)+'_')));
  if(!state.data?.meta?.hasBooks&&!records.some(x=>Object.keys(x).some(k=>k.startsWith('book_'))))
-  return 'Dashboard hỗ trợ ITB tổng, L&D Interbank, L&D ALM, Repo/Reso, Swap MM, CD/PAP, Bond Trading và Bond AFS. Nạp MB MM.xlsx hoặc file book đã xuất để phân tích các số dư thực tế.';
+  return 'Nguồn thị trường hiện có lãi suất và tỷ giá, chưa có số dư book. Số dư ITB, L&D, Repo, Swap và trái phiếu chỉ hiển thị từ dữ liệu nội bộ đã lưu trên thiết bị.';
  if(!selected){
   const coverage=kinds.map(x=>`${x.name}: ${shortDate(find(x.id)?.date)}`).join('\n');
   return `Có ${kinds.filter(x=>find(x.id)).length}/${kinds.length} book được nhận diện từ workbook.\n${coverage}\nITB tổng là số kiểm soát, không cộng thêm vào book thành phần.`;
@@ -389,7 +389,7 @@ function localAnswerV13(input){
  }
  if(/nim|biên lãi|chi phí vốn|lợi nhuận/.test(q)){
   if(privateActive&&lastRow.ld_nim_pct!=null)return `L&D NIM tại ${shortDate(lastRow.date)}: ${rateText(lastRow.ld_nim_pct)}.\nCông thức = lãi suất cho vay bình quân VND − lãi suất đi vay bình quân VND, khi dư nợ hợp lệ. Chỉ tiêu chưa bao gồm điều chỉnh FTP, MTM, hedge cost.`;
-  return `NIM L&D = Lãi suất cho vay bình quân VND − lãi suất đi vay bình quân VND.\nBạn có thể nạp Excel MM để xem NIM thực tế theo từng phiên và đối chiếu thay đổi.`;
+  return `NIM L&D = lãi suất cho vay bình quân VND − lãi suất đi vay bình quân VND.\nNguồn thị trường hiện không có đủ số dư và lãi suất giao dịch nội bộ để tính NIM.`;
  }
  if(/fx|usd|tỷ giá|ngoại hối/.test(q)){
   const usd=privateActive&&lastRow.fx_mid!=null?`\nTỷ giá trong workbook (${shortDate(lastRow.date)}): ${n(lastRow.fx_mid,{d:0})} VND/USD.`:'';
@@ -403,13 +403,13 @@ function localAnswerV13(input){
  }
  if(/quy mô|dư nợ|mm|thanh khoản|ld|l&d/.test(q)){
   if(privateActive&&lastRow.loan_bn!=null)return `Quy mô cho vay ITB tại ${shortDate(lastRow.date)}: ${n(lastRow.loan_bn,{d:2})} tỷ VND.${lastRow.ld_scale_bn!=null?`\nL&D VND: ${n(lastRow.ld_scale_bn,{d:2})} tỷ VND.`:''}\nTheo các trường được nhận diện trong workbook đã nạp.`;
-  return `Để phân tích số dư MM và L&D thực tế, chọn “Nạp dữ liệu” và tải workbook. Công cụ nhận diện ngày, khoản mục, lãi suất và kỳ hạn theo tên trường, kể cả khi dòng thay đổi vị trí.`;
+  return `Nguồn hiện tại có lãi suất liên ngân hàng và tỷ giá. Số dư MM, L&D và cơ cấu book là chỉ tiêu nội bộ, không thể suy ra chỉ từ lãi suất thị trường.`;
  }
  if(termMatch||/lãi suất|qua đêm|liên ngân|interbank/.test(q)){
   const t=termMatch?norm(termMatch[1]):'ON',a=publicDisplay(t),b=publicLatest(t);
   return `Lãi suất ${t} gần nhất: ${a?rateText(a.rate_pct):'—'} tại ${shortDate(a?.date)} (${a?.source_type==='interbank_indicative_rounded'?'Bản tin liên ngân hàng':'NHNN'}).\n${b?`NHNN cùng kỳ hạn: ${rateText(b.rate_pct)}, ngày ${shortDate(b.date)}.`:''}${privateActive&&latestValid('itb_'+t.toLowerCase())?`\nWorkbook: ${rateText(latestValid('itb_'+t.toLowerCase()).value)}, ngày ${shortDate(latestValid('itb_'+t.toLowerCase()).date)}.`:''}`;
  }
- return `Bạn có thể hỏi: “Lãi suất ON hôm nay?”, “Spread 3M–ON?”, “Tỷ giá USD/VND?”, “SOFR và US 10Y?”, “NIM của workbook?” hoặc “Nguồn nào mới nhất?”.\nDữ liệu hiển thị theo từng ngày quan sát với nguồn truy vết.`;
+ return `Các chỉ tiêu hiện có gồm lãi suất ON–9M, tỷ giá USD/VND, SOFR và US 10Y. Có thể so sánh các kỳ hạn hoặc kiểm tra nguồn và ngày công bố.`;
 }
 
 async function importFileV13(file){
@@ -453,13 +453,23 @@ async function refreshPublicV13(){
 }
 
 async function checkModelV13(){
- state.llm=false;$('#aiBackend').textContent='Phân tích số liệu';$('#modelState').textContent='TREASURY ANALYST';
- $('#chatModeDesc').textContent='Phân tích lãi suất, danh mục, chênh lệch và nguồn dữ liệu';
+ state.llm=false;$('#aiBackend').textContent='Có dữ liệu';$('#modelState').textContent='TRA CỨU SỐ LIỆU';
+ $('#chatModeDesc').textContent='Lãi suất, tỷ giá và công thức';
 }
 
 async function mainV13(){
  bind();
  const picker=$('#filePicker');picker.setAttribute('multiple','');
+ const menu=$('#mobileMenu'),sidebar=$('#sidebar');
+ menu?.addEventListener('click',()=>document.body.classList.toggle('menu-open',sidebar.classList.contains('open')));
+ $('#sidebarScrim')?.addEventListener('click',()=>{sidebar.classList.remove('open');document.body.classList.remove('menu-open')});
+ document.addEventListener('click',ev=>{if(ev.target.closest('[data-nav]'))document.body.classList.remove('menu-open')});
+ document.addEventListener('keydown',ev=>{if(ev.key==='Escape'){sidebar.classList.remove('open');document.body.classList.remove('menu-open')}});
+ $('#clearDeviceCache')?.addEventListener('click',async()=>{
+  if(state.importing)return;
+  try{await clearLastWorkbook();state.data=makePublicSeries(state.publicMarket);pageTo('overview');render();toast('Đã xóa dữ liệu Excel lưu trên máy');}
+  catch(err){toast('Chưa xóa được dữ liệu: '+err.message)}
+ });
  // The shared file input queues every workbook sequentially through bind().
  document.addEventListener('dragover',event=>{if([...event.dataTransfer?.types||[]].includes('Files')){event.preventDefault();document.body.classList.add('file-dragging')}});
  document.addEventListener('dragleave',event=>{if(event.target===document.documentElement)document.body.classList.remove('file-dragging')});
