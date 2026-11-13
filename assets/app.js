@@ -261,7 +261,15 @@ function renderKpisV13(){
 }
 
 function renderDonutV13(){
- if(state.data?.meta?.kind==='private-local')return _previousRenderDonut();
+ const p=document.querySelector('#instrumentDonut')?.closest('.panel');
+ const title=p?.querySelector('h2'),sub=p?.querySelector('.panel-sub'),foot=p?.querySelector('.panel-foot-note');
+ if(state.data?.meta?.kind==='private-local'){
+  if(title)title.textContent='Cơ cấu MM';if(sub)sub.textContent='Tỷ VND';if(foot)foot.textContent='Theo dư nợ cuối kỳ';
+  return _previousRenderDonut();
+ }
+ if(title)title.textContent='Mặt bằng lãi suất';
+ if(sub)sub.textContent='%/năm';
+ if(foot)foot.textContent='Lãi suất từng kỳ hạn · NHNN';
  const arr=TERM_LABELS.map(t=>({label:t,value:publicLatest(t)?.rate_pct??null})).filter(x=>Number.isFinite(+x.value));
  $('#instrumentDonut').innerHTML=`<div class="public-curve-mark"><span>VNIBOR</span><strong>${rateText(publicLatest('ON')?.rate_pct)}</strong><small>Qua đêm · ${shortDate(publicLatest('ON')?.date)}</small></div>`;
  const max=Math.max(...arr.map(x=>x.value),1);
@@ -276,8 +284,22 @@ function renderPortfolioV13(){
  const benchmark=TERM_LABELS.map(t=>({name:t,obs:publicLatest(t)})).filter(x=>x.obs);
  const max=Math.max(...benchmark.map(x=>x.obs.rate_pct),1);
  $('#portfolioBreakdown').innerHTML=benchmark.map(x=>`<div class="breakdown-row"><div class="breakdown-label"><span>${x.name}</span><strong>${rateText(x.obs.rate_pct)}</strong></div><div class="breakdown-bar"><span style="--bar:#26a69a;width:${100*x.obs.rate_pct/max}%"></span></div></div>`).join('');
- $('#reconDetails').innerHTML=`<div class="import-action-card"><strong>Phân tích số dư MM và L&D theo Excel</strong><p>Nạp workbook để xem quy mô, NIM, cơ cấu danh mục và đối chiếu nghiệp vụ. Tên chỉ tiêu được dùng làm khóa nhận diện.</p><button type="button" class="btn btn-primary" id="inlineImportV13">Nạp Excel phân tích ↗</button></div>`;
- $('#inlineImportV13')?.addEventListener('click',()=>$('#filePicker').click());
+
+ const terms=[['1W – ON','1W','ON'],['1M – ON','1M','ON'],['3M – ON','3M','ON'],['6M – 3M','6M','3M']];
+ const data=terms.map(([label,left,right])=>{
+  const l=publicLatest(left),r=publicLatest(right);
+  const sameDay=l?.date&&l.date===r?.date;
+  const val=sameDay?Number(l.rate_pct)-Number(r.rate_pct):null;
+  return {label,val,date:l?.date};
+ });
+ $('#reconDetails').innerHTML=data.map(x=>`<div class="metric-item"><label>${esc(x.label)}</label><strong>${x.val==null?'—':(x.val>=0?'+':'')+n(x.val,{d:2})+' đpt'}</strong><small>${esc(shortDate(x.date))} · NHNN</small></div>`).join('');
+ const heading=document.querySelector('[data-view="portfolio"] .grid-2-1 .panel h2');
+ if(heading)heading.textContent='Diễn biến lãi suất';
+ const breakdownHeading=document.querySelector('[data-view="portfolio"] .grid-2-1 .panel:nth-child(2) h2');
+ if(breakdownHeading)breakdownHeading.textContent='Mặt bằng lãi suất theo kỳ hạn';
+ const reconTitle=document.querySelector('[data-view="portfolio"] .panel.top-spaced h2');
+ if(reconTitle)reconTitle.textContent='Chênh lệch lãi suất theo kỳ hạn';
+
 }
 
 function renderBondsFxV13(){
@@ -300,8 +322,10 @@ function renderQualityV13(){
  const cards=[['Kỳ hạn LNH',String(TERM_LABELS.filter(x=>publicLatest(x)).length),'kỳ hạn'],['Quan sát NHNN',String(snap.interbank?.length||0),'điểm'],['Nguồn dữ liệu',String(sources.filter(x=>x[1]).length),'nguồn'],['Bản tin',String(snap.news?.length||0),'tin']];
  $('#qualityKpis').innerHTML=cards.map(([label,v,unit])=>`<div class="kpi-card"><div class="kpi-head">${esc(label)}</div><div class="kpi-value">${v}<small>${esc(unit)}</small></div><div class="kpi-bottom">Dữ liệu công khai</div></div>`).join('');
  $('#freshnessTable').innerHTML=`<table class="data-table"><thead><tr><th>Nguồn</th><th>Ngày quan sát</th><th>Tình trạng</th></tr></thead><tbody>${sources.map(([label,date])=>`<tr><td>${esc(label)}</td><td>${shortDate(date)}</td><td>${date?'Có dữ liệu':'Chưa có'}</td></tr>`).join('')}</tbody></table>`;
- $('#qualityWarnings').innerHTML=`<div class="import-action-card"><strong>Kiểm tra dữ liệu Excel</strong><p>Đọc cả workbook theo tên trường; sau khi nhập sẽ hiển thị dữ liệu thực, số chỉ tiêu tìm được và các cảnh báo đối chiếu.</p><button type="button" class="btn btn-primary" id="qualityImportV13">Chọn file Excel ↗</button></div>`;
- $('#qualityImportV13')?.addEventListener('click',()=>$('#filePicker').click());
+ const completed=sources.filter(([,date])=>date).length;
+ const missing=sources.filter(([,date])=>!date).map(([name])=>name);
+ const rates=state.publicMarket.interbank||[];
+ $('#qualityWarnings').innerHTML=`<div class="quality-brief"><strong>${completed}/${sources.length} nguồn có dữ liệu</strong><p>${rates.length} quan sát lãi suất với ngày công bố. ${missing.length?'Cần kiểm tra: '+esc(missing.join(', ')):'Các nhóm nguồn chính đã có số liệu.'}</p><span>Ngày của từng nguồn được giữ riêng khi tính và so sánh.</span></div>`;
 }
 
 function renderMetadataV13(){
@@ -311,9 +335,10 @@ function renderMetadataV13(){
  $('#sourceBadge').className='source-badge '+(local?'local':'market-real');
  $('#dataBannerTitle').textContent=local?'Danh mục đang theo dõi':'Dữ liệu thị trường';
  $('#dataBannerDetail').textContent=local?`${state.data.series.length} phiên · ${(meta.files||[]).length||1} tệp đã lưu trên thiết bị`:`Lãi suất ${shortDate(latest)} · USD/VND ${shortDate(state.publicMarket.fx?.date)}`;
- $('#aiDataMode').textContent=local?'Workbook đang phân tích':'Thị trường';
+ $('#aiDataMode').textContent=local?'Danh mục trên máy':'Lãi suất & tỷ giá';
  $('#aiAsOf').textContent=shortDate(latest);
- $('#aiMarketMode').textContent=state.publicMarket.interbank?.length?'Đã nạp':'Đang tải';
+ $('#aiMarketMode').textContent=state.publicMarket.interbank?.length?'Đã cập nhật':'Đang tải';
+ const reset=document.querySelector('#clearDeviceCache');if(reset)reset.hidden=!local;
 }
 
 function bookAnswerV14(question){
