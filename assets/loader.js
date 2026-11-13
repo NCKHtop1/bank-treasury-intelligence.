@@ -1,3 +1,4 @@
+import {mmComputeInstrument} from './treasury-analytics.mjs';
 /**
  * Bank workbook parser. Runs entirely in the browser; no data is POSTed anywhere.
  * JSZip is a self-hosted MIT-licensed vendor dependency. Reads only known XML
@@ -27,21 +28,27 @@ function blockFromLabel(name){const m=String(name).match(/^--\[([^\]]+)\]--$/);r
 function rowFinder(labels){const markers=[];for(const [r,v] of labels){const block=blockFromLabel(v);if(block)markers.push({r,block})}markers.sort((a,b)=>a.r-b.r);
 return(label,block=null,required=true)=>{const cand=[...labels].filter(([r,text])=>cleanText(text)===cleanText(label)).filter(([r])=>{if(!block)return true;const prior=markers.filter(x=>x.r<r).at(-1);return prior?.block===block.toUpperCase()}).map(([r])=>r);if(cand.length===1)return cand[0];if(required)throw Error(`Không xác định được metric "${label}" trong block "${block||'không chỉ định'}" (khớp ${cand.length} dòng)`);return null};}
 function freshness(rows,keys){for(let i=rows.length-1;i>=0;i--)for(const k of keys){if(rows[i][k]!=null&&Number.isFinite(+rows[i][k]))return rows[i].date}return null}
-function calcSeries(dates,raws,market){const sorted=[...dates.entries()].sort((a,b)=>a[0].localeCompare(b[0]));const out=[],warns=[];let lastFx=null,lastFxDate=null;
-const val=(x,k)=>raws[k]?.get(x)??null;const sum=(...args)=>args.every(v=>v!==null&&v!==undefined&&Number.isFinite(+v))?args.reduce((a,b)=>a+Number(b),0):null;
-const scale=v=>v===null?null:v/1e9;
-for(const [date,col] of sorted){const mr=market.get(date)||{},fxval=mr.fx_mid;if(fxval!=null){lastFx=fxval;lastFxDate=date}const gap=lastFxDate?Math.round((new Date(date)-new Date(lastFxDate))/86400000):null;const fx=(gap!=null&&gap<=7)?lastFx:null;
-const loan=scale(sum(val(col,'interbank_vnd_loan'),fx!=null&&val(col,'interbank_usd_loan')!=null?val(col,'interbank_usd_loan')*fx:null));
-const invest=scale(sum(val(col,'bond_pap'),val(col,'bond_trading'),val(col,'bond_afs')));
-const reso=scale(val(col,'reso_vnd'));
-const secured=scale(sum(val(col,'secured_vnd'),fx!=null&&val(col,'secured_usd')!=null?val(col,'secured_usd')*fx:null));
-const unsecured=scale(sum(val(col,'unsecured_vnd'),fx!=null&&val(col,'unsecured_usd')!=null?val(col,'unsecured_usd')*fx:null));
-const swap=sum(loan,invest!=null?-invest:null,reso!=null?-reso:null,secured!=null?-secured:null,unsecured!=null?-unsecured:null);const hasTF=raws.trade_finance_vnd||raws.trade_finance_usd;const tVnd=val(col,'trade_finance_vnd'),tUsd=val(col,'trade_finance_usd');const tf=hasTF&&(tVnd!=null||tUsd!=null)?scale(sum(tVnd??0,tUsd!=null?(fx!=null?tUsd*fx:null):0)):null;
-const gtcg=scale(sum(val(col,'bond_trading'),val(col,'bond_pap'),val(col,'cd_maturity_vnd')!=null?-val(col,'cd_maturity_vnd'):null));
-const ldScale=sum(secured,unsecured),ldRate=val(col,'ld_vnd_rate'),funding=val(col,'mm_funding_vnd_rate'),ldBalance=val(col,'ld_vnd_balance');
-const nim=ldRate!=null&&funding!=null&&ldBalance!=null&&Math.abs(ldBalance)>0?ldRate-funding:null;
-const item={...mr,date,loan_bn:loan,total_mm_bn:loan,invest_gtcg_bn:invest,reso_bn:reso,secured_bn:secured,unsecured_bn:unsecured,swap_bn:swap,trade_finance_bn:tf,instrument_recon_gap_bn:loan!=null&&swap!=null?loan-(invest+reso+secured+unsecured+swap+(tf??0)):null,gtcg_scale_bn:gtcg,ld_scale_bn:ldScale,ld_nim_pct:nim,pnl_bn:scale(val(col,'pnl_total')),fx_conversion_carry_days:gap};out.push(item)}
-if(out.some(x=>x.fx_conversion_carry_days>7))warns.push('Có phiên thiếu FX mid quá 7 ngày; không tính quy đổi USD sang VND cho các phiên này.');return {out,warns}}
+
+function calcSeries(dates,raws,market){
+ const ordered=[...dates.entries()].sort((a,b)=>a[0].localeCompare(b[0]));
+ const out=[],warns=[];let lastFx=null,lastFxDate=null;
+ const fieldNames=['interbank_vnd_loan','interbank_usd_loan','bond_pap','bond_trading','bond_afs','reso_vnd','secured_vnd','secured_usd','unsecured_vnd','unsecured_usd','cd_maturity_vnd','ld_vnd_balance','ld_vnd_rate','mm_funding_vnd_rate','trade_finance_vnd','trade_finance_usd'];
+ for(const [date,col] of ordered){
+  const observation=market.get(date)||{},fxRaw=observation.fx_mid;
+  if(typeof fxRaw==='number'&&Number.isFinite(fxRaw)&&fxRaw>10000&&fxRaw<60000){lastFx=fxRaw;lastFxDate=date;}
+  const carry=lastFxDate?Math.round((Date.parse(date+'T00:00:00Z')-Date.parse(lastFxDate+'T00:00:00Z'))/86400000):null;
+  const fx=carry!==null&&carry>=0&&carry<=7?lastFx:null;
+  const raw=Object.fromEntries(fieldNames.map(k=>[k,raws[k]?.get(col)??null]));
+  raw.hasTradeFinance=Boolean(raws.trade_finance_vnd||raws.trade_finance_usd);
+  const computed=mmComputeInstrument(raw,fx);
+  out.push({...observation,date,...computed,pnl_bn:raws.pnl_total?.has(col)?Number(raws.pnl_total.get(col))/1e9:null,fx_conversion_carry_days:carry});
+ }
+ if(out.some(r=>r.fx_conversion_carry_days>7))warns.push('FX mid cách ngày số dư quá 7 ngày: các quy đổi USD không được tính cho phiên này.');
+ if(out.some(r=>r.swap_bn!=null&&r.swap_bn<0))warns.push('Một số phiên Swap residual âm; kiểm tra mapping các nhóm nguồn và định nghĩa Loan.');
+ if(out.some(r=>r.instrument_recon_gap_bn!=null&&Math.abs(r.instrument_recon_gap_bn)>0.01))warns.push('Instrument reconciliation có chênh lệch; nếu Trade Finance tách riêng thì công thức Swap residual cần được xác nhận lại.');
+ return {out,warns};
+}
+
 async function parseExcel(file){if(file.size>85*1024*1024)throw Error('Workbook quá lớn (>85 MB). Hãy chạy scripts/export_snapshot.py cục bộ để tránh treo trình duyệt.');if(!window.JSZip){await new Promise((ok,err)=>{const s=document.createElement('script');s.src=new URL('./vendor/jszip.min.js',import.meta.url).href;s.onload=ok;s.onerror=()=>err(Error('Không nạp được JSZip nội bộ'));document.head.appendChild(s)})}const zip=await window.JSZip.loadAsync(await file.arrayBuffer()),sheetPaths=await workbookSheets(zip),strings=await getStrings(zip);if(!sheetPaths.TongHop){const data=await parseAlternateWorkbookV13(zip,sheetPaths,strings,file);return sheetNamedV13(sheetPaths,'ITB')?enrichBookWorkbookV14(data,zip,sheetPaths,strings):data;}const tong=await readSheet(zip,sheetPaths.TongHop,strings);const labels=new Map(),dates=new Map();const dateCandidates=[...tong].filter(([row])=>row<=2500).map(([row,cols])=>({row,cols,dates:[...cols].filter(([c,v])=>c>=2&&isoDate(v)).length})).sort((a,b)=>b.dates-a.dates);const header=dateCandidates[0];if(!header||header.dates<2)throw Error('Không tìm thấy hàng tiêu đề ngày trong TongHop.');for(const [row,cols] of tong){if(row===header.row){for(const [col,val] of cols){if(col>=2){const day=isoDate(val);if(day)dates.set(day,col)}}}else if(cols.has(1))labels.set(row,cols.get(1))}const r=rowFinder(labels);const def={interbank_vnd_loan:['[VND] - Cho Vay','INTERBANK'],interbank_usd_loan:['[USD] - Cho Vay','INTERBANK'],reso_vnd:['[VND] - RESO','REPO AND RESO'],bond_pap:['Du No Thoi Diem BOND PAP',null],bond_trading:['Du No Thoi Diem BOND TRADING',null],bond_afs:['Du No Thoi Diem BOND AFS',null],secured_vnd:['Cho vay TSDB VND',null],secured_usd:['Cho vay TSDB USD',null],unsecured_vnd:['Cho vay tin chap vnd',null],unsecured_usd:['Cho vay tin chap USD',null],cd_maturity_vnd:['[VND] - CD Đáo Hạn',null],ld_vnd_balance:['[VND] - Cho Vay','LOAN AND DEPOSIT'],ld_vnd_rate:['[VND] - LS cho vay BQ','LOAN AND DEPOSIT'],mm_funding_vnd_rate:['[VND] - LS di vay BQ (Đầu Vào)',null],pnl_total:['PnL hàng ngày',null]};const mapping={},raws={};for(const [key,[label,block]] of Object.entries(def)){const index=r(label,block);mapping[key]=index;raws[key]=tong.get(index)||new Map()};for(const [key,label] of [['trade_finance_vnd','[VND] - Trade Finance'],['trade_finance_usd','[USD] - Trade Finance']]){const index=r(label,'TRADE FINANCE',false);if(index){mapping[key]=index;raws[key]=tong.get(index)||new Map()}}
 const market=new Map();const set=(date,key,value)=>{if(!date||!dates.has(date)||value==null)return;if(!market.has(date))market.set(date,{});market.get(date)[key]=value};const warnings=[];if(!raws.trade_finance_vnd&&!raws.trade_finance_usd)warnings.push('Trade Finance chưa có trường nguồn được xác nhận dưới block TRADE FINANCE trong TongHop.');else warnings.push('Trade Finance có nguồn; công thức Swap residual hiện chưa trừ Trade Finance, cần đối chiếu chênh lệch.');const safeRead=async(name,maxCol)=>sheetPaths[name]?readSheet(zip,sheetPaths[name],strings,{maxCol}):new Map();const freshMap={};
 const fx=await safeRead('Ty gia',6);for(const [nr,c] of fx){if(nr===1)continue;const date=isoDate(c.get(1));set(date,'fx_ask',rawNum(c.get(4)));set(date,'fx_bid',rawNum(c.get(5)));set(date,'fx_mid',rawNum(c.get(6)))}
