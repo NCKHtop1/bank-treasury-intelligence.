@@ -1,0 +1,39 @@
+name: TreasuryIQ mobile & data QA
+on:
+  workflow_dispatch:
+  push:
+    branches: [gh-pages]
+    paths:
+      - 'assets/app.js'
+      - 'assets/mobile-finish.css'
+      - 'assets/device-cache.mjs'
+      - 'assets/treasury-workspace.mjs'
+      - 'index.html'
+      - 'scripts/qa_mobile.cjs'
+      - '.github/workflows/mobile-qa.yml'
+permissions:
+  contents: read
+jobs:
+  mobile:
+    name: Test mobile and local data restoration
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Browser availability
+        run: google-chrome --version
+      - name: Install Playwright Chrome driver
+        run: npm install --no-save --no-audit --no-fund playwright-core@1.55.1
+      - name: Run 5-viewport mobile, chart and encrypted-cache checks
+        run: node scripts/qa_mobile.cjs
+      - name: Save visual QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: treasuryiq-ux-qa
+          path: |
+            mobile-*.png
+            desktop-*.png
+          if-no-files-found: ignore
