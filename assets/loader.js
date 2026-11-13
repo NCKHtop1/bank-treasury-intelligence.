@@ -204,7 +204,7 @@ async function enrichBookWorkbookV14(out,zip,paths,strings){
  out.meta={...(out.meta||{}),kind:'private-local',hasBooks:true,bookSheets:Object.keys(counts),bookObservations:counts,bookLatestDate:out.series.filter(x=>Object.keys(x).some(k=>k.startsWith('book_'))).at(-1)?.date||null};
  out.source_freshness={...(out.source_freshness||{}),...Object.fromEntries(Object.entries(counts).filter(([,c])=>c>0).map(([code])=>[code,out.series.filter(r=>Object.keys(r).some(k=>k.startsWith('book_'+code+'_'))).at(-1)?.date||null]))};
  out.warnings=[...(out.warnings||[]),...quality];
- out.monthlyBooks=await parseMonthlyBooksV14(zip,paths,strings);
+ out.monthlyBooks=(await parseMonthlyBooksV14(zip,paths,strings)).filter(x=>x.month<=(out.meta.bookLatestDate||'').slice(0,7));
  // Legacy fields feed existing MM/L&D modules without double counting.
  for(const r of out.series){
   if(r.book_itb_asset_vnd_bn!==undefined)r.loan_bn=r.book_itb_asset_vnd_bn;
