@@ -1,5 +1,6 @@
 import { readUserFile } from './loader.js';
 import {saveLastWorkbook,loadLastWorkbook,clearLastWorkbook} from './device-cache.mjs';
+import {installLocalHandoff} from './local-handoff.mjs';
 import {renderTreasuryWorkspace,mmAnalystAnswer} from './treasury-workspace.mjs';
 import {mmAggregate} from './treasury-analytics.mjs';
 
@@ -184,7 +185,70 @@ function renderMetadata(){
  $('#aiAsOf').textContent=shortDate(last().date);
  $('#aiMarketMode').textContent=state.publicMarket.interbank?.length?'Đã đồng bộ':'Đang tải';
 }
-function render(){if(!state.data)return;renderMetadata();renderKpis();renderDonut();renderRateCharts();renderPortfolio();renderBondsFx();renderMarket();renderQuality();renderBooksV14();renderTreasuryWorkspace(state.data,{freq:state.freq,period:state.period})}
+
+function renderPersonalDashboard(){
+ const panel=document.querySelector('#personalDashboard');
+ if(!panel)return;
+ const rows=(state.data?.series||[]);
+ const privateData=state.data?.meta?.kind==='private-local';
+ const book=[...rows].reverse().find(r=>Number.isFinite(r.book_itb_asset_vnd_bn)) ||
+             [...rows].reverse().find(r=>Object.keys(r).some(k=>k.startsWith('book_')&&Number.isFinite(r[k])));
+ const active=Boolean(privateData&&book);
+ panel.hidden=!active;
+ document.body.classList.toggle('has-personal',active);
+ if(!active)return;
+ const asOf=book.date;
+ const period=periodStart(asOf);
+ const inPeriod=rows.filter(r=>r.date>=period&&r.date<=asOf);
+ const plot=state.freq==='daily'?inPeriod:mmAggregate(inPeriod,state.freq);
+ const lastValue=key=>{
+   const r=[...rows].reverse().find(x=>x.date<=asOf&&typeof x[key]==='number'&&Number.isFinite(x[key]));
+   return r?{value:r[key],date:r.date}:null;
+ };
+ const cards=[
+   ['Cho vay ITB','book_itb_asset_vnd_bn','tỷ VND',false],
+   ['Đi vay ITB','book_itb_fund_vnd_bn','tỷ VND',true],
+   ['Swap MM ròng','book_swp_net_vnd_bn','tỷ VND',false],
+   ['L&D Interbank','book_ld_itb_asset_vnd_bn','tỷ VND',false],
+   ['GTCG đầu tư','invest_gtcg_bn','tỷ VND',false],
+   ['Quy mô GTCG','gtcg_scale_bn','tỷ VND',false],
+   ['NIM L&D','ld_nim_pct','điểm %',false],
+   ['Cho vay USD ITB','book_itb_asset_usd_m','triệu USD',false]
+ ];
+ document.querySelector('#personalAsOf').textContent='Số liệu '+shortDate(asOf);
+ document.querySelector('#personalCards').innerHTML=cards.map(c=>{
+   const rec=lastValue(c[1]);
+   const v=rec?((c[3]&&rec.value<0)?-rec.value:rec.value):null;
+   return '<article class="personal-stat"><div class="personal-stat-title">'+esc(c[0])+'</div>'+
+     '<div class="personal-stat-value">'+(v===null?'—':n(v,{d:c[2]==='điểm %'?2:1}))+
+     '<span class="personal-stat-unit">'+esc(c[2])+'</span></div>'+
+     '<div class="personal-stat-meta">'+(rec?shortDate(rec.date):'Chưa có số liệu')+'</div></article>';
+ }).join('');
+ const charts=[
+   ['personalLoanChart',[
+     {key:'book_itb_asset_vnd_bn',name:'Loan ITB',color:'#267bb7'},
+     {key:'book_itb_fund_vnd_bn',name:'Deposit ITB',color:'#c88959'}
+   ]],
+   ['personalSwapChart',[
+     {key:'book_swp_asset_vnd_bn',name:'Swap cho vay',color:'#287db9'},
+     {key:'book_swp_fund_vnd_bn',name:'Swap đi vay',color:'#c58858'},
+     {key:'book_swp_net_vnd_bn',name:'Swap ròng',color:'#13a49c'}
+   ]],
+   ['personalLDChart',[
+     {key:'book_ld_itb_asset_vnd_bn',name:'L&D cho vay',color:'#287db9'},
+     {key:'book_ld_itb_fund_vnd_bn',name:'L&D đi vay',color:'#c58858'}
+   ]],
+   ['personalGTCGChart',[
+     {key:'invest_gtcg_bn',name:'GTCG đầu tư',color:'#2b80b9'},
+     {key:'gtcg_scale_bn',name:'Quy mô GTCG',color:'#1ca495'}
+   ]]
+ ];
+ for(const [id,defs] of charts){
+   makeChart(document.querySelector('#'+id),plot,defs,{unit:'bn',empty:'Chưa có quan sát cho giai đoạn này'});
+ }
+}
+
+function render(){if(!state.data)return;renderMetadata();renderKpis();renderDonut();renderRateCharts();renderPortfolio();renderBondsFx();renderMarket();renderQuality();renderBooksV14();renderTreasuryWorkspace(state.data,{freq:state.freq,period:state.period});renderPersonalDashboard()}
 function csvExport(){const rows=dataFiltered();if(!rows.length)return toast('Chưa có dữ liệu để xuất.');const keys=Object.keys(rows[0]);const csv='\ufeff'+[keys.join(','),...rows.map(row=>keys.map(k=>row[k]===null||row[k]===undefined?'':String(row[k])).join(','))].join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`treasury_session_${new Date().toISOString().slice(0,10)}.csv`;a.click();URL.revokeObjectURL(url);toast('Đã xuất CSV từ dữ liệu hiện có trong trình duyệt.')}
 function localAnswer(q){const question=q.toLowerCase();const r=last();const on=latestValid('itb_on'),prev=olderValid('itb_on',20),p=publicLatest('ON'),d=state.data?.meta?.kind==='synthetic'?'Số liệu MM là mô phỏng.':'Số liệu MM được nạp trong trình duyệt.';const fmt=v=>v==null?'chưa có quan sát hợp lệ':rateText(v);if(/nim|biên lãi|lợi nhuận/.test(question))return `${d}\nNIM L&D = Lãi suất cho vay bình quân VND – Lãi suất đi vay bình quân VND; chỉ tính khi dư nợ cho vay VND khác 0.\nNIM gần nhất: ${fmt(r.ld_nim_pct)} tại ${shortDate(r.date)}.\nLưu ý NIM không đồng nghĩa P&L, chưa phản ánh FTP, MTM, hedge cost hoặc impairment.`;if(/on|qua đêm|liên ngân|lãi suất|rate|kỳ hạn/.test(question))return `${d}\nITB ON nội bộ: ${fmt(on?.value)} (${shortDate(on?.date)}). ${prev!=null&&on?.value!=null?`Thay đổi khoảng 20 phiên: ${n(on.value-prev,{d:2})} điểm %.`:''}\nNHNN ON công khai: ${fmt(p?.rate_pct)} (${shortDate(p?.date)}), nguồn: ${p?.source||'chưa kết nối'}.\nHai chuỗi có thể khác định nghĩa; không tự gộp để lấp khoảng trống.`;if(/lỗi|thiếu|chất lượng|quality|qc|nguồn|cũ/.test(question)){const dates=state.data?.source_freshness||{},old=Object.entries(dates).filter(([k,v])=>calcDays(v,r.date)>7).map(([k,v])=>`${k} (${shortDate(v)})`);return `Kiểm tra tại ${shortDate(r.date)}:\n${old.length?'Nguồn cũ hơn 7 ngày: '+old.join(', '):'Không phát hiện nguồn cũ hơn 7 ngày từ metadata.'}\n${(state.data?.warnings||[]).slice(0,3).join('\n')||'Không có cảnh báo từ bộ xử lý.'}\nKhông có dữ liệu sẽ để trống thay vì tự bịa hoặc gán benchmark khác loại.`}if(/fx|usd|tỷ giá|swap/.test(question))return `${d}\nUSD/VND Mid: ${n(r.fx_mid,{d:0})} tại ${shortDate(r.date)}.\nSwap residual: ${n(r.swap_bn,{d:2})} tỷ VND = Loan – GTCG – RESO – TSĐB – Tín chấp.\nĐối với trạng thái FX, cần xác định book, đơn vị tiền tệ và ngày giá trước khi đánh giá rủi ro.`;if(/mm|quy mô|loan|dư nợ|gtcg|thanh khoản/.test(question))return `${d}\nTổng dư nợ MM tại ${shortDate(r.date)}: ${n(r.loan_bn,{d:2})} tỷ VND.\nĐầu tư GTCG: ${n(r.invest_gtcg_bn,{d:2})} tỷ; Có TSĐB: ${n(r.secured_bn,{d:2})} tỷ; Tín chấp: ${n(r.unsecured_bn,{d:2})} tỷ.\nGTCG ròng = BOND Trading + BOND PAP – CD đáo hạn (khác chỉ tiêu Đầu tư GTCG).\nDùng số dư theo ngày để tính BQ, không thay bằng snapshot cuối tháng.`;return `Tôi có thể trả lời câu hỏi về ON, lãi suất theo kỳ hạn, NIM, quy mô MM, GTCG, tỷ giá, Swap residual và cảnh báo nguồn.\n${d} Tại ${shortDate(r.date)}, dư nợ MM là ${n(r.loan_bn,{d:1})} tỷ và lãi suất ON nội bộ là ${fmt(on?.value)}.\nVui lòng hỏi thêm một chỉ tiêu cụ thể; mọi kết quả cần đối chiếu nguồn gốc trước khi sử dụng.`}
 async function assistantRequest(question){return {answer:localAnswer(question),mode:'local'}}
@@ -490,6 +554,15 @@ async function mainV13(){
  else toast('Chưa tải được dữ liệu thị trường. Thử làm mới trang.');
  if(state.publicMarket.interbank.length)await refreshPublicV13();
  checkModelV13();
+ installLocalHandoff(async incoming=>{
+   const sorted=[...incoming.series].sort((a,b)=>a.date.localeCompare(b.date));
+   state.data={...incoming,series:sorted,meta:{...incoming.meta,kind:'private-local',hasBooks:true}};
+   state.period='3M';state.freq='daily';state.activePage='overview';
+   state.activeRates=new Set(['itb_on_public','itb_1w_public','itb_1m_public','itb_on','vbma_swap_on','vbma_itb_on']);
+   await saveLastWorkbook(state.data);
+   pageTo('overview');render();
+   toast('Đã mở danh mục đã lưu · '+sorted.length+' ngày');
+ });
  window.setInterval(()=>refreshPublicV13(),60*60*1000);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-state.lastMarketFetch>60*60*1000)refreshPublicV13()});
 }
