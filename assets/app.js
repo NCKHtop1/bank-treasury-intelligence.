@@ -1,4 +1,6 @@
 import { readUserFile } from './loader.js';
+import {renderTreasuryWorkspace,mmAnalystAnswer} from './treasury-workspace.mjs';
+import {mmAggregate} from './treasury-analytics.mjs';
 
 const $=(selector,root=document)=>root.querySelector(selector);
 const $$=(selector,root=document)=>[...root.querySelectorAll(selector)];
@@ -16,7 +18,10 @@ const colors={
  loan_bn:'#326fbc',ld_scale_bn:'#18a8a1',gtcg_scale_bn:'#5d85cf',gtcg_lsbq_pct:'#e5a15f',fx_mid:'#3b83b9',fx_bid:'#18a499',fx_ask:'#dd9863',vbma_swap_on:'#298ab5',vbma_swap_1m:'#14a59c',vbma_swap_3m:'#9c7ec7'
 };
 const RATE_FIELDS=['itb_on','itb_1w','itb_2w','itb_1m','itb_3m','itb_6m','itb_9m'];
+const VBMA_FIELDS=['vbma_swap_on','vbma_swap_1m','vbma_swap_3m','vbma_itb_on','vbma_1y','vbma_3y','vbma_5y','vbma_10y'];
 const PUBLIC_FIELDS=RATE_FIELDS.map(key=>key+'_public');
+Object.assign(seriesLabels,{vbma_swap_on:'Swap ON · VBMA',vbma_swap_1m:'Swap 1M · VBMA',vbma_swap_3m:'Swap 3M · VBMA',vbma_itb_on:'ITB ON · VBMA',vbma_1y:'Yield 1Y · VBMA',vbma_3y:'Yield 3Y · VBMA',vbma_5y:'Yield 5Y · VBMA',vbma_10y:'Yield 10Y · VBMA'});
+Object.assign(colors,{vbma_itb_on:'#527cc9',vbma_1y:'#6f9b9c',vbma_3y:'#bc7789',vbma_5y:'#906ebf',vbma_10y:'#9d6b3e'});
 const TERM_LABELS=['ON','1W','2W','1M','3M','6M','9M'];
 const instruments=[['invest_gtcg_bn','Đầu tư GTCG','#3d75bf'],['reso_bn','Mua bán GTCG kỳ hạn','#47b5ab'],['secured_bn','Có TSĐB','#7b8bc5'],['unsecured_bn','Tín chấp','#f1b25b'],['swap_bn','Swap','#9a77bf']];
 const state={
@@ -49,7 +54,7 @@ function rateRows(){
    map.get(p.date)[termToField[p.tenor]]=Number(p.rate_pct);
  }
  const latest=[dataRows().at(-1)?.date,...(state.publicMarket.interbank||[]).map(x=>x.date)].filter(Boolean).sort().at(-1);
- return [...map.values()].sort((a,b)=>dateCompare(a.date,b.date)).filter(x=>x.date>=periodStart(latest));
+ const rows=[...map.values()].sort((a,b)=>dateCompare(a.date,b.date)).filter(x=>x.date>=periodStart(latest));return state.freq==='daily'?rows:mmAggregate(rows,state.freq);
 }
 function kpi({label,metric,unit,icon,mode}){const recent=latestValid(metric),old=olderValid(metric),curr=recent?.value;const diff=curr!=null&&old!=null?curr-old:null;const pct=curr!=null&&old?100*diff/Math.abs(old):null;const value=curr==null?'—':n(curr,{d:mode==='rate'?2:mode==='fx'?0:1});const delta=diff==null?'—':`${diff>0?'+':''}${mode==='rate'?n(diff,{d:2})+'đ':n(pct,{d:1})+'%'}`;const dir=diff==null?'flat':diff>0?'pos':diff<0?'neg':'flat';return `<div class="kpi-card"><div class="kpi-head">${esc(label)}<span class="kpi-symbol">${icon}</span></div><div class="kpi-value">${value}<small>${unit}</small></div><div class="kpi-bottom"><span class="delta ${dir}">${delta}</span><span>so với khoảng 20 phiên · ${esc(recent?.date||'—')}</span></div></div>`}
 function renderKpis(){
@@ -73,16 +78,17 @@ function pathFor(rows,key,x,y){let p='',started=false;rows.forEach((r,i)=>{const
 function makeChart(el,rows,defs,{unit='rate',note='',empty='Chưa có dữ liệu',pointMode=false}={}){if(!el)return;const validDefs=defs.filter(d=>rows.some(r=>r[d.key]!=null&&Number.isFinite(+r[d.key])));if(!rows.length||!validDefs.length){el.innerHTML=`<div class="chart-error">${esc(empty)}</div>`;return}const w=1000,h=318,pad={left:unit==='fx'?72:62,right:20,top:19,bottom:37};const vals=validDefs.flatMap(d=>rows.map(r=>r[d.key]).filter(x=>typeof x==='number'&&Number.isFinite(x)));let min=Math.min(...vals),max=Math.max(...vals),range=max-min;if(range===0)range=Math.max(1,Math.abs(max)*.2);min-=range*.15;max+=range*.19;const x=i=>pad.left+(rows.length===1?(w-pad.left-pad.right)/2:i/(rows.length-1)*(w-pad.left-pad.right));const y=v=>pad.top+(max-v)/(max-min)*(h-pad.top-pad.bottom);const f=v=>unit==='bn'?n(v,{d:0}):unit==='fx'?n(v,{d:0}):n(v,{d:1});const grid=Array.from({length:5},(_,i)=>{const frac=i/4,yy=pad.top+frac*(h-pad.top-pad.bottom);return `<line class="chart-grid" x1="${pad.left}" x2="${w-pad.right}" y1="${yy}" y2="${yy}"/><text x="${pad.left-9}" y="${yy+4}" text-anchor="end">${f(max-frac*(max-min))}</text>`}).join('');const ticks=Array.from(new Set([0,Math.round((rows.length-1)*.25),Math.round((rows.length-1)*.5),Math.round((rows.length-1)*.75),rows.length-1])).map(i=>`<text x="${x(i)}" y="${h-8}" text-anchor="middle">${esc(rows[i].date.slice(5).replace('-','/'))}</text>`).join('');const lines=validDefs.map((d,j)=>{const col=d.color||colors[d.key]||['#2b79b8','#17a49b','#b47aa7'][j%3],p=pathFor(rows,d.key,x,y);const lastidx=rows.findLastIndex(row=>typeof row[d.key]==='number'&&Number.isFinite(row[d.key]));const dot=lastidx>=0?`<circle cx="${x(lastidx)}" cy="${y(rows[lastidx][d.key])}" r="3.5" fill="${col}" stroke="#fff" stroke-width="2"/>`:'';return `<path class="chart-line" stroke="${col}" stroke-dasharray="${d.dash?'6,6':'none'}" d="${p}"/>${dot}`}).join('');el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(note||'Biểu đồ chuỗi thời gian')}">${grid}${ticks}<g>${lines}</g><line class="hover-line" style="display:none" stroke="#71869d" stroke-dasharray="4 4" x1="0" x2="0" y1="${pad.top}" y2="${h-pad.bottom}"/><rect class="hover-layer" x="${pad.left}" y="${pad.top}" width="${w-pad.left-pad.right}" height="${h-pad.top-pad.bottom}" fill="transparent"/></svg><div class="chart-tooltip"></div>`;const svg=$('svg',el),overlay=$('.hover-layer',svg),cross=$('.hover-line',svg),tooltip=$('.chart-tooltip',el);const touch=ev=>{const rect=svg.getBoundingClientRect();const ratio=(ev.clientX-rect.left)/rect.width;const i=Math.max(0,Math.min(rows.length-1,Math.round((ratio*w-pad.left)/(w-pad.left-pad.right)*(rows.length-1))));const row=rows[i];cross.style.display='block';cross.setAttribute('x1',x(i));cross.setAttribute('x2',x(i));let content=`<div style="font-weight:750;margin-bottom:6px">${shortDate(row.date)}</div>`;for(const d of validDefs){const v=row[d.key];if(v==null||!Number.isFinite(+v))continue;content+=`<div style="margin:3px 0;color:#dce9f3"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${d.color||colors[d.key]||'#7da'};margin-right:6px"></span>${esc(d.name||d.key)} <strong style="float:right;margin-left:18px">${f(v)}${unit==='rate'?'%':unit==='bn'?' tỷ':''}</strong></div>`}tooltip.innerHTML=content;tooltip.style.display='block';const rel=Math.max(0,Math.min(el.clientWidth-185,(ev.clientX-el.getBoundingClientRect().left)+12));tooltip.style.left=rel+'px';tooltip.style.top='9px'};overlay.addEventListener('mousemove',touch);overlay.addEventListener('mouseleave',()=>{cross.style.display='none';tooltip.style.display='none'});}
 function rateDefinitions(){
  const hasLocal=state.data?.meta?.kind==='private-local';
- return [...PUBLIC_FIELDS,...(hasLocal?RATE_FIELDS:[])].filter(key=>state.activeRates.has(key)).map(key=>({key,name:seriesLabels[key],color:colors[key],dash:key.endsWith('_public')}));
+ return [...PUBLIC_FIELDS,...(hasLocal?[...RATE_FIELDS,...VBMA_FIELDS]:[])]
+ .filter(key=>state.activeRates.has(key)&&(!hasLocal||key.endsWith('_public')||dataRows().some(r=>Number.isFinite(r[key]))))
+ .map(key=>({key,name:seriesLabels[key],color:colors[key],dash:key.endsWith('_public')||key.startsWith('vbma_')}));
 }
 function renderLegends(){
  const local=state.data?.meta?.kind==='private-local';
- const render=(element,showAll)=>{
- const publicFields=showAll?PUBLIC_FIELDS:PUBLIC_FIELDS.slice(0,6);
- const keys=[...publicFields,...(local?(showAll?RATE_FIELDS:RATE_FIELDS.slice(0,4)):[])];
- element.innerHTML=keys.map(key=>`<button class="legend-button ${state.activeRates.has(key)?'':'off'}" data-toggle-rate="${key}" aria-pressed="${state.activeRates.has(key)}"><span class="legend-dot" style="--dot:${colors[key]}"></span>${esc(seriesLabels[key])}</button>`).join('');
- };
- render($('#rateLegend'),false);render($('#ratesLegend2'),true);
+ const available=k=>!local||k.endsWith('_public')||dataRows().some(r=>Number.isFinite(r[k]));
+ const button=k=>`<button class="legend-button ${state.activeRates.has(k)?'':'off'}" data-toggle-rate="${k}" role="checkbox" aria-checked="${state.activeRates.has(k)}" title="${esc(seriesLabels[k])}"><span class="legend-tick">✓</span><span class="legend-dot" style="--dot:${colors[k]}"></span>${esc(seriesLabels[k])}</button>`;
+ const groups=[['NHNN',PUBLIC_FIELDS],...(local?[['LS ITB · workbook',RATE_FIELDS],['VBMA · Swap / Yield',VBMA_FIELDS]]:[])];
+ const build=full=>groups.map(([label,keys])=>{const list=full?keys:(label==='NHNN'?keys.slice(0,4):label.startsWith('LS ITB')?keys.slice(0,3):keys.slice(0,4));const shown=list.filter(available);if(!shown.length)return '';return `<div class="rate-tick-group"><span class="rate-tick-label">${esc(label)}</span><div class="rate-tick-buttons">${shown.map(button).join('')}</div></div>`;}).join('');
+ $('#rateLegend').innerHTML=build(false);$('#ratesLegend2').innerHTML=build(true);
 }
 function deltaMatchedToOrigin(tenor,observed){
  if(!observed || observed.source_type==='interbank_indicative_rounded')return null;
@@ -177,7 +183,7 @@ function renderMetadata(){
  $('#aiAsOf').textContent=shortDate(last().date);
  $('#aiMarketMode').textContent=state.publicMarket.interbank?.length?'Đã đồng bộ':'Đang tải';
 }
-function render(){if(!state.data)return;renderMetadata();renderKpis();renderDonut();renderRateCharts();renderPortfolio();renderBondsFx();renderMarket();renderQuality();renderBooksV14()}
+function render(){if(!state.data)return;renderMetadata();renderKpis();renderDonut();renderRateCharts();renderPortfolio();renderBondsFx();renderMarket();renderQuality();renderBooksV14();renderTreasuryWorkspace(state.data,{freq:state.freq,period:state.period})}
 function csvExport(){const rows=dataFiltered();if(!rows.length)return toast('Chưa có dữ liệu để xuất.');const keys=Object.keys(rows[0]);const csv='\ufeff'+[keys.join(','),...rows.map(row=>keys.map(k=>row[k]===null||row[k]===undefined?'':String(row[k])).join(','))].join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`treasury_session_${new Date().toISOString().slice(0,10)}.csv`;a.click();URL.revokeObjectURL(url);toast('Đã xuất CSV từ dữ liệu hiện có trong trình duyệt.')}
 function localAnswer(q){const question=q.toLowerCase();const r=last();const on=latestValid('itb_on'),prev=olderValid('itb_on',20),p=publicLatest('ON'),d=state.data?.meta?.kind==='synthetic'?'Số liệu MM là mô phỏng.':'Số liệu MM được nạp trong trình duyệt.';const fmt=v=>v==null?'chưa có quan sát hợp lệ':rateText(v);if(/nim|biên lãi|lợi nhuận/.test(question))return `${d}\nNIM L&D = Lãi suất cho vay bình quân VND – Lãi suất đi vay bình quân VND; chỉ tính khi dư nợ cho vay VND khác 0.\nNIM gần nhất: ${fmt(r.ld_nim_pct)} tại ${shortDate(r.date)}.\nLưu ý NIM không đồng nghĩa P&L, chưa phản ánh FTP, MTM, hedge cost hoặc impairment.`;if(/on|qua đêm|liên ngân|lãi suất|rate|kỳ hạn/.test(question))return `${d}\nITB ON nội bộ: ${fmt(on?.value)} (${shortDate(on?.date)}). ${prev!=null&&on?.value!=null?`Thay đổi khoảng 20 phiên: ${n(on.value-prev,{d:2})} điểm %.`:''}\nNHNN ON công khai: ${fmt(p?.rate_pct)} (${shortDate(p?.date)}), nguồn: ${p?.source||'chưa kết nối'}.\nHai chuỗi có thể khác định nghĩa; không tự gộp để lấp khoảng trống.`;if(/lỗi|thiếu|chất lượng|quality|qc|nguồn|cũ/.test(question)){const dates=state.data?.source_freshness||{},old=Object.entries(dates).filter(([k,v])=>calcDays(v,r.date)>7).map(([k,v])=>`${k} (${shortDate(v)})`);return `Kiểm tra tại ${shortDate(r.date)}:\n${old.length?'Nguồn cũ hơn 7 ngày: '+old.join(', '):'Không phát hiện nguồn cũ hơn 7 ngày từ metadata.'}\n${(state.data?.warnings||[]).slice(0,3).join('\n')||'Không có cảnh báo từ bộ xử lý.'}\nKhông có dữ liệu sẽ để trống thay vì tự bịa hoặc gán benchmark khác loại.`}if(/fx|usd|tỷ giá|swap/.test(question))return `${d}\nUSD/VND Mid: ${n(r.fx_mid,{d:0})} tại ${shortDate(r.date)}.\nSwap residual: ${n(r.swap_bn,{d:2})} tỷ VND = Loan – GTCG – RESO – TSĐB – Tín chấp.\nĐối với trạng thái FX, cần xác định book, đơn vị tiền tệ và ngày giá trước khi đánh giá rủi ro.`;if(/mm|quy mô|loan|dư nợ|gtcg|thanh khoản/.test(question))return `${d}\nTổng dư nợ MM tại ${shortDate(r.date)}: ${n(r.loan_bn,{d:2})} tỷ VND.\nĐầu tư GTCG: ${n(r.invest_gtcg_bn,{d:2})} tỷ; Có TSĐB: ${n(r.secured_bn,{d:2})} tỷ; Tín chấp: ${n(r.unsecured_bn,{d:2})} tỷ.\nGTCG ròng = BOND Trading + BOND PAP – CD đáo hạn (khác chỉ tiêu Đầu tư GTCG).\nDùng số dư theo ngày để tính BQ, không thay bằng snapshot cuối tháng.`;return `Tôi có thể trả lời câu hỏi về ON, lãi suất theo kỳ hạn, NIM, quy mô MM, GTCG, tỷ giá, Swap residual và cảnh báo nguồn.\n${d} Tại ${shortDate(r.date)}, dư nợ MM là ${n(r.loan_bn,{d:1})} tỷ và lãi suất ON nội bộ là ${fmt(on?.value)}.\nVui lòng hỏi thêm một chỉ tiêu cụ thể; mọi kết quả cần đối chiếu nguồn gốc trước khi sử dụng.`}
 async function assistantRequest(question){return {answer:localAnswer(question),mode:'local'}}
@@ -357,7 +363,7 @@ async function importFileV13(file){
   const series=[...map.values()].sort((a,b)=>a.date.localeCompare(b.date));
   const names=[...(prior?.meta?.files|| (prior?.meta?.source_file?[prior.meta.source_file]:[])),file.name];
   state.data={...result,series,monthlyBooks:result.monthlyBooks?.length?result.monthlyBooks:(prior?.monthlyBooks||[]),meta:{...result.meta,kind:'private-local',source_file:[...new Set(names)].join(' · '),files:[...new Set(names)],asOf:series.at(-1)?.date},warnings:[...new Set([...(prior?.warnings||[]),...(result.warnings||[])])],source_freshness:{...(prior?.source_freshness||{}),...(result.source_freshness||{})},mapping:{...(prior?.mapping||{}),...(result.mapping||{})}};
-  state.activeRates=new Set(['itb_on_public','itb_1w_public','itb_1m_public','itb_on','itb_1w','itb_1m']);
+  state.activeRates=new Set(['itb_on_public','itb_1w_public','itb_1m_public','itb_on','vbma_swap_on','vbma_itb_on']);
   state.period='3M';state.freq='daily';$('#freqSelect').value='daily';
   $('[data-period]').forEach(x=>x.classList.toggle('selected',x.dataset.period==='3M'));
   render();if(result.meta?.hasBooks)pageTo('books');toast(`Đã cập nhật ${series.length} ngày · ${Object.keys(state.data.mapping||{}).length} trường được nhận diện`);
@@ -405,7 +411,7 @@ async function mainV13(){
  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-state.lastMarketFetch>60*60*1000)refreshPublicV13()});
 }
 const _previousRenderKpis=renderKpis,_previousRenderDonut=renderDonut,_previousRenderPortfolio=renderPortfolio,_previousRenderBondsFx=renderBondsFx,_previousRenderQuality=renderQuality;
-renderKpis=renderKpisV13;renderDonut=renderDonutV13;renderPortfolio=renderPortfolioV13;renderBondsFx=renderBondsFxV13;renderQuality=renderQualityV13;renderMetadata=renderMetadataV13;localAnswer=localAnswerV13;importFile=importFileV13;refreshPublic=refreshPublicV13;checkModel=checkModelV13;
+renderKpis=renderKpisV13;renderDonut=renderDonutV13;renderPortfolio=renderPortfolioV13;renderBondsFx=renderBondsFxV13;renderQuality=renderQualityV13;renderMetadata=renderMetadataV13;localAnswer=(q)=>mmAnalystAnswer(q,state.data)||localAnswerV13(q);importFile=importFileV13;refreshPublic=refreshPublicV13;checkModel=checkModelV13;
 function renderBooksV14(){
  const bk=[
   {id:'itb',label:'ITB tổng',hint:'Tổng Interbank · số kiểm soát',kind:'control',color:'#255f9e'},
