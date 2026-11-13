@@ -71,7 +71,7 @@ async function saveLastWorkbook(data){
  if(bytes.byteLength>CACHE_LIMIT)throw new Error('Dữ liệu quá lớn để lưu trên thiết bị');
  const key=await deviceKey(true),iv=crypto.getRandomValues(new Uint8Array(12));
  const cipher=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,bytes);
- await setItem('data',RECORD_NAME,{version:1,iv:Array.from(iv),cipher:Array.from(new Uint8Array(cipher)),savedAt:new Date().toISOString()});
+ await setItem('data',RECORD_NAME,{version:1,iv,cipher:new Uint8Array(cipher),savedAt:new Date().toISOString()});
  return {savedAt:new Date().toISOString(),days:sanitized.series.length};
 }
 async function loadLastWorkbook(){
