@@ -52,7 +52,7 @@ jobs:
             echo 'changed=true' >> "$GITHUB_OUTPUT"
           fi
       - name: Trigger protected GitHub Pages publisher
-        if: steps.update.outputs.changed == 'true'
+        if: steps.update.outputs.changed == 'true' || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run publish-pages.yml --ref gh-pages
+        run: gh workflow run publish-pages.yml --ref gh-pages --repo "$GITHUB_REPOSITORY"
