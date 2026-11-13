@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-13T10:59:41.324Z",
+    "checkedAt": "2026-11-13T18:28:34.220Z",
     "tenors": [
       "ON",
       "1W",
@@ -1603,15 +1603,15 @@
   "fx": {
     "date": "2026-11-13",
     "rate": 25637,
-    "source": "Tỷ giá trung tâm · NCB/NHNN",
-    "source_url": "https://www.ncb-bank.vn/vi/ty-gia-tien-te",
-    "quality": "public_verified_snapshot",
+    "source": "Tỷ giá trung tâm · nguồn tổng hợp",
+    "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
+    "quality": "third_party_mirror",
     "type": "central_reference"
   },
   "macro": {
     "SOFR": {
-      "date": "2026-11-10",
-      "value": 3.89,
+      "date": "2026-11-12",
+      "value": 3.9,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/SOFR",
       "quality": "public_observed"
@@ -1683,6 +1683,12 @@
       "source": "NCB",
       "title": "Bảng tỷ giá USD/VND và tỷ giá trung tâm ngày 13/11",
       "link": "https://www.ncb-bank.vn/vi/ty-gia-tien-te"
+    },
+    {
+      "title": "Phiên 13/11: NHNN hút ròng 18.153 tỷ đồng từ thị trường, lãi suất qua đêm neo mức 4,8% - nguoiquansat.vn",
+      "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPejBTSHZqVjZmcm5ibjV4WDlOWGstc19KVEdfWVFBcUN3a1JvWXFQV0EwWHhhSnhMc0RhUnRJa2V1dU00T2ZsMUxhQnJjMXphWTlRSUJyeXVoejBhTVdFT21XSGFwRVpTdlIwbWpzUnI3SmJ2WTF4dUdtMThOcXdLMUFqeEI0Q1g0Qk44UWZWTGRwQU5ZcVJrYTRKRHQ1S2NYTVpVaDNkUEJ4R3ZfTm1qVGNRZmNoelRuU3lv?oc=5",
+      "date": "2026-11-13",
+      "source": "Google News"
     },
     {
       "date": "2026-11-12",
@@ -1931,9 +1937,9 @@
     {
       "date": "2026-11-13",
       "rate": 25637,
-      "source": "Tỷ giá trung tâm · NCB/NHNN",
-      "source_url": "https://www.ncb-bank.vn/vi/ty-gia-tien-te",
-      "quality": "public_verified_snapshot"
+      "source": "Tỷ giá trung tâm · nguồn tổng hợp",
+      "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
+      "quality": "third_party_mirror"
     }
   ]
 }
