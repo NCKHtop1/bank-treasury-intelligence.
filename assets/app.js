@@ -40,7 +40,7 @@ function periodStart(maxDate){if(!maxDate)return'0000-01-01';const max=new Date(
 function dailyFiltered(){const rows=dataRows();const bound=periodStart(rows.at(-1)?.date);return rows.filter(x=>x.date>=bound)}
 function dataFiltered(){const rows=dailyFiltered();if(state.freq==='daily')return rows;const by=new Map();for(const x of rows){const month=x.date.slice(0,7);if(!by.has(month))by.set(month,[]);by.get(month).push(x)}return [...by].map(([month,entries])=>{if(state.freq==='monthly_eop')return entries.at(-1);const out={date:entries.at(-1).date};for(const key of Object.keys(entries.at(-1)))if(key!=='date'){const valid=entries.map(x=>x[key]).filter(x=>typeof x==='number'&&Number.isFinite(x));out[key]=valid.length?valid.reduce((a,b)=>a+b,0)/valid.length:null}return out})}
 function rateRows(){
- const raw=state.data?.meta?.kind==='synthetic' ? [] : dailyFiltered().map(x=>({...x}));
+ const raw=state.data?.meta?.kind!=='private-local' ? [] : dailyFiltered().map(x=>({...x}));
  const map=new Map(raw.map(x=>[x.date,x]));
  const termToField={ON:'itb_on_public','1W':'itb_1w_public','2W':'itb_2w_public','1M':'itb_1m_public','3M':'itb_3m_public','6M':'itb_6m_public','9M':'itb_9m_public'};
  for(const p of state.publicMarket.interbank||[]){
@@ -72,11 +72,11 @@ function renderKpis(){
 function pathFor(rows,key,x,y){let p='',started=false;rows.forEach((r,i)=>{const z=r[key];if(typeof z!=='number'||!Number.isFinite(z)){started=false;return}p+=`${started?'L':'M'}${x(i).toFixed(2)},${y(z).toFixed(2)} `;started=true});return p.trim()}
 function makeChart(el,rows,defs,{unit='rate',note='',empty='Chưa có dữ liệu',pointMode=false}={}){if(!el)return;const validDefs=defs.filter(d=>rows.some(r=>r[d.key]!=null&&Number.isFinite(+r[d.key])));if(!rows.length||!validDefs.length){el.innerHTML=`<div class="chart-error">${esc(empty)}</div>`;return}const w=1000,h=318,pad={left:unit==='fx'?72:62,right:20,top:19,bottom:37};const vals=validDefs.flatMap(d=>rows.map(r=>r[d.key]).filter(x=>typeof x==='number'&&Number.isFinite(x)));let min=Math.min(...vals),max=Math.max(...vals),range=max-min;if(range===0)range=Math.max(1,Math.abs(max)*.2);min-=range*.15;max+=range*.19;const x=i=>pad.left+(rows.length===1?(w-pad.left-pad.right)/2:i/(rows.length-1)*(w-pad.left-pad.right));const y=v=>pad.top+(max-v)/(max-min)*(h-pad.top-pad.bottom);const f=v=>unit==='bn'?n(v,{d:0}):unit==='fx'?n(v,{d:0}):n(v,{d:1});const grid=Array.from({length:5},(_,i)=>{const frac=i/4,yy=pad.top+frac*(h-pad.top-pad.bottom);return `<line class="chart-grid" x1="${pad.left}" x2="${w-pad.right}" y1="${yy}" y2="${yy}"/><text x="${pad.left-9}" y="${yy+4}" text-anchor="end">${f(max-frac*(max-min))}</text>`}).join('');const ticks=Array.from(new Set([0,Math.round((rows.length-1)*.25),Math.round((rows.length-1)*.5),Math.round((rows.length-1)*.75),rows.length-1])).map(i=>`<text x="${x(i)}" y="${h-8}" text-anchor="middle">${esc(rows[i].date.slice(5).replace('-','/'))}</text>`).join('');const lines=validDefs.map((d,j)=>{const col=d.color||colors[d.key]||['#2b79b8','#17a49b','#b47aa7'][j%3],p=pathFor(rows,d.key,x,y);const lastidx=rows.findLastIndex(row=>typeof row[d.key]==='number'&&Number.isFinite(row[d.key]));const dot=lastidx>=0?`<circle cx="${x(lastidx)}" cy="${y(rows[lastidx][d.key])}" r="3.5" fill="${col}" stroke="#fff" stroke-width="2"/>`:'';return `<path class="chart-line" stroke="${col}" stroke-dasharray="${d.dash?'6,6':'none'}" d="${p}"/>${dot}`}).join('');el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(note||'Biểu đồ chuỗi thời gian')}">${grid}${ticks}<g>${lines}</g><line class="hover-line" style="display:none" stroke="#71869d" stroke-dasharray="4 4" x1="0" x2="0" y1="${pad.top}" y2="${h-pad.bottom}"/><rect class="hover-layer" x="${pad.left}" y="${pad.top}" width="${w-pad.left-pad.right}" height="${h-pad.top-pad.bottom}" fill="transparent"/></svg><div class="chart-tooltip"></div>`;const svg=$('svg',el),overlay=$('.hover-layer',svg),cross=$('.hover-line',svg),tooltip=$('.chart-tooltip',el);const touch=ev=>{const rect=svg.getBoundingClientRect();const ratio=(ev.clientX-rect.left)/rect.width;const i=Math.max(0,Math.min(rows.length-1,Math.round((ratio*w-pad.left)/(w-pad.left-pad.right)*(rows.length-1))));const row=rows[i];cross.style.display='block';cross.setAttribute('x1',x(i));cross.setAttribute('x2',x(i));let content=`<div style="font-weight:750;margin-bottom:6px">${shortDate(row.date)}</div>`;for(const d of validDefs){const v=row[d.key];if(v==null||!Number.isFinite(+v))continue;content+=`<div style="margin:3px 0;color:#dce9f3"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${d.color||colors[d.key]||'#7da'};margin-right:6px"></span>${esc(d.name||d.key)} <strong style="float:right;margin-left:18px">${f(v)}${unit==='rate'?'%':unit==='bn'?' tỷ':''}</strong></div>`}tooltip.innerHTML=content;tooltip.style.display='block';const rel=Math.max(0,Math.min(el.clientWidth-185,(ev.clientX-el.getBoundingClientRect().left)+12));tooltip.style.left=rel+'px';tooltip.style.top='9px'};overlay.addEventListener('mousemove',touch);overlay.addEventListener('mouseleave',()=>{cross.style.display='none';tooltip.style.display='none'});}
 function rateDefinitions(){
- const hasLocal=state.data?.meta?.kind!=='synthetic';
+ const hasLocal=state.data?.meta?.kind==='private-local';
  return [...PUBLIC_FIELDS,...(hasLocal?RATE_FIELDS:[])].filter(key=>state.activeRates.has(key)).map(key=>({key,name:seriesLabels[key],color:colors[key],dash:key.endsWith('_public')}));
 }
 function renderLegends(){
- const local=state.data?.meta?.kind!=='synthetic';
+ const local=state.data?.meta?.kind==='private-local';
  const render=(element,showAll)=>{
  const publicFields=showAll?PUBLIC_FIELDS:PUBLIC_FIELDS.slice(0,6);
  const keys=[...publicFields,...(local?(showAll?RATE_FIELDS:RATE_FIELDS.slice(0,4)):[])];
@@ -97,7 +97,7 @@ function renderRateCharts(){
  makeChart($('#fullRateChart'),rows,defs,{unit:'rate',empty:'Dữ liệu thị trường đang đồng bộ'});
  const sbvLatest=publicLatest('ON');
  $('#ratesSourceNote').textContent=sbvLatest?`NHNN · cập nhật quan sát ${shortDate(sbvLatest.date)} · Tự quét mỗi 60 phút`:'Đang đồng bộ lãi suất liên ngân hàng';
- const local=state.data?.meta?.kind!=='synthetic';
+ const local=state.data?.meta?.kind==='private-local';
  const html=TERM_LABELS.map((tenor,i)=>{
   const localData=local?latestValid(RATE_FIELDS[i]):null;
   const sbv=publicLatest(tenor),bulletin=(state.publicMarket.marketQuotes||[]).filter(x=>x.tenor===tenor).sort((a,b)=>b.date.localeCompare(a.date))[0];
@@ -122,7 +122,7 @@ function renderPortfolio(){const rows=dataFiltered();makeChart($('#balanceChart'
 function renderBondsFx(){
  const rows=dataFiltered();
  makeChart($('#gtcgChart'),rows,[{key:'gtcg_scale_bn',name:'Quy mô GTCG',color:'#3c7cbc'}],{unit:'bn'});
- const latest=last(),isLocal=state.data?.meta?.kind!=='synthetic';
+ const latest=last(),isLocal=state.data?.meta?.kind==='private-local';
  const internal=[['1Y','vbma_1y'],['2Y','vbma_2y'],['5Y','vbma_5y'],['10Y','vbma_10y']].map(([date,k])=>({date,value:latest[k]})).filter(x=>x.value!=null);
  const publicCurve=(state.publicMarket.bonds||[]).map(x=>({date:x.tenor,value:x.yield_pct}));
  const preferInternal=isLocal&&internal.length>=3;
@@ -182,7 +182,7 @@ function csvExport(){const rows=dataFiltered();if(!rows.length)return toast('Ch�
 function localAnswer(q){const question=q.toLowerCase();const r=last();const on=latestValid('itb_on'),prev=olderValid('itb_on',20),p=publicLatest('ON'),d=state.data?.meta?.kind==='synthetic'?'Số liệu MM là mô phỏng.':'Số liệu MM được nạp trong trình duyệt.';const fmt=v=>v==null?'chưa có quan sát hợp lệ':rateText(v);if(/nim|biên lãi|lợi nhuận/.test(question))return `${d}\nNIM L&D = Lãi suất cho vay bình quân VND – Lãi suất đi vay bình quân VND; chỉ tính khi dư nợ cho vay VND khác 0.\nNIM gần nhất: ${fmt(r.ld_nim_pct)} tại ${shortDate(r.date)}.\nLưu ý NIM không đồng nghĩa P&L, chưa phản ánh FTP, MTM, hedge cost hoặc impairment.`;if(/on|qua đêm|liên ngân|lãi suất|rate|kỳ hạn/.test(question))return `${d}\nITB ON nội bộ: ${fmt(on?.value)} (${shortDate(on?.date)}). ${prev!=null&&on?.value!=null?`Thay đổi khoảng 20 phiên: ${n(on.value-prev,{d:2})} điểm %.`:''}\nNHNN ON công khai: ${fmt(p?.rate_pct)} (${shortDate(p?.date)}), nguồn: ${p?.source||'chưa kết nối'}.\nHai chuỗi có thể khác định nghĩa; không tự gộp để lấp khoảng trống.`;if(/lỗi|thiếu|chất lượng|quality|qc|nguồn|cũ/.test(question)){const dates=state.data?.source_freshness||{},old=Object.entries(dates).filter(([k,v])=>calcDays(v,r.date)>7).map(([k,v])=>`${k} (${shortDate(v)})`);return `Kiểm tra tại ${shortDate(r.date)}:\n${old.length?'Nguồn cũ hơn 7 ngày: '+old.join(', '):'Không phát hiện nguồn cũ hơn 7 ngày từ metadata.'}\n${(state.data?.warnings||[]).slice(0,3).join('\n')||'Không có cảnh báo từ bộ xử lý.'}\nKhông có dữ liệu sẽ để trống thay vì tự bịa hoặc gán benchmark khác loại.`}if(/fx|usd|tỷ giá|swap/.test(question))return `${d}\nUSD/VND Mid: ${n(r.fx_mid,{d:0})} tại ${shortDate(r.date)}.\nSwap residual: ${n(r.swap_bn,{d:2})} tỷ VND = Loan – GTCG – RESO – TSĐB – Tín chấp.\nĐối với trạng thái FX, cần xác định book, đơn vị tiền tệ và ngày giá trước khi đánh giá rủi ro.`;if(/mm|quy mô|loan|dư nợ|gtcg|thanh khoản/.test(question))return `${d}\nTổng dư nợ MM tại ${shortDate(r.date)}: ${n(r.loan_bn,{d:2})} tỷ VND.\nĐầu tư GTCG: ${n(r.invest_gtcg_bn,{d:2})} tỷ; Có TSĐB: ${n(r.secured_bn,{d:2})} tỷ; Tín chấp: ${n(r.unsecured_bn,{d:2})} tỷ.\nGTCG ròng = BOND Trading + BOND PAP – CD đáo hạn (khác chỉ tiêu Đầu tư GTCG).\nDùng số dư theo ngày để tính BQ, không thay bằng snapshot cuối tháng.`;return `Tôi có thể trả lời câu hỏi về ON, lãi suất theo kỳ hạn, NIM, quy mô MM, GTCG, tỷ giá, Swap residual và cảnh báo nguồn.\n${d} Tại ${shortDate(r.date)}, dư nợ MM là ${n(r.loan_bn,{d:1})} tỷ và lãi suất ON nội bộ là ${fmt(on?.value)}.\nVui lòng hỏi thêm một chỉ tiêu cụ thể; mọi kết quả cần đối chiếu nguồn gốc trước khi sử dụng.`}
 async function assistantRequest(question){return {answer:localAnswer(question),mode:'local'}}
 function addBubble(type,text){const m=$('#chatMessages');const node=document.createElement('div');node.className='chat-bubble '+type;if(type==='assistant'){const label=document.createElement('div');label.className='bubble-label';label.textContent='TREASURY ANALYST';node.appendChild(label)}node.appendChild(document.createTextNode(text));m.appendChild(node);m.scrollTop=m.scrollHeight}
-async function ask(q){const question=(q||'').trim();if(!question)return;pageTo('assistant');addBubble('user',question);const input=$('#chatInput');input.value='';input.disabled=true;const out=await assistantRequest(question);addBubble('assistant',out.answer+(out.mode==='local'?'\n\n[Phân tích tại thiết bị; chưa dùng mô hình AI trực tuyến]':''));input.disabled=false;input.focus()}
+async function ask(q){const question=(q||'').trim();if(!question)return;pageTo('assistant');addBubble('user',question);const input=$('#chatInput');input.value='';input.disabled=true;const out=await assistantRequest(question);addBubble('assistant',out.answer);input.disabled=false;input.focus()}
 async function importFile(file){if(!file)return;state.importing=true;toast('Đang phân tích file trên thiết bị; không tải lên máy chủ.');try{const result=await readUserFile(file);if(!Array.isArray(result.series)||result.series.length<2)throw Error('Không tìm thấy đủ chuỗi ngày hợp lệ.');result.series.sort((a,b)=>dateCompare(a.date,b.date));result.meta=result.meta||{};result.meta.kind='private-local';result.meta.asOf=result.series.at(-1).date;state.data=result;state.activeRates=new Set(['itb_on','itb_1w','itb_1m','itb_on_public','itb_1w_public']);state.period='3M';state.freq='daily';$('#freqSelect').value='daily';$$('[data-period]').forEach(x=>x.classList.toggle('selected',x.dataset.period==='3M'));render();toast(`Đã nạp ${result.series.length} quan sát từ ${file.name}. Dữ liệu chỉ nằm trong tab này.`)}catch(err){toast('Không nạp được file: '+(err.message||String(err)))}finally{state.importing=false;$('#filePicker').value=''}}
 async function refreshPublic(){
  if(state.marketRefreshing)return;
@@ -224,4 +224,186 @@ async function main(){
   if(!document.hidden&&Date.now()-state.lastMarketFetch>60*60*1000)refreshPublic();
  });
 }
-main();
+
+function makePublicSeries(snapshot){
+ const dates=new Map(),fields={'ON':'itb_on_public','1W':'itb_1w_public','2W':'itb_2w_public','1M':'itb_1m_public','3M':'itb_3m_public','6M':'itb_6m_public','9M':'itb_9m_public'};
+ for(const obs of snapshot.interbank||[]){
+  if(!obs.date||!fields[obs.tenor]||!Number.isFinite(Number(obs.rate_pct)))continue;
+  if(!dates.has(obs.date))dates.set(obs.date,{date:obs.date});
+  dates.get(obs.date)[fields[obs.tenor]]=Number(obs.rate_pct);
+ }
+ const rows=[...dates.values()].sort((a,b)=>a.date.localeCompare(b.date));
+ if(!rows.length)throw Error('Không có dữ liệu lãi suất có ngày công bố');
+ const last=rows.at(-1).date;
+ return {meta:{kind:'public-only',source_file:'Public market',asOf:last,createdAt:snapshot.meta?.checkedAt||'',label:'Dữ liệu thị trường'},series:rows,
+  source_freshness:{'Liên ngân hàng / NHNN':last,'Tỷ giá trung tâm':snapshot.fx?.date||null,'Lợi suất TPCP':snapshot.bonds?.[0]?.date||null,'SOFR':snapshot.macro?.SOFR?.date||null},warnings:[]};
+}
+
+function renderKpisV13(){
+ if(state.data?.meta?.kind==='private-local')return _previousRenderKpis();
+ const card=(label,value,unit,detail,highlight=false)=>`<div class="kpi-card ${highlight?'featured-kpi':''}"><div class="kpi-head">${esc(label)}<span class="kpi-symbol">↗</span></div><div class="kpi-value">${esc(String(value))}<small>${esc(unit)}</small></div><div class="kpi-bottom">${esc(detail)}</div></div>`;
+ const obs=t=>publicDisplay(t);const f=t=>obs(t)?n(obs(t).rate_pct,{d:2}):'—';
+ const day=t=>obs(t)?`${shortDate(obs(t).date)} · ${obs(t).source_type==='interbank_indicative_rounded'?'Bản tin LNH':'NHNN'}`:'Chưa công bố';
+ const fx=state.publicMarket.fx;
+ $('#kpiGrid').innerHTML=[card('Lãi suất ON',f('ON'),'%/năm',day('ON'),true),card('Lãi suất 1W',f('1W'),'%/năm',day('1W')),card('Lãi suất 1M',f('1M'),'%/năm',day('1M')),card('USD/VND trung tâm',fx?n(fx.rate,{d:0}):'—','VND',`${shortDate(fx?.date)} · NHNN`)].join('');
+ $('#portfolioKpis').innerHTML=['ON','1W','2W','1M'].map((t,i)=>card('Lãi suất '+t,f(t),'%/năm',day(t),i===0)).join('');
+ const bonds=state.publicMarket.bonds||[];
+ $('#bondKpis').innerHTML=['3Y','5Y','7Y','10Y'].map((t,i)=>{const b=bonds.find(x=>x.tenor===t);return card('TPCP '+t,b?n(b.yield_pct,{d:2}):'—','%/năm',b?`${shortDate(b.date)} · TPCP thứ cấp`:'Chưa công bố',i===0)}).join('');
+ const sofr=state.publicMarket.macro?.SOFR,dgs10=state.publicMarket.macro?.DGS10;
+ $('#fxKpis').innerHTML=[card('USD/VND trung tâm',fx?n(fx.rate,{d:0}):'—','VND',`${shortDate(fx?.date)} · NHNN`,true),card('ON · VND',f('ON'),'%/năm',day('ON')),card('SOFR',sofr?n(sofr.value,{d:2}):'—','%/năm',`${shortDate(sofr?.date)} · FRED`),card('US Treasury 10Y',dgs10?n(dgs10.value,{d:2}):'—','%/năm',`${shortDate(dgs10?.date)} · FRED`)].join('');
+}
+
+function renderDonutV13(){
+ if(state.data?.meta?.kind==='private-local')return _previousRenderDonut();
+ const arr=TERM_LABELS.map(t=>({label:t,value:publicLatest(t)?.rate_pct??null})).filter(x=>Number.isFinite(+x.value));
+ $('#instrumentDonut').innerHTML=`<div class="public-curve-mark"><span>VNIBOR</span><strong>${rateText(publicLatest('ON')?.rate_pct)}</strong><small>Qua đêm · ${shortDate(publicLatest('ON')?.date)}</small></div>`;
+ const max=Math.max(...arr.map(x=>x.value),1);
+ $('#instrumentLegend').innerHTML=arr.map(x=>`<div class="market-term-line"><span>${x.label}</span><div class="term-track"><i style="width:${100*x.value/max}%"></i></div><strong>${rateText(x.value)}</strong></div>`).join('');
+}
+
+function renderPortfolioV13(){
+ if(state.data?.meta?.kind==='private-local')return _previousRenderPortfolio();
+ const rates=rateRows(),defs=[{key:'itb_on_public',name:'ON',color:'#267cb5'},{key:'itb_1w_public',name:'1W',color:'#1ca59e'},{key:'itb_1m_public',name:'1M',color:'#8e82cf'}];
+ makeChart($('#balanceChart'),rates,defs,{unit:'rate',empty:'Đang cập nhật dữ liệu NHNN'});
+ makeChart($('#portfolioChart'),rates,defs,{unit:'rate',empty:'Đang cập nhật dữ liệu NHNN'});
+ const benchmark=TERM_LABELS.map(t=>({name:t,obs:publicLatest(t)})).filter(x=>x.obs);
+ const max=Math.max(...benchmark.map(x=>x.obs.rate_pct),1);
+ $('#portfolioBreakdown').innerHTML=benchmark.map(x=>`<div class="breakdown-row"><div class="breakdown-label"><span>${x.name}</span><strong>${rateText(x.obs.rate_pct)}</strong></div><div class="breakdown-bar"><span style="--bar:#26a69a;width:${100*x.obs.rate_pct/max}%"></span></div></div>`).join('');
+ $('#reconDetails').innerHTML=`<div class="import-action-card"><strong>Phân tích số dư MM và L&D theo Excel</strong><p>Nạp workbook để xem quy mô, NIM, cơ cấu danh mục và đối chiếu nghiệp vụ. Tên chỉ tiêu được dùng làm khóa nhận diện.</p><button type="button" class="btn btn-primary" id="inlineImportV13">Nạp Excel phân tích ↗</button></div>`;
+ $('#inlineImportV13')?.addEventListener('click',()=>$('#filePicker').click());
+}
+
+function renderBondsFxV13(){
+ if(state.data?.meta?.kind==='private-local')return _previousRenderBondsFx();
+ const arr=state.publicMarket.bonds||[];
+ drawBarCurve($('#bondCurveChart'),arr.map(x=>({date:x.tenor,value:Number(x.yield_pct)})).filter(x=>Number.isFinite(x.value)),'TPCP thứ cấp');
+ $('#vbmaFreshnessNote').textContent=arr[0]?`Nguồn ${arr[0].source} · ${shortDate(arr[0].date)}`:'';
+ makeChart($('#gtcgChart'),rateRows(),[{key:'itb_3m_public',name:'3M · NHNN',color:'#397bb9'},{key:'itb_6m_public',name:'6M · NHNN',color:'#20a9a1'}],{unit:'rate'});
+ const history=(state.publicMarket.fxHistory||[]).map(x=>({date:x.date,fx_mid:x.rate}));
+ if(history.length>1)makeChart($('#fxChart'),history,[{key:'fx_mid',name:'USD/VND trung tâm',color:'#397bb9'}],{unit:'fx'});
+ else $('#fxChart').innerHTML=`<div class="market-feature"><span>Tỷ giá trung tâm NHNN</span><strong>${n(state.publicMarket.fx?.rate,{d:0})}</strong><small>${shortDate(state.publicMarket.fx?.date)}</small></div>`;
+ const macro=state.publicMarket.macro||{};
+ $('#swapChart').innerHTML=`<div class="market-feature-grid">${[['SOFR · Mỹ',macro.SOFR],['US 10Y',macro.DGS10]].map(([label,obs])=>`<div class="market-feature"><span>${label}</span><strong>${obs?rateText(obs.value):'—'}</strong><small>${shortDate(obs?.date)}</small></div>`).join('')}</div>`;
+}
+
+function renderQualityV13(){
+ if(state.data?.meta?.kind==='private-local')return _previousRenderQuality();
+ const snap=state.publicMarket,asOf=snap.interbank?.at(-1)?.date||'';
+ const sources=[['Liên ngân hàng / NHNN',asOf],['Tỷ giá trung tâm',snap.fx?.date],['TPCP thứ cấp',snap.bonds?.[0]?.date],['SOFR / FRED',snap.macro?.SOFR?.date]];
+ const cards=[['Kỳ hạn LNH',String(TERM_LABELS.filter(x=>publicLatest(x)).length),'kỳ hạn'],['Quan sát NHNN',String(snap.interbank?.length||0),'điểm'],['Nguồn dữ liệu',String(sources.filter(x=>x[1]).length),'nguồn'],['Bản tin',String(snap.news?.length||0),'tin']];
+ $('#qualityKpis').innerHTML=cards.map(([label,v,unit])=>`<div class="kpi-card"><div class="kpi-head">${esc(label)}</div><div class="kpi-value">${v}<small>${esc(unit)}</small></div><div class="kpi-bottom">Dữ liệu công khai</div></div>`).join('');
+ $('#freshnessTable').innerHTML=`<table class="data-table"><thead><tr><th>Nguồn</th><th>Ngày quan sát</th><th>Tình trạng</th></tr></thead><tbody>${sources.map(([label,date])=>`<tr><td>${esc(label)}</td><td>${shortDate(date)}</td><td>${date?'Có dữ liệu':'Chưa có'}</td></tr>`).join('')}</tbody></table>`;
+ $('#qualityWarnings').innerHTML=`<div class="import-action-card"><strong>Kiểm tra dữ liệu Excel</strong><p>Đọc cả workbook theo tên trường; sau khi nhập sẽ hiển thị dữ liệu thực, số chỉ tiêu tìm được và các cảnh báo đối chiếu.</p><button type="button" class="btn btn-primary" id="qualityImportV13">Chọn file Excel ↗</button></div>`;
+ $('#qualityImportV13')?.addEventListener('click',()=>$('#filePicker').click());
+}
+
+function renderMetadataV13(){
+ const meta=state.data?.meta||{},local=meta.kind==='private-local',latest=local?meta.asOf:publicLatest('ON')?.date;
+ $('#asOfDate').textContent=shortDate(latest);
+ $('#sourceBadge').textContent=local?'◉ WORKBOOK ĐÃ NẠP':'◉ DỮ LIỆU THỊ TRƯỜNG';
+ $('#sourceBadge').className='source-badge '+(local?'local':'market-real');
+ $('#dataBannerTitle').textContent=local?'Bộ dữ liệu của bạn':'Nguồn thị trường đã xác minh';
+ $('#dataBannerDetail').textContent=local?`${state.data.series.length} phiên · ${meta.source_file||'Workbook'}`:`NHNN ${shortDate(latest)} · FX ${shortDate(state.publicMarket.fx?.date)} · Thông tin mỗi nguồn theo ngày công bố`;
+ $('#aiDataMode').textContent=local?'Workbook đang phân tích':'Thị trường';
+ $('#aiAsOf').textContent=shortDate(latest);
+ $('#aiMarketMode').textContent=state.publicMarket.interbank?.length?'Đã nạp':'Đang tải';
+}
+
+function localAnswerV13(input){
+ const q=String(input||'').toLowerCase();const lastRow=last(),on=publicDisplay('ON'),fx=state.publicMarket.fx,sofr=state.publicMarket.macro?.SOFR;
+ const privateActive=state.data?.meta?.kind==='private-local';
+ const termMatch=q.match(/(?:\b|^)(on|1w|2w|1m|3m|6m|9m)(?:\b|$)/i);
+ const norm=t=>({on:'ON','1w':'1W','2w':'2W','1m':'1M','3m':'3M','6m':'6M','9m':'9M'})[t.toLowerCase()]||'ON';
+ if(/nguồn|mới nhất|cập nhật|ngày nào|khi nào/.test(q)){
+  return `Lãi suất NHNN: ${shortDate(publicLatest('ON')?.date)}. Bản tin liên ngân hàng: ${shortDate(state.publicMarket.marketQuotes?.at(-1)?.date)}. Tỷ giá trung tâm: ${shortDate(fx?.date)}. SOFR: ${shortDate(sofr?.date)}.\nDữ liệu được sử dụng đúng ngày quan sát; mỗi chỉ tiêu có đường dẫn nguồn ở bảng chi tiết.`;
+ }
+ if(/đường cong|chênh lệch|spread|so sánh|cấu trúc kỳ hạn/.test(q)){
+  const a=publicLatest('ON'),b=publicLatest('1M'),c=publicLatest('3M');if(a&&b&&c)return `Đường cong lãi suất NHNN ngày ${shortDate(a.date)}:\nON ${rateText(a.rate_pct)} · 1M ${rateText(b.rate_pct)} · 3M ${rateText(c.rate_pct)}.\nSpread 1M–ON = ${n(b.rate_pct-a.rate_pct,{d:2})} điểm phần trăm; 3M–ON = ${n(c.rate_pct-a.rate_pct,{d:2})} điểm phần trăm.\nĐây là chênh lệch giữa các kỳ hạn cùng nguồn NHNN.`;
+ }
+ if(/nim|biên lãi|chi phí vốn|lợi nhuận/.test(q)){
+  if(privateActive&&lastRow.ld_nim_pct!=null)return `L&D NIM tại ${shortDate(lastRow.date)}: ${rateText(lastRow.ld_nim_pct)}.\nCông thức = lãi suất cho vay bình quân VND − lãi suất đi vay bình quân VND, khi dư nợ hợp lệ. Chỉ tiêu chưa bao gồm điều chỉnh FTP, MTM, hedge cost.`;
+  return `NIM L&D = Lãi suất cho vay bình quân VND − lãi suất đi vay bình quân VND.\nBạn có thể nạp Excel MM để xem NIM thực tế theo từng phiên và đối chiếu thay đổi.`;
+ }
+ if(/fx|usd|tỷ giá|ngoại hối/.test(q)){
+  const usd=privateActive&&lastRow.fx_mid!=null?`\nTỷ giá trong workbook (${shortDate(lastRow.date)}): ${n(lastRow.fx_mid,{d:0})} VND/USD.`:'';
+  return `Tỷ giá trung tâm USD/VND: ${n(fx?.rate,{d:0})} VND/USD, ngày ${shortDate(fx?.date)} (${fx?.source||'NHNN'}).${usd}\nKhi so sánh cần thống nhất ngày quan sát và loại tỷ giá (trung tâm, bid, ask, mid).`;
+ }
+ if(/sofr|fed|mỹ|us 10|treasury 10/.test(q)){
+  const d=state.publicMarket.macro?.DGS10;return `SOFR: ${sofr?rateText(sofr.value):'—'} (${shortDate(sofr?.date)}). US Treasury 10Y: ${d?rateText(d.value):'—'} (${shortDate(d?.date)}).\nĐây là lãi suất và lợi suất Mỹ; không quy đổi trực tiếp thành lãi suất ON VND.`;
+ }
+ if(/tpcp|trái phiếu|bond|yield|gtcg/.test(q)){
+  const bonds=state.publicMarket.bonds||[];const b=bonds.find(x=>x.tenor==='10Y');return `Lợi suất TPCP thứ cấp 10Y: ${b?rateText(b.yield_pct):'—'} (${shortDate(b?.date)}).${privateActive&&lastRow.gtcg_scale_bn!=null?`\nGTCG ròng theo workbook: ${n(lastRow.gtcg_scale_bn,{d:2})} tỷ VND tại ${shortDate(lastRow.date)}.`:''}\nNguồn: ${b?.source||'bản tin thị trường'}.`;
+ }
+ if(/quy mô|dư nợ|mm|thanh khoản|ld|l&d/.test(q)){
+  if(privateActive&&lastRow.loan_bn!=null)return `Quy mô cho vay ITB tại ${shortDate(lastRow.date)}: ${n(lastRow.loan_bn,{d:2})} tỷ VND.${lastRow.ld_scale_bn!=null?`\nL&D VND: ${n(lastRow.ld_scale_bn,{d:2})} tỷ VND.`:''}\nTheo các trường được nhận diện trong workbook đã nạp.`;
+  return `Để phân tích số dư MM và L&D thực tế, chọn “Nạp dữ liệu” và tải workbook. Công cụ nhận diện ngày, khoản mục, lãi suất và kỳ hạn theo tên trường, kể cả khi dòng thay đổi vị trí.`;
+ }
+ if(termMatch||/lãi suất|qua đêm|liên ngân|interbank/.test(q)){
+  const t=termMatch?norm(termMatch[1]):'ON',a=publicDisplay(t),b=publicLatest(t);
+  return `Lãi suất ${t} gần nhất: ${a?rateText(a.rate_pct):'—'} tại ${shortDate(a?.date)} (${a?.source_type==='interbank_indicative_rounded'?'Bản tin liên ngân hàng':'NHNN'}).\n${b?`NHNN cùng kỳ hạn: ${rateText(b.rate_pct)}, ngày ${shortDate(b.date)}.`:''}${privateActive&&latestValid('itb_'+t.toLowerCase())?`\nWorkbook: ${rateText(latestValid('itb_'+t.toLowerCase()).value)}, ngày ${shortDate(latestValid('itb_'+t.toLowerCase()).date)}.`:''}`;
+ }
+ return `Bạn có thể hỏi: “Lãi suất ON hôm nay?”, “Spread 3M–ON?”, “Tỷ giá USD/VND?”, “SOFR và US 10Y?”, “NIM của workbook?” hoặc “Nguồn nào mới nhất?”.\nDữ liệu hiển thị theo từng ngày quan sát với nguồn truy vết.`;
+}
+
+async function importFileV13(file){
+ if(!file||state.importing)return;
+ state.importing=true;toast(`Đang đọc ${file.name}...`);
+ try{
+  const result=await readUserFile(file);
+  if(!Array.isArray(result.series)||result.series.length<2)throw Error('Không có đủ ngày dữ liệu hợp lệ');
+  const prior=state.data?.meta?.kind==='private-local'?state.data:null;
+  const map=new Map((prior?.series||[]).map(x=>[x.date,{...x}]));
+  for(const record of result.series){if(!record.date)continue;const dest=map.get(record.date)||{date:record.date};for(const [key,value] of Object.entries(record))if(key!=='date'&&value!==null&&value!==undefined&&value!=='')dest[key]=value;map.set(record.date,dest)}
+  const series=[...map.values()].sort((a,b)=>a.date.localeCompare(b.date));
+  const names=[...(prior?.meta?.files|| (prior?.meta?.source_file?[prior.meta.source_file]:[])),file.name];
+  state.data={...result,series,meta:{...result.meta,kind:'private-local',source_file:[...new Set(names)].join(' · '),files:[...new Set(names)],asOf:series.at(-1)?.date},warnings:[...new Set([...(prior?.warnings||[]),...(result.warnings||[])])],source_freshness:{...(prior?.source_freshness||{}),...(result.source_freshness||{})},mapping:{...(prior?.mapping||{}),...(result.mapping||{})}};
+  state.activeRates=new Set(['itb_on_public','itb_1w_public','itb_1m_public','itb_on','itb_1w','itb_1m']);
+  state.period='3M';state.freq='daily';$('#freqSelect').value='daily';
+  $('[data-period]').forEach(x=>x.classList.toggle('selected',x.dataset.period==='3M'));
+  render();toast(`Đã cập nhật ${series.length} ngày · ${Object.keys(state.data.mapping||{}).length} trường được nhận diện`);
+ }catch(err){toast('Không thể nhập Excel: '+(err?.message||String(err)))}finally{state.importing=false;$('#filePicker').value=''}
+}
+
+async function refreshPublicV13(){
+ if(state.marketRefreshing)return;
+ state.marketRefreshing=true;
+ try{
+  const u=new URL('../data/public_snapshot.json',import.meta.url);u.searchParams.set('v',String(Date.now()));
+  const r=await fetch(u.href,{cache:'no-store',signal:AbortSignal.timeout(15000)});
+  if(!r.ok)throw Error('HTTP '+r.status);
+  const snapshot=await r.json();if(!Array.isArray(snapshot.interbank)||!snapshot.interbank.length)throw Error('Nguồn chưa hợp lệ');
+  state.publicMarket=snapshot;state.lastMarketFetch=Date.now();
+  if(state.data?.meta?.kind!=='private-local')state.data=makePublicSeries(snapshot);
+  const day=publicLatest('ON')?.date;
+  $('#marketStatus').textContent=day?'NHNN · '+shortDate(day):'Thị trường';
+  $('#marketDot').style.background='#29bfa9';
+  render();
+ }catch(e){$('#marketStatus').textContent=publicLatest('ON')?.date?'Thị trường · '+shortDate(publicLatest('ON').date):'Đang kết nối';if(state.data)render()}
+ finally{state.marketRefreshing=false}
+}
+
+async function checkModelV13(){
+ state.llm=false;$('#aiBackend').textContent='Sẵn sàng';$('#modelState').textContent='TREASURY ANALYST';
+ $('#chatModeDesc').textContent='Phân tích lãi suất, danh mục, chênh lệch và nguồn dữ liệu';
+}
+
+async function mainV13(){
+ bind();
+ const picker=$('#filePicker');picker.setAttribute('multiple','');
+ picker.addEventListener('change',async event=>{if(event.target.files?.length>1){for(const f of [...event.target.files].slice(1))await importFileV13(f)}});
+ document.addEventListener('dragover',event=>{if([...event.dataTransfer?.types||[]].includes('Files')){event.preventDefault();document.body.classList.add('file-dragging')}});
+ document.addEventListener('dragleave',event=>{if(event.target===document.documentElement)document.body.classList.remove('file-dragging')});
+ document.addEventListener('drop',async event=>{const files=[...(event.dataTransfer?.files||[])].filter(f=>/\.(xlsx|xlsm|json|csv)$/i.test(f.name));if(!files.length)return;event.preventDefault();document.body.classList.remove('file-dragging');for(const file of files)await importFileV13(file)});
+ try{
+  const response=await fetch(new URL('../data/public_snapshot.json',import.meta.url));
+  if(!response.ok)throw Error('Không đọc được nguồn thị trường');
+  state.publicMarket=await response.json();state.data=makePublicSeries(state.publicMarket);
+  render();
+ }catch(err){toast('Không thể mở dữ liệu thị trường: '+err.message)}
+ await refreshPublicV13();checkModelV13();
+ window.setInterval(()=>refreshPublicV13(),60*60*1000);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-state.lastMarketFetch>60*60*1000)refreshPublicV13()});
+}
+const _previousRenderKpis=renderKpis,_previousRenderDonut=renderDonut,_previousRenderPortfolio=renderPortfolio,_previousRenderBondsFx=renderBondsFx,_previousRenderQuality=renderQuality;
+renderKpis=renderKpisV13;renderDonut=renderDonutV13;renderPortfolio=renderPortfolioV13;renderBondsFx=renderBondsFxV13;renderQuality=renderQualityV13;renderMetadata=renderMetadataV13;localAnswer=localAnswerV13;importFile=importFileV13;refreshPublic=refreshPublicV13;checkModel=checkModelV13;
+mainV13();

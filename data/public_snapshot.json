@@ -12,7 +12,13 @@
       "3M",
       "6M",
       "9M"
-    ]
+    ],
+    "release": "1.3",
+    "sources": {
+      "sbv": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "fx": "https://tygia.day/ty-gia-trung-tam",
+      "treasury": "https://fred.stlouisfed.org/"
+    }
   },
   "interbank": [
     {
@@ -68,7 +74,7 @@
     {
       "date": "2026-10-29",
       "tenor": "6M",
-      "rate_pct": 8.0,
+      "rate_pct": 8,
       "source": "NHNN · Dữ Liệu Kinh Tế",
       "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
       "published_on": "2026-10-29",
@@ -138,7 +144,7 @@
     {
       "date": "2026-10-30",
       "tenor": "6M",
-      "rate_pct": 8.0,
+      "rate_pct": 8,
       "source": "NHNN · Dữ Liệu Kinh Tế",
       "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
       "published_on": "2026-10-30",
@@ -208,7 +214,7 @@
     {
       "date": "2026-11-02",
       "tenor": "6M",
-      "rate_pct": 8.0,
+      "rate_pct": 8,
       "source": "NHNN · Dữ Liệu Kinh Tế",
       "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
       "published_on": "2026-11-02",
@@ -278,7 +284,7 @@
     {
       "date": "2026-11-03",
       "tenor": "6M",
-      "rate_pct": 8.0,
+      "rate_pct": 8,
       "source": "NHNN · Dữ Liệu Kinh Tế",
       "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
       "published_on": "2026-11-03",
@@ -378,7 +384,7 @@
     {
       "date": "2026-11-05",
       "tenor": "1W",
-      "rate_pct": 5.0,
+      "rate_pct": 5,
       "source": "NHNN · Dữ Liệu Kinh Tế",
       "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
       "published_on": "2026-11-05",
@@ -478,7 +484,7 @@
     {
       "date": "2026-11-06",
       "tenor": "3M",
-      "rate_pct": 7.0,
+      "rate_pct": 7,
       "source": "NHNN · Dữ Liệu Kinh Tế",
       "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
       "published_on": "2026-11-06",
@@ -843,6 +849,155 @@
       "source": "NCB",
       "title": "Bảng tỷ giá USD/VND và tỷ giá trung tâm ngày 13/11",
       "link": "https://www.ncb-bank.vn/vi/ty-gia-tien-te"
+    }
+  ],
+  "fxHistory": [
+    {
+      "date": "2026-10-21",
+      "rate": 25634,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-10-22",
+      "rate": 25632,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-10-23",
+      "rate": 25627,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-10-24",
+      "rate": 25627,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-10-26",
+      "rate": 25627,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-10-27",
+      "rate": 25633,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-10-28",
+      "rate": 25631,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-10-29",
+      "rate": 25644,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-10-30",
+      "rate": 25637,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-10-31",
+      "rate": 25637,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-11-02",
+      "rate": 25631,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-11-03",
+      "rate": 25630,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-11-04",
+      "rate": 25627,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-11-05",
+      "rate": 25623,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-11-06",
+      "rate": 25615,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-11-07",
+      "rate": 25615,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-11-09",
+      "rate": 25610,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-11-10",
+      "rate": 25600,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-11-11",
+      "rate": 25611,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-11-12",
+      "rate": 25623,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
+    },
+    {
+      "date": "2026-11-13",
+      "rate": 25637,
+      "source": "Tỷ Giá Đây · NHNN",
+      "source_url": "https://tygia.day/ty-gia-trung-tam",
+      "quality": "public_observed"
     }
   ]
 }
