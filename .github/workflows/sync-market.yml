@@ -11,8 +11,7 @@ on:
     - cron: '0 0-12 * * 1-5'
 permissions:
   contents: write
-  pages: write
-  id-token: write
+  actions: write
 concurrency:
   group: treasuryiq-github-pages
   cancel-in-progress: false
@@ -21,9 +20,6 @@ jobs:
     name: Refresh public market observations
     runs-on: ubuntu-latest
     timeout-minutes: 7
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout market update code
         uses: actions/checkout@v4
@@ -55,15 +51,8 @@ jobs:
             git -C site push origin HEAD:gh-pages
             echo 'changed=true' >> "$GITHUB_OUTPUT"
           fi
-      - name: Configure Pages
+      - name: Trigger protected GitHub Pages publisher
         if: steps.update.outputs.changed == 'true'
-        uses: actions/configure-pages@v5
-      - name: Upload refreshed public site
-        if: steps.update.outputs.changed == 'true'
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: site
-      - name: Deploy refreshed public site
-        if: steps.update.outputs.changed == 'true'
-        id: deployment
-        uses: actions/deploy-pages@v4
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run publish-pages.yml --ref gh-pages
