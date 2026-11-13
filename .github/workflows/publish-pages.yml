@@ -58,6 +58,18 @@ jobs:
           assert.ok(view.detailed.includes('Trade Finance'));
           const answer=mmAnalystAnswer('cơ cấu book',{meta:{kind:'private-local'},series:[mmRow,partial]});
           assert.ok(answer.includes('26/10/2026'));
+          const nodes=new Map(['#mmOverview','#mmAnalyticWorkspace','#gtcgChart','#reconDetails'].map(k=>[k,{innerHTML:''}]));
+          globalThis.document={
+            body:{classList:{toggle() {}}},
+            querySelector:key=>nodes.get(key)||null,
+            querySelectorAll:()=>[],
+            addEventListener() {}
+          };
+          renderTreasuryWorkspace({meta:{kind:'private-local'},series:[mmRow,partial]},{period:'3M',freq:'daily'});
+          assert.ok(nodes.get('#mmOverview').innerHTML.includes('Quản trị quy mô'));
+          assert.ok(nodes.get('#mmAnalyticWorkspace').innerHTML.includes('Bình quân'));
+          assert.ok(nodes.get('#mmAnalyticWorkspace').innerHTML.includes('Công thức'));
+          assert.ok(nodes.get('#gtcgChart').innerHTML.length>50);
           assert.equal(typeof mmAnalystAnswer,'function');
           assert.ok(readFileSync('index.html','utf8').includes('id="mmAnalyticWorkspace"'));
           assert.ok(readFileSync('assets/app.js','utf8').includes('VBMA_FIELDS'));
