@@ -107,7 +107,7 @@ async function run(){
         {date:'2026-10-20',book_itb_asset_vnd_bn:101},
         {date:'2026-10-21',book_itb_asset_vnd_bn:105}
       ]};
-      const html='<html><script id="seed-data" type="application/json">'+JSON.stringify(mock)+'<\\/script></html>';
+      const html='<html><script id="seed-data" type="application/json">'+JSON.stringify(mock)+'</script></html>';
       const file=new File([html],'treasury-saved.html',{type:'text/html'});
       const result=await readUserFile(file);
       return {count:result.series.length,latest:result.series.at(-1).date};
