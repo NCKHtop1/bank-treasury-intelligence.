@@ -180,36 +180,39 @@ function renderMetadata(){
 function render(){if(!state.data)return;renderMetadata();renderKpis();renderDonut();renderRateCharts();renderPortfolio();renderBondsFx();renderMarket();renderQuality()}
 function csvExport(){const rows=dataFiltered();if(!rows.length)return toast('Chưa có dữ liệu để xuất.');const keys=Object.keys(rows[0]);const csv='\ufeff'+[keys.join(','),...rows.map(row=>keys.map(k=>row[k]===null||row[k]===undefined?'':String(row[k])).join(','))].join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`treasury_session_${new Date().toISOString().slice(0,10)}.csv`;a.click();URL.revokeObjectURL(url);toast('Đã xuất CSV từ dữ liệu hiện có trong trình duyệt.')}
 function localAnswer(q){const question=q.toLowerCase();const r=last();const on=latestValid('itb_on'),prev=olderValid('itb_on',20),p=publicLatest('ON'),d=state.data?.meta?.kind==='synthetic'?'Số liệu MM là mô phỏng.':'Số liệu MM được nạp trong trình duyệt.';const fmt=v=>v==null?'chưa có quan sát hợp lệ':rateText(v);if(/nim|biên lãi|lợi nhuận/.test(question))return `${d}\nNIM L&D = Lãi suất cho vay bình quân VND – Lãi suất đi vay bình quân VND; chỉ tính khi dư nợ cho vay VND khác 0.\nNIM gần nhất: ${fmt(r.ld_nim_pct)} tại ${shortDate(r.date)}.\nLưu ý NIM không đồng nghĩa P&L, chưa phản ánh FTP, MTM, hedge cost hoặc impairment.`;if(/on|qua đêm|liên ngân|lãi suất|rate|kỳ hạn/.test(question))return `${d}\nITB ON nội bộ: ${fmt(on?.value)} (${shortDate(on?.date)}). ${prev!=null&&on?.value!=null?`Thay đổi khoảng 20 phiên: ${n(on.value-prev,{d:2})} điểm %.`:''}\nNHNN ON công khai: ${fmt(p?.rate_pct)} (${shortDate(p?.date)}), nguồn: ${p?.source||'chưa kết nối'}.\nHai chuỗi có thể khác định nghĩa; không tự gộp để lấp khoảng trống.`;if(/lỗi|thiếu|chất lượng|quality|qc|nguồn|cũ/.test(question)){const dates=state.data?.source_freshness||{},old=Object.entries(dates).filter(([k,v])=>calcDays(v,r.date)>7).map(([k,v])=>`${k} (${shortDate(v)})`);return `Kiểm tra tại ${shortDate(r.date)}:\n${old.length?'Nguồn cũ hơn 7 ngày: '+old.join(', '):'Không phát hiện nguồn cũ hơn 7 ngày từ metadata.'}\n${(state.data?.warnings||[]).slice(0,3).join('\n')||'Không có cảnh báo từ bộ xử lý.'}\nKhông có dữ liệu sẽ để trống thay vì tự bịa hoặc gán benchmark khác loại.`}if(/fx|usd|tỷ giá|swap/.test(question))return `${d}\nUSD/VND Mid: ${n(r.fx_mid,{d:0})} tại ${shortDate(r.date)}.\nSwap residual: ${n(r.swap_bn,{d:2})} tỷ VND = Loan – GTCG – RESO – TSĐB – Tín chấp.\nĐối với trạng thái FX, cần xác định book, đơn vị tiền tệ và ngày giá trước khi đánh giá rủi ro.`;if(/mm|quy mô|loan|dư nợ|gtcg|thanh khoản/.test(question))return `${d}\nTổng dư nợ MM tại ${shortDate(r.date)}: ${n(r.loan_bn,{d:2})} tỷ VND.\nĐầu tư GTCG: ${n(r.invest_gtcg_bn,{d:2})} tỷ; Có TSĐB: ${n(r.secured_bn,{d:2})} tỷ; Tín chấp: ${n(r.unsecured_bn,{d:2})} tỷ.\nGTCG ròng = BOND Trading + BOND PAP – CD đáo hạn (khác chỉ tiêu Đầu tư GTCG).\nDùng số dư theo ngày để tính BQ, không thay bằng snapshot cuối tháng.`;return `Tôi có thể trả lời câu hỏi về ON, lãi suất theo kỳ hạn, NIM, quy mô MM, GTCG, tỷ giá, Swap residual và cảnh báo nguồn.\n${d} Tại ${shortDate(r.date)}, dư nợ MM là ${n(r.loan_bn,{d:1})} tỷ và lãi suất ON nội bộ là ${fmt(on?.value)}.\nVui lòng hỏi thêm một chỉ tiêu cụ thể; mọi kết quả cần đối chiếu nguồn gốc trước khi sử dụng.`}
-async function assistantRequest(question){const isPrivate=state.data?.meta?.kind!=='synthetic';if(isPrivate)return {answer:localAnswer(question),mode:'local'};try{const r=await fetch('/api/assistant',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question}),signal:AbortSignal.timeout(9000)});if(r.ok){const j=await r.json();if(j?.answer)return {answer:j.answer,mode:'online'}}}catch(_e){}return {answer:localAnswer(question),mode:'local'}}
+async function assistantRequest(question){return {answer:localAnswer(question),mode:'local'}}
 function addBubble(type,text){const m=$('#chatMessages');const node=document.createElement('div');node.className='chat-bubble '+type;if(type==='assistant'){const label=document.createElement('div');label.className='bubble-label';label.textContent='TREASURY ANALYST';node.appendChild(label)}node.appendChild(document.createTextNode(text));m.appendChild(node);m.scrollTop=m.scrollHeight}
 async function ask(q){const question=(q||'').trim();if(!question)return;pageTo('assistant');addBubble('user',question);const input=$('#chatInput');input.value='';input.disabled=true;const out=await assistantRequest(question);addBubble('assistant',out.answer+(out.mode==='local'?'\n\n[Phân tích tại thiết bị; chưa dùng mô hình AI trực tuyến]':''));input.disabled=false;input.focus()}
 async function importFile(file){if(!file)return;state.importing=true;toast('Đang phân tích file trên thiết bị; không tải lên máy chủ.');try{const result=await readUserFile(file);if(!Array.isArray(result.series)||result.series.length<2)throw Error('Không tìm thấy đủ chuỗi ngày hợp lệ.');result.series.sort((a,b)=>dateCompare(a.date,b.date));result.meta=result.meta||{};result.meta.kind='private-local';result.meta.asOf=result.series.at(-1).date;state.data=result;state.activeRates=new Set(['itb_on','itb_1w','itb_1m','itb_on_public','itb_1w_public']);state.period='3M';state.freq='daily';$('#freqSelect').value='daily';$$('[data-period]').forEach(x=>x.classList.toggle('selected',x.dataset.period==='3M'));render();toast(`Đã nạp ${result.series.length} quan sát từ ${file.name}. Dữ liệu chỉ nằm trong tab này.`)}catch(err){toast('Không nạp được file: '+(err.message||String(err)))}finally{state.importing=false;$('#filePicker').value=''}}
 async function refreshPublic(){
  if(state.marketRefreshing)return;
- state.marketRefreshing=true;$('#marketStatus').textContent='Đang cập nhật';
+ state.marketRefreshing=true;
  try{
-  const r=await fetch('/api/market',{signal:AbortSignal.timeout(13000)});
-  if(!r.ok)throw Error('API '+r.status);
-  const out=await r.json();if(!Array.isArray(out.interbank)||out.interbank.length<20)throw Error('Nguồn dữ liệu không hợp lệ');
-  state.publicMarket=out;state.lastMarketFetch=Date.now();
-  const lastDate=out.coverage?.latestDailyDate||out.interbank.at(-1)?.date;
-  $('#marketStatus').textContent='Thị trường · '+shortDate(lastDate);
-  $('#marketDot').style.background='#35c4a6';render();
+  const url=new URL('../data/public_snapshot.json',import.meta.url);
+  url.searchParams.set('v',String(Date.now()));
+  const response=await fetch(url.href,{cache:'no-store',signal:AbortSignal.timeout(15000)});
+  if(!response.ok)throw Error('HTTP '+response.status);
+  const snapshot=await response.json();
+  if(!Array.isArray(snapshot.interbank)||!snapshot.interbank.length)throw Error('Dữ liệu thị trường chưa hợp lệ');
+  state.publicMarket=snapshot;state.lastMarketFetch=Date.now();
+  const latest=publicLatest('ON')?.date;
+  $('#marketStatus').textContent=latest?'Thị trường · '+shortDate(latest):'Thị trường';
+  $('#marketDot').style.background='#35c4a6';
+  render();
  }catch(_){
-  if(!state.publicMarket.interbank?.length){
-    try{const fallback=await fetch('/data/public_snapshot.json');if(fallback.ok)state.publicMarket=await fallback.json()}catch(_e){}
-  }
-  const lastDate=publicLatest('ON')?.date;
-  $('#marketStatus').textContent=lastDate?'Thị trường · '+shortDate(lastDate):'Đang đồng bộ';
-  $('#marketDot').style.background=lastDate?'#35c4a6':'#e7b66c';render();
+  const latest=publicLatest('ON')?.date;
+  $('#marketStatus').textContent=latest?'Thị trường · '+shortDate(latest):'Chưa có dữ liệu thị trường';
+  $('#marketDot').style.background=latest?'#35c4a6':'#e7b66c';
+  render();
  }finally{state.marketRefreshing=false}
 }
-async function checkModel(){try{const r=await fetch('/api/assistant',{signal:AbortSignal.timeout(6000)});const data=r.ok?await r.json():null;state.llm=!!data?.enabled;$('#aiBackend').textContent=state.llm?'Sẵn sàng — public only':'Local fallback';$('#modelState').textContent=state.llm?'AI KẾT NỐI — CHỈ NGUỒN CÔNG KHAI':'CHẾ ĐỘ PHÂN TÍCH NỘI BỘ';}catch(_){$('#aiBackend').textContent='Local fallback'}}
+async function checkModel(){state.llm=false;$('#aiBackend').textContent='Phân tích trên thiết bị';$('#modelState').textContent='PHÂN TÍCH TRÊN THIẾT BỊ'}
+
 function bind(){document.addEventListener('click',ev=>{const btn=ev.target.closest('[data-nav]');if(btn){pageTo(btn.dataset.nav);return}const rate=ev.target.closest('[data-toggle-rate]');if(rate){const key=rate.dataset.toggleRate;state.activeRates.has(key)?state.activeRates.delete(key):state.activeRates.add(key);renderRateCharts();return}const p=ev.target.closest('[data-period]');if(p){state.period=p.dataset.period;$$('[data-period]').forEach(x=>x.classList.toggle('selected',x.dataset.period===state.period));render()}});$('#importBtn').addEventListener('click',()=>$('#filePicker').click());$('#qualityImportBtn').addEventListener('click',()=>$('#filePicker').click());$('#importBtnQuality').addEventListener('click',()=>$('#filePicker').click());$('#filePicker').addEventListener('change',ev=>importFile(ev.target.files?.[0]));$('#exportBtn').addEventListener('click',csvExport);$('#freqSelect').addEventListener('change',ev=>{state.freq=ev.target.value;render()});$('#themeBtn').addEventListener('click',()=>{document.body.classList.toggle('dark');$('#themeBtn').textContent=document.body.classList.contains('dark')?'☀':'☾'});$('#mobileMenu').addEventListener('click',()=>$('#sidebar').classList.toggle('open'));$('#refreshMarket').addEventListener('click',refreshPublic);$('#refreshMarketTop')?.addEventListener('click',refreshPublic);$('#chatForm').addEventListener('submit',ev=>{ev.preventDefault();ask($('#chatInput').value)});$$('.question-chip').forEach(b=>b.addEventListener('click',()=>ask(b.textContent)));window.addEventListener('resize',()=>{if(state.data)renderRateCharts()})}
 async function main(){
  bind();
  try{
-  const [demo,pub]=await Promise.all([fetch('/data/demo.json'),fetch('/data/public_snapshot.json')]);
+  const [demo,pub]=await Promise.all([fetch(new URL('../data/demo.json',import.meta.url)),fetch(new URL('../data/public_snapshot.json',import.meta.url))]);
   if(!demo.ok)throw Error('Không tải được dữ liệu khởi tạo');
   state.data=await demo.json();state.data.series.sort((a,b)=>dateCompare(a.date,b.date));
   if(pub.ok)state.publicMarket=await pub.json();
