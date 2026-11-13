@@ -332,7 +332,7 @@ function bookAnswerV14(question){
  if(!selected&&!general)return null;
  const records=state.data?.series||[];
  const fmt=(value,unit='')=>value===null||value===undefined?'—':n(value,{d:2})+(unit?' '+unit:'');
- const key=(id,m)=>'book_'+(['trading','afs'].includes(id)?'cd':id)+'_'+(id==='trading'?'trading_vnd_bn':id==='afs'?'afs_vnd_bn':m);
+ const key=(id,m)=>id==='trading'||id==='afs'?(m==='asset_vnd_bn'?'book_cd_'+(id==='trading'?'trading_vnd_bn':'afs_vnd_bn'):'unavailable_'+id+'_'+m):'book_'+id+'_'+m;
  const find=(id)=>[...records].reverse().find(x=>Object.keys(x).some(k=>k.startsWith('book_'+(['trading','afs'].includes(id)?'cd':id)+'_')));
  if(!state.data?.meta?.hasBooks&&!records.some(x=>Object.keys(x).some(k=>k.startsWith('book_'))))
   return 'Dashboard hỗ trợ ITB tổng, L&D Interbank, L&D ALM, Repo/Reso, Swap MM, CD/PAP, Bond Trading và Bond AFS. Nạp MB MM.xlsx hoặc file book đã xuất để phân tích các số dư thực tế.';
@@ -458,7 +458,7 @@ function renderBooksV14(){
   {id:'trading',label:'Bond Trading',hint:'Sổ trái phiếu kinh doanh',kind:'part',color:'#7486af'},
   {id:'afs',label:'Bond AFS',hint:'Danh mục trái phiếu AFS',kind:'part',color:'#78968b'}
  ];
- const field=(b,metric)=>'book_'+(b==='trading'||b==='afs'?'cd':b)+'_'+((b==='trading'?'trading_vnd_bn':b==='afs'?'afs_vnd_bn':metric));
+ const field=(b,metric)=>b==='trading'||b==='afs'?(metric==='asset_vnd_bn'?'book_cd_'+(b==='trading'?'trading_vnd_bn':'afs_vnd_bn'):'unavailable_'+b+'_'+metric):'book_'+b+'_'+metric;
  const series=state.data?.series||[];
  const isBookRow=r=>Object.keys(r).some(k=>k.startsWith('book_'));
  const lastBookRow=[...series].reverse().find(isBookRow);
