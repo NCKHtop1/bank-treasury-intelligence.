@@ -537,7 +537,7 @@ async function mainV13(){
  // The shared file input queues every workbook sequentially through bind().
  document.addEventListener('dragover',event=>{if([...event.dataTransfer?.types||[]].includes('Files')){event.preventDefault();document.body.classList.add('file-dragging')}});
  document.addEventListener('dragleave',event=>{if(event.target===document.documentElement)document.body.classList.remove('file-dragging')});
- document.addEventListener('drop',async event=>{const files=[...(event.dataTransfer?.files||[])].filter(f=>/\.(xlsx|xlsm|json|csv)$/i.test(f.name));if(!files.length)return;event.preventDefault();document.body.classList.remove('file-dragging');for(const file of files)await importFileV13(file)});
+ document.addEventListener('drop',async event=>{const files=[...(event.dataTransfer?.files||[])].filter(f=>/\.(xlsx|xlsm|json|csv|html|htm)$/i.test(f.name));if(!files.length)return;event.preventDefault();document.body.classList.remove('file-dragging');for(const file of files)await importFileV13(file)});
  let restored=null;
  try{restored=await loadLastWorkbook()}catch(_){}
  try{
