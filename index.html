@@ -48,6 +48,19 @@
 <div class="book-intro-foot"><span id="bookMainAsOf">Dữ liệu book cập nhật theo Excel</span><button class="subtle-link" data-nav="books">Xem chi tiết từng book ›</button></div></section><div class="quick-rates-heading"><div><span class="section-kicker">THỊ TRƯỜNG TIỀN TỆ</span><h2>Lãi suất liên ngân hàng theo kỳ hạn</h2></div><button class="subtle-link" data-nav="rates">Biểu đồ và lịch sử ›</button></div>
           <div class="quick-rate-grid" id="quickRateGrid"></div>
           <div class="toolbar"><div class="toolbar-label">BÁO CÁO TẠI <span id="asOfDate">—</span></div><div class="toolbar-actions"><div class="segmented" id="periodButtons"><button data-period="1M">1M</button><button data-period="3M" class="selected">3M</button><button data-period="6M">6M</button><button data-period="YTD">YTD</button><button data-period="ALL">ALL</button></div><select class="select" id="freqSelect"><option value="daily">Theo ngày</option><option value="monthly_avg">BQ tháng</option><option value="monthly_eop">Cuối tháng</option></select></div></div>
+          <section id="personalDashboard" class="personal-dashboard" hidden aria-label="Danh mục tiền tệ đã lưu">
+            <div class="personal-head">
+              <div><h2>Loan, Deposit &amp; Swap</h2><p>Số liệu danh mục theo kỳ báo cáo, tỷ VND</p></div>
+              <span id="personalAsOf" class="personal-date"></span>
+            </div>
+            <div class="personal-card-grid" id="personalCards"></div>
+            <div class="personal-chart-grid">
+              <article class="personal-chart-card personal-chart-wide"><header><h3>Cho vay &amp; đi vay ITB</h3><span>Loan / Deposit · VND</span></header><div id="personalLoanChart" class="personal-plot"></div></article>
+              <article class="personal-chart-card"><header><h3>Swap MM</h3><span>Cho vay, đi vay, số dư ròng</span></header><div id="personalSwapChart" class="personal-plot"></div></article>
+              <article class="personal-chart-card"><header><h3>L&amp;D Interbank</h3><span>Loan / Deposit · VND</span></header><div id="personalLDChart" class="personal-plot"></div></article>
+              <article class="personal-chart-card personal-chart-wide"><header><h3>GTCG &amp; danh mục</h3><span>Đầu tư và quy mô GTCG</span></header><div id="personalGTCGChart" class="personal-plot"></div></article>
+            </div>
+          </section>
           <div class="kpi-grid" id="kpiGrid"></div><div id="mmOverview" class="mm-workspace mm-overview"></div>
           <div class="grid-2-1 gap-20"><div class="panel chart-panel"><div class="panel-heading"><div><div class="section-kicker">INTERBANK / MONEY MARKET</div><h2>Diễn biến lãi suất liên ngân hàng</h2><span class="panel-sub">%/năm · ON · 1W · 2W · 1M · 3M · 6M · 9M</span></div><button class="panel-more" data-nav="rates">Xem chi tiết ↗</button></div><div class="chart-legend" id="rateLegend"></div><div class="svg-chart" id="overviewRateChart"></div><div class="chart-source-note" id="ratesSourceNote"></div></div>
             <div class="panel mini-panel"><div class="panel-heading"><div><div class="section-kicker">BALANCE MIX</div><h2 id="mixPanelHeading">Cấu trúc kỳ hạn</h2><span class="panel-sub">Đơn vị: tỷ VND</span></div></div><div class="donut-section"><div class="donut-wrap" id="instrumentDonut"></div><div class="donut-legend" id="instrumentLegend"></div></div><div class="panel-foot-note">Cơ cấu theo quy mô MM</div></div></div>
