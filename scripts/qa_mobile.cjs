@@ -100,6 +100,19 @@ async function run(){
     await page.waitForFunction(()=>document.body.classList.contains('market-only'));
     assert.ok(await page.locator('.book-intro-panel').isHidden(),'Book introduction remained after clearing cache');
 
+
+    const importHTML=await page.evaluate(async()=>{
+      const {readUserFile}=await import('./assets/loader.js');
+      const mock={meta:{kind:'private-local',hasBooks:true},series:[
+        {date:'2026-10-20',book_itb_asset_vnd_bn:101},
+        {date:'2026-10-21',book_itb_asset_vnd_bn:105}
+      ]};
+      const html='<html><script id="seed-data" type="application/json">'+JSON.stringify(mock)+'<\\/script></html>';
+      const file=new File([html],'treasury-saved.html',{type:'text/html'});
+      const result=await readUserFile(file);
+      return {count:result.series.length,latest:result.series.at(-1).date};
+    });
+    assert.deepEqual(importHTML,{count:2,latest:'2026-10-21'},'Saved HTML cannot be imported');
     const handoffData={meta:{kind:'private-local',hasBooks:true,source_file:'browser-qa-only',asOf:'2026-10-21'},series:[
       {date:'2026-10-20',book_itb_asset_vnd_bn:101,book_itb_fund_vnd_bn:-40,book_swp_net_vnd_bn:5,book_swp_asset_vnd_bn:16,book_swp_fund_vnd_bn:-11,book_ld_itb_asset_vnd_bn:26,book_ld_itb_fund_vnd_bn:-10,invest_gtcg_bn:54,gtcg_scale_bn:49,ld_nim_pct:2.4,loan_bn:101},
       {date:'2026-10-21',book_itb_asset_vnd_bn:105,book_itb_fund_vnd_bn:-44,book_swp_net_vnd_bn:9,book_swp_asset_vnd_bn:24,book_swp_fund_vnd_bn:-15,book_ld_itb_asset_vnd_bn:38,book_ld_itb_fund_vnd_bn:-20,invest_gtcg_bn:65,gtcg_scale_bn:55,ld_nim_pct:2.7,loan_bn:105}
