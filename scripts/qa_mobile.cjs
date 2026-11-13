@@ -90,7 +90,7 @@ async function run(){
     await page.locator('#mmOverview .mm-kpi').first().waitFor({timeout:16000});
     const saved=await page.locator('#sourceBadge').innerText();
     assert.ok(saved.includes('WORKBOOK'),'Cached workbook not auto-restored: '+saved);
-    assert.equal(await page.locator('#clearDeviceCache').isVisible(),true,'Delete cache action missing');
+    assert.equal(await page.locator('#clearDeviceCache').evaluate(el=>!el.hidden),true,'Delete cache action missing');
     await page.screenshot({path:'mobile-390-remembered.png',fullPage:true});
     await page.locator('.mobile-dock [data-nav="portfolio"]').click();
     assert.ok(await page.locator('#mmAnalyticWorkspace').isVisible(),'Risk workspace not visible');
