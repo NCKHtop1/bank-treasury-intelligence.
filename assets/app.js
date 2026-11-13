@@ -26,7 +26,7 @@ const state={
  activeRates:new Set(['itb_on_public','itb_1w_public','itb_1m_public','itb_3m_public']),
  llm:false,importing:false,lastMarketFetch:0,marketRefreshing:false
 };
-const names={overview:'Overview',rates:'Interbank rates',portfolio:'MM & Liquidity',bonds:'GTCG & VBMA',fx:'FX & Swap',news:'Market intelligence',assistant:'AI Analyst',quality:'Data quality'};
+const names={books:'Book Dashboard',overview:'Overview',rates:'Interbank rates',portfolio:'MM & Liquidity',bonds:'GTCG & VBMA',fx:'FX & Swap',news:'Market intelligence',assistant:'AI Analyst',quality:'Data quality'};
 let toastTimeout=null;
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>el.classList.remove('show'),5200)}
 function pageTo(page){if(!names[page])return;state.activePage=page;$$('.view').forEach(x=>x.classList.toggle('active',x.dataset.view===page));$$('[data-nav]').forEach(x=>x.classList.toggle('active',x.dataset.nav===page));$('#breadcrumb').textContent=names[page];$('#sidebar').classList.remove('open');window.scrollTo({top:0,behavior:'instant'});}
@@ -177,7 +177,7 @@ function renderMetadata(){
  $('#aiAsOf').textContent=shortDate(last().date);
  $('#aiMarketMode').textContent=state.publicMarket.interbank?.length?'Đã đồng bộ':'Đang tải';
 }
-function render(){if(!state.data)return;renderMetadata();renderKpis();renderDonut();renderRateCharts();renderPortfolio();renderBondsFx();renderMarket();renderQuality()}
+function render(){if(!state.data)return;renderMetadata();renderKpis();renderDonut();renderRateCharts();renderPortfolio();renderBondsFx();renderMarket();renderQuality();renderBooksV14()}
 function csvExport(){const rows=dataFiltered();if(!rows.length)return toast('Chưa có dữ liệu để xuất.');const keys=Object.keys(rows[0]);const csv='\ufeff'+[keys.join(','),...rows.map(row=>keys.map(k=>row[k]===null||row[k]===undefined?'':String(row[k])).join(','))].join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`treasury_session_${new Date().toISOString().slice(0,10)}.csv`;a.click();URL.revokeObjectURL(url);toast('Đã xuất CSV từ dữ liệu hiện có trong trình duyệt.')}
 function localAnswer(q){const question=q.toLowerCase();const r=last();const on=latestValid('itb_on'),prev=olderValid('itb_on',20),p=publicLatest('ON'),d=state.data?.meta?.kind==='synthetic'?'Số liệu MM là mô phỏng.':'Số liệu MM được nạp trong trình duyệt.';const fmt=v=>v==null?'chưa có quan sát hợp lệ':rateText(v);if(/nim|biên lãi|lợi nhuận/.test(question))return `${d}\nNIM L&D = Lãi suất cho vay bình quân VND – Lãi suất đi vay bình quân VND; chỉ tính khi dư nợ cho vay VND khác 0.\nNIM gần nhất: ${fmt(r.ld_nim_pct)} tại ${shortDate(r.date)}.\nLưu ý NIM không đồng nghĩa P&L, chưa phản ánh FTP, MTM, hedge cost hoặc impairment.`;if(/on|qua đêm|liên ngân|lãi suất|rate|kỳ hạn/.test(question))return `${d}\nITB ON nội bộ: ${fmt(on?.value)} (${shortDate(on?.date)}). ${prev!=null&&on?.value!=null?`Thay đổi khoảng 20 phiên: ${n(on.value-prev,{d:2})} điểm %.`:''}\nNHNN ON công khai: ${fmt(p?.rate_pct)} (${shortDate(p?.date)}), nguồn: ${p?.source||'chưa kết nối'}.\nHai chuỗi có thể khác định nghĩa; không tự gộp để lấp khoảng trống.`;if(/lỗi|thiếu|chất lượng|quality|qc|nguồn|cũ/.test(question)){const dates=state.data?.source_freshness||{},old=Object.entries(dates).filter(([k,v])=>calcDays(v,r.date)>7).map(([k,v])=>`${k} (${shortDate(v)})`);return `Kiểm tra tại ${shortDate(r.date)}:\n${old.length?'Nguồn cũ hơn 7 ngày: '+old.join(', '):'Không phát hiện nguồn cũ hơn 7 ngày từ metadata.'}\n${(state.data?.warnings||[]).slice(0,3).join('\n')||'Không có cảnh báo từ bộ xử lý.'}\nKhông có dữ liệu sẽ để trống thay vì tự bịa hoặc gán benchmark khác loại.`}if(/fx|usd|tỷ giá|swap/.test(question))return `${d}\nUSD/VND Mid: ${n(r.fx_mid,{d:0})} tại ${shortDate(r.date)}.\nSwap residual: ${n(r.swap_bn,{d:2})} tỷ VND = Loan – GTCG – RESO – TSĐB – Tín chấp.\nĐối với trạng thái FX, cần xác định book, đơn vị tiền tệ và ngày giá trước khi đánh giá rủi ro.`;if(/mm|quy mô|loan|dư nợ|gtcg|thanh khoản/.test(question))return `${d}\nTổng dư nợ MM tại ${shortDate(r.date)}: ${n(r.loan_bn,{d:2})} tỷ VND.\nĐầu tư GTCG: ${n(r.invest_gtcg_bn,{d:2})} tỷ; Có TSĐB: ${n(r.secured_bn,{d:2})} tỷ; Tín chấp: ${n(r.unsecured_bn,{d:2})} tỷ.\nGTCG ròng = BOND Trading + BOND PAP – CD đáo hạn (khác chỉ tiêu Đầu tư GTCG).\nDùng số dư theo ngày để tính BQ, không thay bằng snapshot cuối tháng.`;return `Tôi có thể trả lời câu hỏi về ON, lãi suất theo kỳ hạn, NIM, quy mô MM, GTCG, tỷ giá, Swap residual và cảnh báo nguồn.\n${d} Tại ${shortDate(r.date)}, dư nợ MM là ${n(r.loan_bn,{d:1})} tỷ và lãi suất ON nội bộ là ${fmt(on?.value)}.\nVui lòng hỏi thêm một chỉ tiêu cụ thể; mọi kết quả cần đối chiếu nguồn gốc trước khi sử dụng.`}
 async function assistantRequest(question){return {answer:localAnswer(question),mode:'local'}}
@@ -356,11 +356,11 @@ async function importFileV13(file){
   for(const record of result.series){if(!record.date)continue;const dest=map.get(record.date)||{date:record.date};for(const [key,value] of Object.entries(record))if(key!=='date'&&value!==null&&value!==undefined&&value!=='')dest[key]=value;map.set(record.date,dest)}
   const series=[...map.values()].sort((a,b)=>a.date.localeCompare(b.date));
   const names=[...(prior?.meta?.files|| (prior?.meta?.source_file?[prior.meta.source_file]:[])),file.name];
-  state.data={...result,series,meta:{...result.meta,kind:'private-local',source_file:[...new Set(names)].join(' · '),files:[...new Set(names)],asOf:series.at(-1)?.date},warnings:[...new Set([...(prior?.warnings||[]),...(result.warnings||[])])],source_freshness:{...(prior?.source_freshness||{}),...(result.source_freshness||{})},mapping:{...(prior?.mapping||{}),...(result.mapping||{})}};
+  state.data={...result,series,monthlyBooks:result.monthlyBooks?.length?result.monthlyBooks:(prior?.monthlyBooks||[]),meta:{...result.meta,kind:'private-local',source_file:[...new Set(names)].join(' · '),files:[...new Set(names)],asOf:series.at(-1)?.date},warnings:[...new Set([...(prior?.warnings||[]),...(result.warnings||[])])],source_freshness:{...(prior?.source_freshness||{}),...(result.source_freshness||{})},mapping:{...(prior?.mapping||{}),...(result.mapping||{})}};
   state.activeRates=new Set(['itb_on_public','itb_1w_public','itb_1m_public','itb_on','itb_1w','itb_1m']);
   state.period='3M';state.freq='daily';$('#freqSelect').value='daily';
   $('[data-period]').forEach(x=>x.classList.toggle('selected',x.dataset.period==='3M'));
-  render();toast(`Đã cập nhật ${series.length} ngày · ${Object.keys(state.data.mapping||{}).length} trường được nhận diện`);
+  render();if(result.meta?.hasBooks)pageTo('books');toast(`Đã cập nhật ${series.length} ngày · ${Object.keys(state.data.mapping||{}).length} trường được nhận diện`);
  }catch(err){toast('Không thể nhập Excel: '+(err?.message||String(err)))}finally{state.importing=false;$('#filePicker').value=''}
 }
 
@@ -406,4 +406,132 @@ async function mainV13(){
 }
 const _previousRenderKpis=renderKpis,_previousRenderDonut=renderDonut,_previousRenderPortfolio=renderPortfolio,_previousRenderBondsFx=renderBondsFx,_previousRenderQuality=renderQuality;
 renderKpis=renderKpisV13;renderDonut=renderDonutV13;renderPortfolio=renderPortfolioV13;renderBondsFx=renderBondsFxV13;renderQuality=renderQualityV13;renderMetadata=renderMetadataV13;localAnswer=localAnswerV13;importFile=importFileV13;refreshPublic=refreshPublicV13;checkModel=checkModelV13;
+function renderBooksV14(){
+ const bk=[
+  {id:'itb',label:'ITB tổng',hint:'Tổng Interbank · số kiểm soát',kind:'control',color:'#255f9e'},
+  {id:'ld_itb',label:'L&D Interbank',hint:'Cho vay và đi vay liên ngân hàng',kind:'part',color:'#158f91'},
+  {id:'ld_alm',label:'L&D ALM',hint:'Điều hòa vốn nội bộ / ALM',kind:'part',color:'#8065c0'},
+  {id:'swp',label:'Swap MM',hint:'Swap tiền tệ · hai chân VND/USD',kind:'part',color:'#c48952'},
+  {id:'repo',label:'Repo / Reso',hint:'Repo nguồn vốn / Reso sử dụng vốn',kind:'part',color:'#238bae'},
+  {id:'cd',label:'CD / Bond PAP',hint:'Giấy tờ có giá · CD/PAP',kind:'part',color:'#b17e58'},
+  {id:'trading',label:'Bond Trading',hint:'Sổ trái phiếu kinh doanh',kind:'part',color:'#7486af'},
+  {id:'afs',label:'Bond AFS',hint:'Danh mục trái phiếu AFS',kind:'part',color:'#78968b'}
+ ];
+ const field=(b,metric)=>'book_'+(b==='trading'||b==='afs'?'cd':b)+'_'+((b==='trading'?'trading_vnd_bn':b==='afs'?'afs_vnd_bn':metric));
+ const series=state.data?.series||[];
+ const isBookRow=r=>Object.keys(r).some(k=>k.startsWith('book_'));
+ const lastBookRow=[...series].reverse().find(isBookRow);
+ const asOf=lastBookRow?.date;
+ const exactRow=b=>[...series].reverse().find(r=>r.date<=asOf&&Object.keys(r).some(k=>k.startsWith('book_'+(b==='trading'||b==='afs'?'cd':b)+'_')));
+ const present=(r,k)=>r&&r[k]!==null&&r[k]!==undefined&&Number.isFinite(+r[k]);
+ const metric=(b,m)=>{const r=asOf?exactRow(b):null;const k=field(b,m);return present(r,k)?Number(r[k]):null};
+ const sourceDate=b=>exactRow(b)?.date||null;
+ const display=(v,d=1)=>v===null?'—':n(v,{d});
+ const rate=v=>v===null?'—':`${n(v,{d:2})}%`;
+ const bookMetrics=b=>{
+  const a=metric(b,'asset_vnd_bn'),f=metric(b,'fund_vnd_bn'),reported=metric(b,'net_vnd_bn');
+  // Net of an asset-only book is intentionally not inferred from a missing funding field.
+  const net=reported!==null?reported:(a!==null&&f!==null?a+f:null);
+  return {a,f,net,ua:metric(b,'asset_usd_m'),uf:metric(b,'fund_usd_m'),lr:metric(b,'loan_rate_pct'),fr:metric(b,'fund_rate_pct'),tenor:metric(b,'loan_term_days'),fundTenor:metric(b,'fund_term_days'),date:sourceDate(b)};
+ };
+ const dict=Object.fromEntries(bk.map(x=>[x.id,bookMetrics(x.id)]));
+ const active=!!asOf;
+ const label=active?`Dữ liệu Book · ${shortDate(asOf)}`:'Chưa nạp workbook Book';
+ const status=$('#bookDataStatus'),updated=$('#bookMainAsOf'),statusBadge=$('#booksStatusBadge'),asOfEl=$('#booksAsOf'),sourceEl=$('#bookSourceLabel');
+ if(status)status.textContent=active?'Đã nhận dữ liệu Book':'Chưa nạp dữ liệu Book';
+ if(updated)updated.textContent=active?`${shortDate(asOf)} · ${state.data.meta?.source_file||'Excel đã nạp'}`:'Nạp Excel để hiển thị số dư và rủi ro theo Book';
+ if(statusBadge){statusBadge.textContent=active?'● DỮ LIỆU BOOK':'● CHƯA NẠP EXCEL';statusBadge.className='source-badge '+(active?'local':'demo')}
+ if(asOfEl)asOfEl.textContent=label;
+ if(sourceEl)sourceEl.textContent=active?`${state.data.meta?.source_file||'Excel'} · ${series.filter(isBookRow).length} phiên`:'Phân tích workbook ngay trong trình duyệt';
+ const tiles=$('#bookCardsMain');
+ if(tiles)tiles.innerHTML=bk.filter(x=>x.id!=='itb').map(book=>{
+   const p=dict[book.id],v=p.a!==null?p.a:p.f!==null?p.f:p.net;
+   const unit=p.a!==null||p.f!==null||p.net!==null?'tỷ VND':'';
+   return `<button type="button" class="book-tile" data-nav="books"><span class="book-tile-accent" style="--c:${book.color}"></span><strong>${esc(book.label)}</strong><span class="book-tile-value">${display(v,1)} <small>${unit}</small></span><span class="book-tile-sub">${esc(book.hint)}</span></button>`
+ }).join('');
+ const base=dict.itb,ld=dict.ld_itb;
+ const kpis=[
+  ['ITB · Cho vay VND',base.a,'tỷ đồng','Tài sản gộp'],
+  ['ITB · Đi vay VND',base.f,'tỷ đồng','Nguồn vốn, giữ dấu âm'],
+  ['ITB · Net báo cáo',base.net,'tỷ đồng','Net theo sheet ITB'],
+  ['L&D · Chênh LS VND',ld.lr!==null&&ld.fr!==null?ld.lr-ld.fr:null,'điểm %','LS cho vay trừ LS đi vay']
+ ];
+ const kpiRoot=$('#bookKpiGrid');
+ if(kpiRoot)kpiRoot.innerHTML=kpis.map(([name,value,unit,small],i)=>`<div class="kpi-card ${i===0?'featured-kpi':''}"><div class="kpi-head">${esc(name)}<span class="kpi-symbol">${['▥','↙','◈','↗'][i]}</span></div><div class="kpi-value">${display(value,2)}<small>${unit}</small></div><div class="kpi-bottom">${esc(active?small+' · '+shortDate(asOf):'Chờ nạp Excel')}</div></div>`).join('');
+ const overview=$('#bookMatrix');
+ if(overview){
+  const has=active;
+  const format=(v,d=1)=>v===null?'<span class="book-missing">—</span>':`<span class="${v<0?'book-negative':''}">${display(v,d)}</span>`;
+  overview.innerHTML=`<table class="book-table"><thead><tr><th>Book</th><th class="num">Tài sản VND <small>tỷ</small></th><th class="num">Nguồn vốn VND <small>tỷ</small></th><th class="num">Net VND <small>tỷ</small></th><th class="num">Cho vay USD <small>triệu</small></th><th class="num">Đi vay USD <small>triệu</small></th><th class="num">LS cho vay</th><th class="num">LS đi vay</th><th class="num">KH cho vay <small>ngày</small></th><th>Ngày</th></tr></thead>
+   <tbody>${bk.map(book=>{const x=dict[book.id];return `<tr class="${book.kind==='control'?'book-control-row':''}"><td><span class="book-dot" style="--dot:${book.color}"></span><strong>${esc(book.label)}</strong><small>${esc(book.kind==='control'?'Tổng kiểm soát · không cộng trùng':book.hint)}</small></td><td class="num">${format(x.a)}</td><td class="num">${format(x.f)}</td><td class="num">${format(x.net)}</td><td class="num">${format(x.ua)}</td><td class="num">${format(x.uf)}</td><td class="num">${format(x.lr,2)}${x.lr===null?'':'%'}</td><td class="num">${format(x.fr,2)}${x.fr===null?'':'%'}</td><td class="num">${format(x.tenor,1)}</td><td>${shortDate(x.date)}</td></tr>`}).join('')}</tbody></table>
+    ${!has?'<div class="book-empty-action"><strong>Danh mục Book đã sẵn sàng</strong><span>Chọn MB MM.xlsx để hiển thị số dư thực tế cho từng book.</span><button class="btn btn-primary" type="button" data-import-book>Nạp Excel Treasury</button></div>':''}`;
+ }
+ const selector=$('#bookSelect');
+ if(selector){
+  const prev=selector.value;
+  selector.innerHTML=bk.map(b=>`<option value="${b.id}">${esc(b.label)}</option>`).join('');
+  selector.value=bk.some(x=>x.id===prev)?prev:'ld_itb';
+  selector.onchange=()=>renderBooksV14();
+  const code=selector.value,rows=series.filter(r=>['asset_vnd_bn','fund_vnd_bn','net_vnd_bn','trading_vnd_bn','afs_vnd_bn'].some(m=>present(r,field(code,m))));
+  const defs=[
+   {key:field(code,'asset_vnd_bn'),name:'Tài sản',color:'#2877b1'},
+   {key:field(code,'fund_vnd_bn'),name:'Nguồn vốn',color:'#dc8f5b'},
+   {key:field(code,'net_vnd_bn'),name:'Net',color:'#20a99c'}
+  ];
+  if(code==='trading'||code==='afs')defs[0].key=field(code,'asset_vnd_bn');
+  if(code==='repo'||code==='ld_itb'||code==='ld_alm'||code==='swp'||code==='itb'){
+   const valid=defs.filter(d=>rows.some(r=>present(r,d.key)));
+   makeChart($('#bookTrend'),rows,valid,{unit:'bn',empty:'Nạp Excel để xem biến động theo Book'});
+  }else makeChart($('#bookTrend'),rows,defs.slice(0,1),{unit:'bn',empty:'Nạp Excel để xem biến động theo Book'});
+ }
+ const risk=$('#bookRiskCheck');
+ if(risk){
+  if(!active){risk.innerHTML='<div class="book-empty-compact">Nạp workbook để đối chiếu số dư và nguồn vốn theo ngày.</div>'}
+  else{
+   const cards=[],count=bk.filter(b=>dict[b.id].date).length;
+   cards.push({title:'Độ phủ dữ liệu',detail:`${count}/${bk.length} book có ngày và trường hợp lệ`,kind:count===bk.length?'ok':'warn'});
+   for(const book of bk.filter(b=>['itb','ld_itb','ld_alm','swp'].includes(b.id))){
+    const x=dict[book.id];
+    if(x.a!==null&&x.f!==null&&x.net!==null){
+     const gap=x.net-(x.a+x.f);
+     // Do not classify ITB aggregate residual as trading P&L or error.
+     cards.push({title:book.label+' · Đối chiếu Net',detail:`Net báo cáo − (Tài sản + Nguồn vốn) = ${display(gap,2)} tỷ VND. ${book.id==='itb'?'ITB tổng cần đối chiếu phạm vi book thành phần.':'Cùng nguồn và ngày dữ liệu.'}`,kind:Math.abs(gap)<=0.01?'ok':'warn'});
+    }
+   }
+   const staleness=bk.filter(b=>dict[b.id].date&&dict[b.id].date!==asOf);
+   if(staleness.length)cards.push({title:'Book khác ngày báo cáo',detail:staleness.map(b=>b.label+' '+shortDate(dict[b.id].date)).join(' · '),kind:'warn'});
+   risk.innerHTML=cards.map(x=>`<div class="book-risk-entry ${x.kind}"><span class="book-risk-icon">${x.kind==='ok'?'✓':'!'}</span><div><strong>${esc(x.title)}</strong><p>${esc(x.detail)}</p></div></div>`).join('');
+  }
+ }
+ const map=$('#bookSourceMap');
+ if(map){
+  const data=state.data?.mapping||{};
+  const items=Object.entries(data).filter(([k])=>k.startsWith('book_'));
+  map.innerHTML=items.length?`<table class="data-table"><thead><tr><th>Chỉ tiêu</th><th>Sheet</th><th>Tên trường gốc</th><th>Vị trí dò được</th></tr></thead><tbody>${items.slice(0,120).map(([name,x])=>`<tr><td>${esc(name.replace(/^book_/,''))}</td><td>${esc(x.sheet)}</td><td>${esc(x.field)}</td><td>Cột ${esc(String(x.column))}</td></tr>`).join('')}</tbody></table>`:'<div class="book-empty-compact">Tên trường gốc và vị trí được xác định khi nạp workbook.</div>';
+ }
+ renderMonthlyBooksV14();
+}
+
+function renderMonthlyBooksV14(){
+ const box=$('#bookMonthlyTable'),filter=$('#bookMonthFilter');
+ if(!box||!filter)return;
+ const items=(state.data?.monthlyBooks||[]).filter(r=>r?.month&&['VND','USD'].includes(r.currency));
+ const months=[...new Set(items.map(x=>x.month))].sort().reverse();
+ const selected=months.includes(filter.value)?filter.value:months[0];
+ filter.innerHTML=months.map(month=>`<option value="${month}">${month.split('-').reverse().join('/')}</option>`).join('');
+ if(selected)filter.value=selected;
+ filter.disabled=!months.length;
+ filter.onchange=()=>renderMonthlyBooksV14();
+ if(!months.length){box.innerHTML='<div class="book-empty-compact">Nạp MB MM.xlsx để xem QMBQ, LSBQ và kỳ hạn theo tháng từ sheet Tong hop MM.</div>';return}
+ const names={ld_itb:'L&D Interbank',ld_alm:'L&D ALM',swp:'Swap MM',repo:'Repo / Reso',cd:'CD / Bond PAP',trading:'Bond Trading',total:'Tổng theo báo cáo'};
+ const ordered=['ld_itb','ld_alm','cd','trading','swp','repo','total'];
+ const display=(v,d=1)=>v===undefined||v===null?'—':n(v,{d});
+ const recs=items.filter(x=>x.month===selected).sort((a,b)=>a.currency.localeCompare(b.currency)||ordered.indexOf(a.book)-ordered.indexOf(b.book));
+ box.innerHTML=`<table class="book-table"><thead><tr><th>Book / loại tiền</th><th class="num">QMBQ tài sản</th><th class="num">QMBQ nguồn vốn</th><th class="num">LSBQ cho vay (%)</th><th class="num">LSBQ đi vay (%)</th><th class="num">KHBQ cho vay (ngày)</th><th class="num">KHBQ đi vay (ngày)</th><th class="num">NIM theo báo cáo (%)</th></tr></thead><tbody>${recs.map(x=>{
+ const cls=x.book==='total'?'book-control-row':'',unit=x.currency==='VND'?'tỷ VND':'triệu USD';
+ return `<tr class="${cls}"><td><strong>${esc(names[x.book]||x.book)}</strong><small>${unit} · QMBQ tháng ${esc(selected)}</small></td><td class="num">${display(x.asset)}</td><td class="num">${display(x.fund)}</td><td class="num">${display(x.asset_rate_pct,2)}</td><td class="num">${display(x.fund_rate_pct,2)}</td><td class="num">${display(x.asset_term_days)}</td><td class="num">${display(x.fund_term_days)}</td><td class="num">${display(x.reported_nim_pct,2)}</td></tr>`;
+ }).join('')}</tbody></table>`;
+}
+// Book import buttons are delegated to support dynamic panels.
+document.addEventListener('click',ev=>{if(ev.target.closest('[data-import-book]')){$('#filePicker').click()}});
 mainV13();

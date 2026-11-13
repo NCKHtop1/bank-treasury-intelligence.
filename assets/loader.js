@@ -42,7 +42,7 @@ const ldScale=sum(secured,unsecured),ldRate=val(col,'ld_vnd_rate'),funding=val(c
 const nim=ldRate!=null&&funding!=null&&ldBalance!=null&&Math.abs(ldBalance)>0?ldRate-funding:null;
 const item={...mr,date,loan_bn:loan,total_mm_bn:loan,invest_gtcg_bn:invest,reso_bn:reso,secured_bn:secured,unsecured_bn:unsecured,swap_bn:swap,trade_finance_bn:null,instrument_recon_gap_bn:loan!=null&&swap!=null?loan-(invest+reso+secured+unsecured+swap):null,gtcg_scale_bn:gtcg,ld_scale_bn:ldScale,ld_nim_pct:nim,pnl_bn:scale(val(col,'pnl_total')),fx_conversion_carry_days:gap};out.push(item)}
 if(out.some(x=>x.fx_conversion_carry_days>7))warns.push('Có phiên thiếu FX mid quá 7 ngày; không tính quy đổi USD sang VND cho các phiên này.');return {out,warns}}
-async function parseExcel(file){if(file.size>85*1024*1024)throw Error('Workbook quá lớn (>85 MB). Hãy chạy scripts/export_snapshot.py cục bộ để tránh treo trình duyệt.');if(!window.JSZip){await new Promise((ok,err)=>{const s=document.createElement('script');s.src=new URL('./vendor/jszip.min.js',import.meta.url).href;s.onload=ok;s.onerror=()=>err(Error('Không nạp được JSZip nội bộ'));document.head.appendChild(s)})}const zip=await window.JSZip.loadAsync(await file.arrayBuffer()),sheetPaths=await workbookSheets(zip),strings=await getStrings(zip);if(!sheetPaths.TongHop)return parseAlternateWorkbookV13(zip,sheetPaths,strings,file);const tong=await readSheet(zip,sheetPaths.TongHop,strings);const labels=new Map(),dates=new Map();const dateCandidates=[...tong].filter(([row])=>row<=50).map(([row,cols])=>({row,cols,dates:[...cols].filter(([c,v])=>c>=2&&isoDate(v)).length})).sort((a,b)=>b.dates-a.dates);const header=dateCandidates[0];if(!header||header.dates<2)throw Error('Không tìm thấy hàng tiêu đề ngày trong TongHop (quét 50 dòng đầu).');for(const [row,cols] of tong){if(row===header.row){for(const [col,val] of cols){if(col>=2){const day=isoDate(val);if(day)dates.set(day,col)}}}else if(cols.has(1))labels.set(row,cols.get(1))}const r=rowFinder(labels);const def={interbank_vnd_loan:['[VND] - Cho Vay','INTERBANK'],interbank_usd_loan:['[USD] - Cho Vay','INTERBANK'],reso_vnd:['[VND] - RESO','REPO AND RESO'],bond_pap:['Du No Thoi Diem BOND PAP',null],bond_trading:['Du No Thoi Diem BOND TRADING',null],bond_afs:['Du No Thoi Diem BOND AFS',null],secured_vnd:['Cho vay TSDB VND',null],secured_usd:['Cho vay TSDB USD',null],unsecured_vnd:['Cho vay tin chap vnd',null],unsecured_usd:['Cho vay tin chap USD',null],cd_maturity_vnd:['[VND] - CD Đáo Hạn',null],ld_vnd_balance:['[VND] - Cho Vay','LOAN AND DEPOSIT'],ld_vnd_rate:['[VND] - LS cho vay BQ','LOAN AND DEPOSIT'],mm_funding_vnd_rate:['[VND] - LS di vay BQ (Đầu Vào)',null],pnl_total:['PnL hàng ngày',null]};const mapping={},raws={};for(const [key,[label,block]] of Object.entries(def)){const index=r(label,block);mapping[key]=index;raws[key]=tong.get(index)||new Map()}
+async function parseExcel(file){if(file.size>85*1024*1024)throw Error('Workbook quá lớn (>85 MB). Hãy chạy scripts/export_snapshot.py cục bộ để tránh treo trình duyệt.');if(!window.JSZip){await new Promise((ok,err)=>{const s=document.createElement('script');s.src=new URL('./vendor/jszip.min.js',import.meta.url).href;s.onload=ok;s.onerror=()=>err(Error('Không nạp được JSZip nội bộ'));document.head.appendChild(s)})}const zip=await window.JSZip.loadAsync(await file.arrayBuffer()),sheetPaths=await workbookSheets(zip),strings=await getStrings(zip);if(!sheetPaths.TongHop){const data=await parseAlternateWorkbookV13(zip,sheetPaths,strings,file);return sheetNamedV13(sheetPaths,'ITB')?enrichBookWorkbookV14(data,zip,sheetPaths,strings):data;}const tong=await readSheet(zip,sheetPaths.TongHop,strings);const labels=new Map(),dates=new Map();const dateCandidates=[...tong].filter(([row])=>row<=50).map(([row,cols])=>({row,cols,dates:[...cols].filter(([c,v])=>c>=2&&isoDate(v)).length})).sort((a,b)=>b.dates-a.dates);const header=dateCandidates[0];if(!header||header.dates<2)throw Error('Không tìm thấy hàng tiêu đề ngày trong TongHop (quét 50 dòng đầu).');for(const [row,cols] of tong){if(row===header.row){for(const [col,val] of cols){if(col>=2){const day=isoDate(val);if(day)dates.set(day,col)}}}else if(cols.has(1))labels.set(row,cols.get(1))}const r=rowFinder(labels);const def={interbank_vnd_loan:['[VND] - Cho Vay','INTERBANK'],interbank_usd_loan:['[USD] - Cho Vay','INTERBANK'],reso_vnd:['[VND] - RESO','REPO AND RESO'],bond_pap:['Du No Thoi Diem BOND PAP',null],bond_trading:['Du No Thoi Diem BOND TRADING',null],bond_afs:['Du No Thoi Diem BOND AFS',null],secured_vnd:['Cho vay TSDB VND',null],secured_usd:['Cho vay TSDB USD',null],unsecured_vnd:['Cho vay tin chap vnd',null],unsecured_usd:['Cho vay tin chap USD',null],cd_maturity_vnd:['[VND] - CD Đáo Hạn',null],ld_vnd_balance:['[VND] - Cho Vay','LOAN AND DEPOSIT'],ld_vnd_rate:['[VND] - LS cho vay BQ','LOAN AND DEPOSIT'],mm_funding_vnd_rate:['[VND] - LS di vay BQ (Đầu Vào)',null],pnl_total:['PnL hàng ngày',null]};const mapping={},raws={};for(const [key,[label,block]] of Object.entries(def)){const index=r(label,block);mapping[key]=index;raws[key]=tong.get(index)||new Map()}
 const market=new Map();const set=(date,key,value)=>{if(!date||!dates.has(date)||value==null)return;if(!market.has(date))market.set(date,{});market.get(date)[key]=value};const warnings=['Trade Finance chưa có nguồn trong TongHop được xác nhận. Không tự gán "Cho vay FI" vào Trade Finance.'];const safeRead=async(name,maxCol)=>sheetPaths[name]?readSheet(zip,sheetPaths[name],strings,{maxCol}):new Map();const freshMap={};
 const fx=await safeRead('Ty gia',6);for(const [nr,c] of fx){if(nr===1)continue;const date=isoDate(c.get(1));set(date,'fx_ask',rawNum(c.get(4)));set(date,'fx_bid',rawNum(c.get(5)));set(date,'fx_mid',rawNum(c.get(6)))}
 const itb=await safeRead('LS ITB',12);const headers=new Map();const bestItbHeader=findHeaderV13(itb,['MMONVND','MMSWVND','MM1MVND','MM3MVND']);for(const [col,title] of bestItbHeader?.map?[...itb.get(bestItbHeader.nr)]:[])headers.set(cleanText(title).toUpperCase(),col);const itbDefs={MMONVND:'itb_on',MMSWVND:'itb_1w',MM2WVND:'itb_2w',MM1MVND:'itb_1m',MM2MVND:'itb_2m',MM3MVND:'itb_3m',MM6MVND:'itb_6m',MM9MVND:'itb_9m',MM1YVND:'itb_1y'};for(const [nr,c] of itb){if(nr===(bestItbHeader?.nr||1))continue;const date=isoDate(c.get(1));for(const [header,key] of Object.entries(itbDefs)){const col=headers.get(header);if(col){set(date,key,rawNum(c.get(col)));if(key==='itb_1w')set(date,'itb_sw',rawNum(c.get(col)))}}}
@@ -106,6 +106,164 @@ async function parseAlternateWorkbookV13(zip,paths,strings,file){
  if(!rows.some(x=>Object.keys(x).length>1))throw Error('Không nhận diện được trường từ tên cột trong workbook.');
  if(!rows.some(x=>x.loan_bn!=null))warnings.push('Workbook chỉ có thông tin lãi suất hoặc tỷ giá; các chỉ tiêu số dư sẽ xuất hiện khi có file MM.');
  return {meta:{kind:'private-local',source_file:file.name,asOf:rows.at(-1).date,createdAt:new Date().toISOString(),label:'Workbook',scope:sheetNamedV13(paths,'ITB')?'itb_vnd':'market_rates',mapping_count:Object.keys(mapped).length},series:rows,mapping:mapped,source_freshness:fresh,warnings};
+}
+
+function bookSpecV14(){
+ return [
+  ['itb','ITB',['Date','[VND] - Cho Vay','[VND] - Di Vay'],[
+   ['asset_vnd_bn','[VND] - Cho Vay','vnd'],['fund_vnd_bn','[VND] - Di Vay','fund_vnd'],
+   ['net_vnd_bn','[VND] - Net Cho Vay/Di Vay','vnd'],
+   ['asset_usd_m','[USD] - Cho Vay','usd'],['fund_usd_m','[USD] - Di Vay','fund_usd'],
+   ['net_usd_m','[USD] - Net Cho Vay/Di Vay','usd'],
+   ['loan_rate_pct','[VND] - LS cho vay BQ','rate'],['fund_rate_pct','[VND] - LS di vay BQ','rate'],
+   ['loan_term_days','[VND] - Ky han cho vay BQ','term'],['fund_term_days','[VND] - Ky han di vay BQ','term']]],
+  ['ld_itb','LD ITB',['Date','[VND] - Cho Vay','[VND] - Di Vay'],[
+   ['asset_vnd_bn','[VND] - Cho Vay','vnd'],['fund_vnd_bn','[VND] - Di Vay','fund_vnd'],
+   ['net_vnd_bn','[VND] - Net Cho Vay/Di Vay','vnd'],
+   ['asset_usd_m','[USD] - Cho Vay','usd'],['fund_usd_m','[USD] - Di Vay','fund_usd'],
+   ['net_usd_m','[USD] - Net Cho Vay/Di Vay','usd'],
+   ['loan_rate_pct','[VND] - LS cho vay BQ','rate'],['fund_rate_pct','[VND] - LS di vay BQ','rate'],
+   ['loan_term_days','[VND] - Ky han cho vay BQ','term'],['fund_term_days','[VND] - Ky han di vay BQ','term']]],
+  ['ld_alm','LD ALM',['Date','[VND] - Cho Vay','[VND] - Di Vay'],[
+   ['asset_vnd_bn','[VND] - Cho Vay','vnd'],['fund_vnd_bn','[VND] - Di Vay','fund_vnd'],
+   ['net_vnd_bn','[VND] - Net Cho Vay/Di Vay','vnd'],
+   ['asset_usd_m','[USD] - Cho Vay','usd'],['fund_usd_m','[USD] - Di Vay','fund_usd'],
+   ['net_usd_m','[USD] - Net Cho Vay/Di Vay','usd'],
+   ['loan_rate_pct','[VND] - LS cho vay BQ','rate'],['fund_rate_pct','[VND] - LS di vay BQ','rate'],
+   ['loan_term_days','[VND] - Ky han cho vay BQ','term'],['fund_term_days','[VND] - Ky han di vay BQ','term']]],
+  ['repo','Repo',['Date','[VND] - RESO','[VND] - REPO'],[
+   ['asset_vnd_bn','[VND] - RESO','vnd'],['fund_vnd_bn','[VND] - REPO','fund_vnd'],
+   ['loan_rate_pct','[VND - RESO] - LS Cho Vay BQ','rate'],['fund_rate_pct','[VND - REPO] - LS Di Vay BQ','rate'],
+   ['loan_term_days','[VND - RESO] - Ky Han Cho Vay B','term'],['fund_term_days','[VND - REPO] - Ky Han Di Vay BQ','term']]],
+  ['swp','SwP',['Date','[VND] - Du No','[VND] - Cho vay'],[
+   ['net_vnd_bn','[VND] - Du No','vnd'],['net_usd_m','[USD] - Du No','usd'],
+   ['asset_vnd_bn','[VND] - Cho vay','vnd'],['fund_vnd_bn','[VND] - Đi vay','fund_vnd'],
+   ['asset_usd_m','[USD] - Cho vay','usd'],['fund_usd_m','[USD] - Đi vay','fund_usd'],
+   ['loan_rate_pct','[VND] - LS cho vay BQ','rate'],['fund_rate_pct','[VND] - LS di vay BQ','rate'],
+   ['loan_term_days','[VND] - KY HAN cho vay BQ','term'],['fund_term_days','[VND] - KY HAN di vay BQ','term']]],
+  ['cd','CD',['Date','Du No Thoi Diem BOND PAP'],[
+   ['asset_vnd_bn','Du No Thoi Diem BOND PAP','vnd'],
+   ['loan_rate_pct','Lai suat cho vay binh quan BOND','rate'],
+   ['loan_term_days','Ky Han cho vay binh quan BOND P','term'],
+   ['trading_vnd_bn','Du No Thoi Diem BOND TRADING','vnd'],
+   ['afs_vnd_bn','Du No Thoi Diem BOND AFS','vnd'],
+   ['cd_maturity_vnd_bn','[VND] - CD Đáo Hạn','vnd']]],
+  ['ld_slide','Bảng L&D Slide',['Thời gian','Quy mô L&D','NIM'],[
+   ['ld_total_vnd_bn','Quy mô L&D','vnd'],
+   ['ld_nim_pct','NIM','rate'],
+   ['gap_term_days','Gap kỳ hạn','term'],
+   ['omo_vnd_bn','OMO','vnd']]]
+ ];
+}
+
+async function enrichBookWorkbookV14(out,zip,paths,strings){
+ const index=new Map((out.series||[]).map(r=>[r.date,r]));
+ const quality=[],mapping={...(out.mapping||{})},counts={};
+ const validDate=s=>/^\d{4}-\d{2}-\d{2}$/.test(s||'')&&s<='2100-01-01';
+ const getRow=date=>{if(!index.has(date))index.set(date,{date});return index.get(date)};
+ const spec=bookSpecV14();
+ for(const [code,sheet,anchors,fields] of spec){
+  const found=sheetNamedV13(paths,sheet);
+  if(!found){quality.push('Không có sheet '+sheet);continue}
+  let rows;
+  try{rows=await readSheet(zip,found[1],strings,{maxCol:40})}
+  catch(e){quality.push('Không đọc được sheet '+sheet+': '+e.message);continue}
+  const header=findHeaderV13(rows,anchors);const dateCol=headerColV13(header,'Date','Thời gian','Ngay');
+  if(!dateCol){quality.push('Thiếu cột ngày: '+sheet);continue}
+  const columns=[];
+  for(const [metric,label,unit] of fields){
+   const col=headerColV13(header,label);
+   if(col){
+    columns.push({metric,col,unit,label});
+    mapping['book_'+code+'_'+metric]={sheet,field:label,column:col,unit};
+   }
+  }
+  if(!columns.length){quality.push('Không nhận diện được trường số liệu: '+sheet);continue}
+  let readCount=0;
+  for(const [nr,cells] of rows){
+   if(nr<=header.nr)continue;
+   const day=isoDate(cells.get(dateCol));if(!validDate(day))continue;
+   const rec=getRow(day);let any=false;
+   for(const f of columns){
+    let v=rawNum(cells.get(f.col));
+    if(v===null||!Number.isFinite(v))continue;
+    if(f.unit==='rate'&&(v<0||v>45))continue;
+    if(f.unit==='term'&&(v<0||v>30000))continue;
+    if(f.unit==='vnd'||f.unit==='fund_vnd')v/=1e9;
+    if(f.unit==='usd'||f.unit==='fund_usd')v/=1e6;
+    if(f.unit==='fund_vnd'||f.unit==='fund_usd')v=-Math.abs(v);
+    rec['book_'+code+'_'+f.metric]=v;any=true;
+   }
+   if(any)readCount++;
+  }
+  counts[code]=readCount;
+  if(readCount<2)quality.push('Sheet '+sheet+' có ít hơn hai ngày hợp lệ');
+ }
+ out.series=[...index.values()].sort((a,b)=>a.date.localeCompare(b.date));
+ out.mapping=mapping;
+ out.meta={...(out.meta||{}),kind:'private-local',hasBooks:true,bookSheets:Object.keys(counts),bookObservations:counts,bookLatestDate:out.series.filter(x=>Object.keys(x).some(k=>k.startsWith('book_'))).at(-1)?.date||null};
+ out.source_freshness={...(out.source_freshness||{}),...Object.fromEntries(Object.entries(counts).filter(([,c])=>c>0).map(([code])=>[code,out.series.filter(r=>Object.keys(r).some(k=>k.startsWith('book_'+code+'_'))).at(-1)?.date||null]))};
+ out.warnings=[...(out.warnings||[]),...quality];
+ out.monthlyBooks=await parseMonthlyBooksV14(zip,paths,strings);
+ // Legacy fields feed existing MM/L&D modules without double counting.
+ for(const r of out.series){
+  if(r.book_itb_asset_vnd_bn!==undefined)r.loan_bn=r.book_itb_asset_vnd_bn;
+  if(r.book_ld_itb_asset_vnd_bn!==undefined)r.ld_scale_bn=r.book_ld_itb_asset_vnd_bn;
+  if(r.book_ld_itb_loan_rate_pct!=null&&r.book_ld_itb_fund_rate_pct!=null)
+    r.ld_nim_pct=r.book_ld_itb_loan_rate_pct-r.book_ld_itb_fund_rate_pct;
+  if(r.book_cd_asset_vnd_bn!=null)r.invest_gtcg_bn=r.book_cd_asset_vnd_bn;
+  if(r.book_repo_asset_vnd_bn!=null)r.reso_bn=r.book_repo_asset_vnd_bn;
+  if(r.book_swp_net_vnd_bn!=null)r.swap_bn=r.book_swp_net_vnd_bn;
+ }
+ return out;
+}
+
+async function parseMonthlyBooksV14(zip,paths,strings){
+ const sheet=sheetNamedV13(paths,'Tong hop MM');
+ if(!sheet)return [];
+ const rows=await readSheet(zip,sheet[1],strings,{maxCol:16});
+ const nameBook=s=>{
+  const k=normFieldV13(s);
+  if(k==='LDINTERBANK')return 'ld_itb';
+  if(k==='LDALM')return 'ld_alm';
+  if(k==='CD')return 'cd';
+  if(k==='BONDTRADING')return 'trading';
+  if(k==='SWAP')return 'swp';
+  if(k==='RESO'||k==='REPO')return 'repo';
+  if(k==='TOTALVND'||k==='TOTALUSD')return 'total';
+  return null;
+ };
+ const group=new Map();let current=null,assetCcy='VND',fundCcy='VND';
+ const add=(row,book,currency,side,balance,rate,term)=>{
+  const v=rawNum(balance);if(v===null||!Number.isFinite(v))return;
+  if(!['VND','USD'].includes(currency))return;
+  const key=[current,book,currency].join('|');
+  if(!group.has(key))group.set(key,{month:current,book,currency,source:'Tong hop MM'});
+  const target=group.get(key),scaled=v/(currency==='VND'?1e9:1e6);
+  target[side]=side==='fund'?-Math.abs(scaled):scaled;
+  const r=rawNum(rate),t=rawNum(term);
+  if(r!==null&&r>=0&&r<=45)target[side+'_rate_pct']=r;
+  if(t!==null&&t>=0&&t<=30000)target[side+'_term_days']=t;
+  const reportedNIM=rawNum(row.get(13));
+  if(reportedNIM!==null&&reportedNIM>-45&&reportedNIM<45)target.reported_nim_pct=reportedNIM;
+ };
+ for(const [,row] of rows){
+  const marker=String(row.get(1)||'').trim().match(/^T\s*(\d{1,2})\s*[.\/]\s*(\d{2,4})$/i);
+  if(marker){
+   const month=Number(marker[1]),y=Number(marker[2]);
+   current=month>=1&&month<=12?(y<100?2000+y:y)+'-'+String(month).padStart(2,'0'):null;
+   assetCcy='VND';fundCcy='VND';
+  }
+  if(!current)continue;
+  const aMark=normFieldV13(row.get(2)),fMark=normFieldV13(row.get(7));
+  if(aMark==='VND'||aMark==='USD')assetCcy=aMark;
+  if(fMark==='VND'||fMark==='USD')fundCcy=fMark;
+  const a=nameBook(row.get(3)),f=nameBook(row.get(8));
+  const aTotal=nameBook(row.get(2)),fTotal=nameBook(row.get(7));
+  if(a||aTotal)add(row,a||aTotal,aTotal?aTotal==='total'&&aMark==='TOTALUSD'?'USD':'VND':assetCcy,'asset',row.get(4),row.get(5),row.get(6));
+  if(f||fTotal)add(row,f||fTotal,fTotal?fMark==='TOTALUSD'?'USD':'VND':fundCcy,'fund',row.get(9),row.get(10),row.get(11));
+ }
+ return [...group.values()].sort((a,b)=>a.month.localeCompare(b.month)||a.book.localeCompare(b.book)||a.currency.localeCompare(b.currency));
 }
 
 function parseCSV(text,file){const lines=text.replace(/^\ufeff/,'').trim().split(/\r?\n/);const cols=lines.shift().split(',').map(x=>x.trim().replace(/^"|"$/g,''));if(!cols.includes('date'))throw Error('CSV cần có cột date (YYYY-MM-DD)');const data=[];for(const line of lines){if(!line.trim())continue;const values=line.split(',');const item={};for(let j=0;j<cols.length;j++){const key=cols[j];item[key]=key==='date'?isoDate(values[j]):rawNum(values[j])}if(item.date)data.push(item)}return {meta:{kind:'private-local',source_file:file.name,asOf:data.at(-1)?.date},source_freshness:{CSV:data.at(-1)?.date},series:data,warnings:['CSV phổ thông không kiểm chứng lại được mapping nghiệp vụ. Chỉ sử dụng các trường đã xuất với chuẩn đúng.']}}
