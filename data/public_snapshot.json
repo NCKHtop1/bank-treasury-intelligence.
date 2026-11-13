@@ -1,0 +1,848 @@
+{
+  "schemaVersion": 2,
+  "meta": {
+    "kind": "public_snapshot",
+    "description": "Last verified public observations, refresh does not change observation dates",
+    "checkedAt": "2026-11-13T08:00:00+07:00",
+    "tenors": [
+      "ON",
+      "1W",
+      "2W",
+      "1M",
+      "3M",
+      "6M",
+      "9M"
+    ]
+  },
+  "interbank": [
+    {
+      "date": "2026-10-29",
+      "tenor": "ON",
+      "rate_pct": 3.74,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-29",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-10-29",
+      "tenor": "1W",
+      "rate_pct": 5.19,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-29",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-10-29",
+      "tenor": "2W",
+      "rate_pct": 5.49,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-29",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-10-29",
+      "tenor": "1M",
+      "rate_pct": 5.06,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-29",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-10-29",
+      "tenor": "3M",
+      "rate_pct": 7.56,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-29",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-10-29",
+      "tenor": "6M",
+      "rate_pct": 8.0,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-29",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-10-29",
+      "tenor": "9M",
+      "rate_pct": 7.11,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-29",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-10-30",
+      "tenor": "ON",
+      "rate_pct": 5.79,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-30",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-10-30",
+      "tenor": "1W",
+      "rate_pct": 5.36,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-30",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-10-30",
+      "tenor": "2W",
+      "rate_pct": 5.5,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-30",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-10-30",
+      "tenor": "1M",
+      "rate_pct": 5.59,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-30",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-10-30",
+      "tenor": "3M",
+      "rate_pct": 7.47,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-30",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-10-30",
+      "tenor": "6M",
+      "rate_pct": 8.0,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-30",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-10-30",
+      "tenor": "9M",
+      "rate_pct": 7.11,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-10-30",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-02",
+      "tenor": "ON",
+      "rate_pct": 4.74,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-02",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-02",
+      "tenor": "1W",
+      "rate_pct": 4.82,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-02",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-02",
+      "tenor": "2W",
+      "rate_pct": 4.73,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-02",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-02",
+      "tenor": "1M",
+      "rate_pct": 5.74,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-02",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-02",
+      "tenor": "3M",
+      "rate_pct": 6.83,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-02",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-02",
+      "tenor": "6M",
+      "rate_pct": 8.0,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-02",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-02",
+      "tenor": "9M",
+      "rate_pct": 7.11,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-02",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-03",
+      "tenor": "ON",
+      "rate_pct": 3.81,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-03",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-03",
+      "tenor": "1W",
+      "rate_pct": 4.26,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-03",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-03",
+      "tenor": "2W",
+      "rate_pct": 5.02,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-03",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-03",
+      "tenor": "1M",
+      "rate_pct": 4.85,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-03",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-03",
+      "tenor": "3M",
+      "rate_pct": 7.54,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-03",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-03",
+      "tenor": "6M",
+      "rate_pct": 8.0,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-03",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-03",
+      "tenor": "9M",
+      "rate_pct": 7.11,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-03",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-04",
+      "tenor": "ON",
+      "rate_pct": 5.02,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-04",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-04",
+      "tenor": "1W",
+      "rate_pct": 5.79,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-04",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-04",
+      "tenor": "2W",
+      "rate_pct": 5.03,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-04",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-04",
+      "tenor": "1M",
+      "rate_pct": 4.46,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-04",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-04",
+      "tenor": "3M",
+      "rate_pct": 6.84,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-04",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-04",
+      "tenor": "6M",
+      "rate_pct": 7.2,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-04",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-04",
+      "tenor": "9M",
+      "rate_pct": 7.11,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-04",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-05",
+      "tenor": "ON",
+      "rate_pct": 4.51,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-05",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-05",
+      "tenor": "1W",
+      "rate_pct": 5.0,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-05",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-05",
+      "tenor": "2W",
+      "rate_pct": 5.1,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-05",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-05",
+      "tenor": "1M",
+      "rate_pct": 5.27,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-05",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-05",
+      "tenor": "3M",
+      "rate_pct": 6.6,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-05",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-05",
+      "tenor": "6M",
+      "rate_pct": 6.38,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-05",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-05",
+      "tenor": "9M",
+      "rate_pct": 7.11,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-05",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-06",
+      "tenor": "ON",
+      "rate_pct": 6.07,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-06",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-06",
+      "tenor": "1W",
+      "rate_pct": 5.7,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-06",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-06",
+      "tenor": "2W",
+      "rate_pct": 5.38,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-06",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-06",
+      "tenor": "1M",
+      "rate_pct": 4.97,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-06",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-06",
+      "tenor": "3M",
+      "rate_pct": 7.0,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-06",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-06",
+      "tenor": "6M",
+      "rate_pct": 7.97,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-06",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-06",
+      "tenor": "9M",
+      "rate_pct": 7.11,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-06",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-09",
+      "tenor": "ON",
+      "rate_pct": 4.65,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-09",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-09",
+      "tenor": "1W",
+      "rate_pct": 4.93,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-09",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-09",
+      "tenor": "2W",
+      "rate_pct": 4.84,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-09",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-09",
+      "tenor": "1M",
+      "rate_pct": 5.07,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-09",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-09",
+      "tenor": "3M",
+      "rate_pct": 6.39,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-09",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-09",
+      "tenor": "6M",
+      "rate_pct": 6.9,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-09",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-09",
+      "tenor": "9M",
+      "rate_pct": 6.96,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-09",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-10",
+      "tenor": "ON",
+      "rate_pct": 4.4,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-10",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-10",
+      "tenor": "1W",
+      "rate_pct": 4.74,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-10",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-10",
+      "tenor": "2W",
+      "rate_pct": 5.06,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-10",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-10",
+      "tenor": "1M",
+      "rate_pct": 5.66,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-10",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-10",
+      "tenor": "3M",
+      "rate_pct": 6.41,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-10",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-10",
+      "tenor": "6M",
+      "rate_pct": 7.9,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-10",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-10",
+      "tenor": "9M",
+      "rate_pct": 6.96,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-10",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-11",
+      "tenor": "ON",
+      "rate_pct": 4.33,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-11",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-11",
+      "tenor": "1W",
+      "rate_pct": 4.66,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-11",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-11",
+      "tenor": "2W",
+      "rate_pct": 6.05,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-11",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-11",
+      "tenor": "1M",
+      "rate_pct": 5.59,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-11",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-11",
+      "tenor": "3M",
+      "rate_pct": 6.33,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-11",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-11",
+      "tenor": "6M",
+      "rate_pct": 7.9,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-11",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-11",
+      "tenor": "9M",
+      "rate_pct": 6.96,
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "published_on": "2026-11-11",
+      "quality": "public_verified_snapshot",
+      "source_type": "sbv_daily_average"
+    }
+  ],
+  "marketQuotes": [
+    {
+      "date": "2026-11-12",
+      "tenor": "ON",
+      "rate_pct": 4.8,
+      "source": "Thị trường LNH · tổng hợp VFMIBA (VietnamNet)",
+      "source_url": "https://vietnamnet.vn/lai-suat-ngan-hang-hom-nay-13-11-2026-ong-lon-big4-giam-ky-han-15-18-thang-2574504.html",
+      "quality": "reported_secondary",
+      "source_type": "interbank_indicative_rounded"
+    },
+    {
+      "date": "2026-11-12",
+      "tenor": "1W",
+      "rate_pct": 4.8,
+      "source": "Thị trường LNH · tổng hợp VFMIBA (VietnamNet)",
+      "source_url": "https://vietnamnet.vn/lai-suat-ngan-hang-hom-nay-13-11-2026-ong-lon-big4-giam-ky-han-15-18-thang-2574504.html",
+      "quality": "reported_secondary",
+      "source_type": "interbank_indicative_rounded"
+    },
+    {
+      "date": "2026-11-12",
+      "tenor": "2W",
+      "rate_pct": 5.2,
+      "source": "Thị trường LNH · tổng hợp VFMIBA (VietnamNet)",
+      "source_url": "https://vietnamnet.vn/lai-suat-ngan-hang-hom-nay-13-11-2026-ong-lon-big4-giam-ky-han-15-18-thang-2574504.html",
+      "quality": "reported_secondary",
+      "source_type": "interbank_indicative_rounded"
+    },
+    {
+      "date": "2026-11-12",
+      "tenor": "1M",
+      "rate_pct": 5.5,
+      "source": "Thị trường LNH · tổng hợp VFMIBA (VietnamNet)",
+      "source_url": "https://vietnamnet.vn/lai-suat-ngan-hang-hom-nay-13-11-2026-ong-lon-big4-giam-ky-han-15-18-thang-2574504.html",
+      "quality": "reported_secondary",
+      "source_type": "interbank_indicative_rounded"
+    }
+  ],
+  "fx": {
+    "date": "2026-11-13",
+    "rate": 25637,
+    "source": "Tỷ giá trung tâm · NCB/NHNN",
+    "source_url": "https://www.ncb-bank.vn/vi/ty-gia-tien-te",
+    "quality": "public_verified_snapshot",
+    "type": "central_reference"
+  },
+  "macro": {
+    "SOFR": {
+      "date": "2026-11-10",
+      "value": 3.89,
+      "source": "FRED · New York Fed",
+      "source_url": "https://fred.stlouisfed.org/series/SOFR",
+      "quality": "public_verified_snapshot"
+    },
+    "DGS10": {
+      "date": "2026-11-10",
+      "value": 4.98,
+      "source": "FRED · US Treasury 10Y",
+      "source_url": "https://fred.stlouisfed.org/series/DGS10",
+      "quality": "public_verified_snapshot"
+    }
+  },
+  "bonds": [
+    {
+      "date": "2026-11-11",
+      "tenor": "3Y",
+      "yield_pct": 3.72,
+      "source": "AAS Morning Market Bulletin",
+      "source_url": "https://phantich.aas.com.vn/insights/2026-11-12",
+      "quality": "public_verified_snapshot",
+      "source_type": "secondary_bond_yield"
+    },
+    {
+      "date": "2026-11-11",
+      "tenor": "5Y",
+      "yield_pct": 4.27,
+      "source": "AAS Morning Market Bulletin",
+      "source_url": "https://phantich.aas.com.vn/insights/2026-11-12",
+      "quality": "public_verified_snapshot",
+      "source_type": "secondary_bond_yield"
+    },
+    {
+      "date": "2026-11-11",
+      "tenor": "7Y",
+      "yield_pct": 4.34,
+      "source": "AAS Morning Market Bulletin",
+      "source_url": "https://phantich.aas.com.vn/insights/2026-11-12",
+      "quality": "public_verified_snapshot",
+      "source_type": "secondary_bond_yield"
+    },
+    {
+      "date": "2026-11-11",
+      "tenor": "10Y",
+      "yield_pct": 4.46,
+      "source": "AAS Morning Market Bulletin",
+      "source_url": "https://phantich.aas.com.vn/insights/2026-11-12",
+      "quality": "public_verified_snapshot",
+      "source_type": "secondary_bond_yield"
+    },
+    {
+      "date": "2026-11-11",
+      "tenor": "15Y",
+      "yield_pct": 4.57,
+      "source": "AAS Morning Market Bulletin",
+      "source_url": "https://phantich.aas.com.vn/insights/2026-11-12",
+      "quality": "public_verified_snapshot",
+      "source_type": "secondary_bond_yield"
+    }
+  ],
+  "news": [
+    {
+      "date": "2026-11-13",
+      "source": "VietnamNet",
+      "title": "Thị trường liên ngân hàng: cập nhật lãi suất ngày 12/11 và điều chỉnh huy động",
+      "link": "https://vietnamnet.vn/lai-suat-ngan-hang-hom-nay-13-11-2026-ong-lon-big4-giam-ky-han-15-18-thang-2574504.html"
+    },
+    {
+      "date": "2026-11-12",
+      "source": "AAS Research",
+      "title": "Bản tin thị trường 12/11: lãi suất liên ngân hàng, OMO và trái phiếu",
+      "link": "https://phantich.aas.com.vn/insights/2026-11-12"
+    },
+    {
+      "date": "2026-11-13",
+      "source": "NCB",
+      "title": "Bảng tỷ giá USD/VND và tỷ giá trung tâm ngày 13/11",
+      "link": "https://www.ncb-bank.vn/vi/ty-gia-tien-te"
+    }
+  ]
+}

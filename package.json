@@ -1,0 +1,14 @@
+{
+  "name": "bank-treasury-intelligence",
+  "version": "1.2.0",
+  "private": true,
+  "description": "Private-ready responsive treasury dashboard with hourly public market snapshots and local Excel analysis",
+  "scripts": {
+    "dev": "npx serve . -l 8000",
+    "check": "node --check assets/app.js && node --check assets/loader.js && node --check api/market.js && node --check api/assistant.js",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

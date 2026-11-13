@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+node_modules/
+.vercel/
+.DS_Store
+__pycache__/
+*.pyc
+*.xls
+*.xlsx
+*.xlsm
+*.csv
+private_*.json
+snapshot_*.json
+user_data/
+output/
+.Docker/
