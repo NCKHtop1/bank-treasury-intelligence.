@@ -18,4 +18,27 @@ function mmReconciliation(row){const keys=["invest_gtcg_bn","reso_bn","secured_b
 
 function mmValidateMetrics(rows){const warnings=[];const last=rows.at(-1)||{};const rec=mmReconciliation(last);if(rec.missing.length)warnings.push({level:"check",text:"Thiếu trường nguồn để đối chiếu: "+rec.missing.join(", ")});if(!rec.tradeFinanceMapped)warnings.push({level:"mapping",text:"Trade Finance chưa có trường nguồn được xác nhận trong TongHop."});if(rec.gap!=null&&Math.abs(rec.gap)>0.01)warnings.push({level:"alert",text:"Chênh lệch cơ cấu "+Math.abs(rec.gap).toFixed(2)+" tỷ VND; kiểm tra Trade Finance và định nghĩa Swap."});if(Number.isFinite(last.swap_bn)&&last.swap_bn<0)warnings.push({level:"alert",text:"Swap residual âm. Cần kiểm tra chồng lắp instrument/FX trước khi kết luận."});if(rows.filter(x=>Number.isFinite(x.loan_bn)).length<15)warnings.push({level:"check",text:"Chuỗi quy mô MM dưới 15 phiên; cảnh báo thống kê chưa đủ quan sát."});return warnings}
 
-export { mmMonthStart, mmShift, mmMonthEnd, mmWindow, mmSeriesStats, mmMetricSummary, mmAggregate, mmDetectAnomalies, mmReconciliation, mmValidateMetrics };
+export { mmComputeInstrument, mmMonthStart, mmShift, mmMonthEnd, mmWindow, mmSeriesStats, mmMetricSummary, mmAggregate, mmDetectAnomalies, mmReconciliation, mmValidateMetrics };
+
+
+function mmComputeInstrument(raw,fx){
+ const valid=v=>typeof v==="number"&&Number.isFinite(v),scale=v=>valid(v)?v/1e9:null;
+ const plus=(...a)=>a.every(valid)?a.reduce((s,v)=>s+v,0):null;
+ const fxOk=valid(fx)&&fx>10000&&fx<60000;
+ const converted=(vnd,usd)=>valid(vnd)&&valid(usd)&&(usd===0||fxOk)?scale(vnd+usd*(fxOk?fx:0)):null;
+ const loan=converted(raw.interbank_vnd_loan,raw.interbank_usd_loan);
+ const invest=scale(plus(raw.bond_pap,raw.bond_trading,raw.bond_afs));
+ const reso=scale(raw.reso_vnd);
+ const secured=converted(raw.secured_vnd,raw.secured_usd);
+ const unsecured=converted(raw.unsecured_vnd,raw.unsecured_usd);
+ const swap=plus(loan,...[invest,reso,secured,unsecured].map(x=>valid(x)?-x:null));
+ const tfKnown=Boolean(raw.hasTradeFinance);
+ const tVnd=valid(raw.trade_finance_vnd)?raw.trade_finance_vnd:0;
+ const tUsd=valid(raw.trade_finance_usd)?raw.trade_finance_usd:0;
+ const tf=tfKnown&&(valid(raw.trade_finance_vnd)||valid(raw.trade_finance_usd))&&(tUsd===0||fxOk)?scale(tVnd+tUsd*(fxOk?fx:0)):null;
+ const reconciled=plus(invest,reso,secured,unsecured,swap,tf??0);
+ const gtcg=scale(plus(raw.bond_trading,raw.bond_pap,valid(raw.cd_maturity_vnd)?-raw.cd_maturity_vnd:null));
+ const ldScale=plus(secured,unsecured);
+ const nim=valid(raw.ld_vnd_balance)&&raw.ld_vnd_balance>0&&valid(raw.ld_vnd_rate)&&valid(raw.mm_funding_vnd_rate)?raw.ld_vnd_rate-raw.mm_funding_vnd_rate:null;
+ return {loan_bn:loan,total_mm_bn:loan,invest_gtcg_bn:invest,reso_bn:reso,secured_bn:secured,unsecured_bn:unsecured,swap_bn:swap,trade_finance_bn:tf,instrument_recon_gap_bn:valid(loan)&&valid(reconciled)?loan-reconciled:null,gtcg_scale_bn:gtcg,ld_scale_bn:ldScale,ld_nim_pct:nim};
+}
