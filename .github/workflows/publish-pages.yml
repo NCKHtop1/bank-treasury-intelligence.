@@ -36,7 +36,7 @@ jobs:
           import assert from 'node:assert/strict';
           import {readFileSync} from 'node:fs';
           import {mmComputeInstrument,mmReconciliation,mmWindow,mmMetricSummary,mmDetectAnomalies,mmAggregate} from './assets/treasury-analytics.mjs';
-          import {renderTreasuryWorkspace,mmAnalystAnswer} from './assets/treasury-workspace.mjs';
+          import {renderTreasuryWorkspace,mmAnalystAnswer,mWorkspaceHTML} from './assets/treasury-workspace.mjs';
           const input={interbank_vnd_loan:100e9,interbank_usd_loan:2e6,bond_pap:50e9,bond_trading:20e9,bond_afs:10e9,reso_vnd:5e9,secured_vnd:30e9,secured_usd:.4e6,unsecured_vnd:12e9,unsecured_usd:.08e6,cd_maturity_vnd:10e9,ld_vnd_balance:55e9,ld_vnd_rate:8,mm_funding_vnd_rate:5};
           const output=mmComputeInstrument(input,25000);
           for(const [key,val] of Object.entries({loan_bn:150,invest_gtcg_bn:80,reso_bn:5,secured_bn:40,unsecured_bn:14,swap_bn:11,gtcg_scale_bn:60,ld_scale_bn:54,ld_nim_pct:3,instrument_recon_gap_bn:0}))assert.ok(Math.abs(output[key]-val)<1e-9,key);
@@ -50,6 +50,14 @@ jobs:
           assert.equal(mmMetricSummary(r,'loan_bn',mmWindow(r,'2026-11-02','prev_mtd')).current.mean,30);
           assert.equal(mmAggregate(r,'monthly_eop').at(-1).loan_bn,40);
           assert.equal(typeof renderTreasuryWorkspace,'function');
+          const partial={date:'2026-11-12',itb_on:5.6};
+          const mmRow={date:'2026-10-26',loan_bn:100,gtcg_scale_bn:55,ld_scale_bn:30,ld_nim_pct:2,invest_gtcg_bn:40,reso_bn:10,secured_bn:20,unsecured_bn:10,swap_bn:20,trade_finance_bn:null};
+          const view=mWorkspaceHTML([mmRow,partial],{period:'3M',freq:'daily'});
+          assert.equal(view.latest.date,'2026-10-26');
+          assert.ok(view.dashboard.includes('26/10/2026'));
+          assert.ok(view.detailed.includes('Trade Finance'));
+          const answer=mmAnalystAnswer('cơ cấu book',{meta:{kind:'private-local'},series:[mmRow,partial]});
+          assert.ok(answer.includes('26/10/2026'));
           assert.equal(typeof mmAnalystAnswer,'function');
           assert.ok(readFileSync('index.html','utf8').includes('id="mmAnalyticWorkspace"'));
           assert.ok(readFileSync('assets/app.js','utf8').includes('VBMA_FIELDS'));
