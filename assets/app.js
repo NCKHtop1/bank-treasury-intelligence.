@@ -315,9 +315,44 @@ function renderMetadataV13(){
  $('#aiMarketMode').textContent=state.publicMarket.interbank?.length?'Đã nạp':'Đang tải';
 }
 
+function bookAnswerV14(question){
+ const q=String(question||'').toLowerCase();
+ const kinds=[
+  {id:'ld_itb',name:'L&D Interbank',sheet:'LD ITB',match:/l\s*&\s*d\s*(itb|interbank)|ld\s*itb|ld\s*interbank|l&d liên ngân hàng/i},
+  {id:'ld_alm',name:'L&D ALM',sheet:'LD ALM',match:/l\s*&\s*d\s*alm|ld\s*alm|book alm|alm book/i},
+  {id:'repo',name:'Repo / Reso',sheet:'Repo',match:/\brepo\b|\breso\b/i},
+  {id:'swp',name:'Swap MM',sheet:'SwP',match:/swap\s*mm|\bswp\b|book swap/i},
+  {id:'cd',name:'CD / Bond PAP',sheet:'CD',match:/\bpap\b|book\s*cd|\bcd\s*\/|certificate of deposit/i},
+  {id:'trading',name:'Bond Trading',sheet:'CD',match:/bond\s*trading|trading\s*book/i},
+  {id:'afs',name:'Bond AFS',sheet:'CD',match:/\bafs\b|bond\s*afs/i},
+  {id:'itb',name:'ITB tổng',sheet:'ITB',match:/itb\s*tổng|tổng\s*itb|book\s*itb/i}
+ ];
+ const selected=kinds.find(x=>x.match.test(q));
+ const general=/\bbooks?\b|sổ kinh doanh|danh mục book|các book/.test(q);
+ if(!selected&&!general)return null;
+ const records=state.data?.series||[];
+ const fmt=(value,unit='')=>value===null||value===undefined?'—':n(value,{d:2})+(unit?' '+unit:'');
+ const key=(id,m)=>'book_'+(['trading','afs'].includes(id)?'cd':id)+'_'+(id==='trading'?'trading_vnd_bn':id==='afs'?'afs_vnd_bn':m);
+ const find=(id)=>[...records].reverse().find(x=>Object.keys(x).some(k=>k.startsWith('book_'+(['trading','afs'].includes(id)?'cd':id)+'_')));
+ if(!state.data?.meta?.hasBooks&&!records.some(x=>Object.keys(x).some(k=>k.startsWith('book_'))))
+  return 'Dashboard hỗ trợ ITB tổng, L&D Interbank, L&D ALM, Repo/Reso, Swap MM, CD/PAP, Bond Trading và Bond AFS. Nạp MB MM.xlsx hoặc file book đã xuất để phân tích các số dư thực tế.';
+ if(!selected){
+  const coverage=kinds.map(x=>`${x.name}: ${shortDate(find(x.id)?.date)}`).join('\n');
+  return `Có ${kinds.filter(x=>find(x.id)).length}/${kinds.length} book được nhận diện từ workbook.\n${coverage}\nITB tổng là số kiểm soát, không cộng thêm vào book thành phần.`;
+ }
+ const r=find(selected.id);
+ if(!r)return `Chưa nhận diện được ${selected.name} trong dữ liệu đang mở. Kiểm tra sheet ${selected.sheet} và tên các trường nguồn.`;
+ const get=m=>r[key(selected.id,m)]??null;
+ const asset=get('asset_vnd_bn'),fund=get('fund_vnd_bn'),rawNet=get('net_vnd_bn');
+ const net=rawNet!==null?rawNet:asset!==null&&fund!==null?asset+fund:null;
+ const loanRate=get('loan_rate_pct'),fundRate=get('fund_rate_pct'),term=get('loan_term_days');
+ return `${selected.name} — ${shortDate(r.date)} · Sheet ${selected.sheet}\nTài sản VND: ${fmt(asset,'tỷ')}; Nguồn vốn VND: ${fmt(fund,'tỷ')}; Net VND: ${fmt(net,'tỷ')}.\nCho vay USD: ${fmt(get('asset_usd_m'),'triệu USD')}; Đi vay USD: ${fmt(get('fund_usd_m'),'triệu USD')}.\nLSBQ cho vay: ${fmt(loanRate,'%/năm')}; LSBQ đi vay: ${fmt(fundRate,'%/năm')}; KHBQ cho vay: ${fmt(term,'ngày')}.\n${selected.id==='itb'?'ITB tổng là số kiểm soát; không cộng lại với các book thành phần.':'Số liệu lấy đúng từ tên trường và ngày trong workbook, không nội suy nguồn vốn còn thiếu.'}`;
+}
+
 function localAnswerV13(input){
  const q=String(input||'').toLowerCase();const lastRow=last(),on=publicDisplay('ON'),fx=state.publicMarket.fx,sofr=state.publicMarket.macro?.SOFR;
  const privateActive=state.data?.meta?.kind==='private-local';
+ const bookResponse=bookAnswerV14(q);if(bookResponse!==null)return bookResponse;
  const termMatch=q.match(/(?:\b|^)(on|1w|2w|1m|3m|6m|9m)(?:\b|$)/i);
  const norm=t=>({on:'ON','1w':'1W','2w':'2W','1m':'1M','3m':'3M','6m':'6M','9m':'9M'})[t.toLowerCase()]||'ON';
  if(/nguồn|mới nhất|cập nhật|ngày nào|khi nào/.test(q)){
