@@ -1,0 +1,44 @@
+/* TreasuryIQ: Loan, Deposit, Swap and book charts (client-side only). */
+.personal-dashboard{margin:12px 0 22px;min-width:0}
+.personal-dashboard[hidden]{display:none!important}
+.personal-head{display:flex;justify-content:space-between;align-items:flex-end;gap:15px;margin-bottom:13px}
+.personal-head h2{font-size:23px;font-weight:790;color:#1d3b53;letter-spacing:-.45px;line-height:1.25;margin:0 0 4px}
+.personal-head p{font-size:12.5px;line-height:1.4;color:#718498;margin:0}
+.personal-date{border:1px solid #cfe7e0;background:#e9f7f3;color:#087f73;padding:7px 11px;border-radius:9px;font-size:12px;font-weight:730;white-space:nowrap}
+.personal-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.personal-stat{border:1px solid #e0e8ef;background:#fff;border-radius:12px;padding:17px 15px 15px;min-height:115px;box-shadow:0 7px 20px rgba(22,55,82,.045);min-width:0}
+.personal-stat-title{color:#647b8e;font-size:12.5px;font-weight:670;line-height:1.4}
+.personal-stat-value{color:#163b5c;font-size:clamp(20px,2.3vw,28px);font-weight:790;letter-spacing:-.5px;line-height:1.22;margin:8px 0 5px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.personal-stat-unit{font-size:11px;color:#7f90a0;font-weight:560;letter-spacing:0;margin-left:4px}
+.personal-stat-meta{color:#93a1ae;font-size:10.5px}
+.personal-chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.personal-chart-wide{grid-column:1/-1}
+.personal-chart-card{border:1px solid #e0e8ef;background:#fff;border-radius:12px;padding:19px 18px 14px;min-width:0;overflow:hidden;box-shadow:0 8px 24px rgba(18,48,76,.04)}
+.personal-chart-card header{display:flex;flex-wrap:wrap;gap:7px;align-items:center;justify-content:space-between;margin-bottom:8px}
+.personal-chart-card h3{font-size:15.5px;font-weight:760;color:#1d4663;margin:0}
+.personal-chart-card header span{font-size:11px;color:#869bae}
+.personal-plot{width:100%;max-width:100%;min-height:210px;overflow:hidden}
+.personal-plot>svg{display:block;width:100%;height:auto}
+.personal-plot>.chart-error{color:#6c8498;font-size:12px}
+body.has-personal #kpiGrid{display:none}
+body.dark .personal-stat,body.dark .personal-chart-card{background:#172b41;border-color:#2d5068}
+body.dark .personal-head h2,body.dark .personal-chart-card h3,body.dark .personal-stat-value{color:#e2eff6}
+@media(max-width:1000px){.personal-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+.personal-dashboard{margin:10px 0 18px}
+.personal-head{align-items:flex-start;flex-direction:column;gap:9px}
+.personal-head h2{font-size:20px}
+.personal-head p{font-size:11.5px}
+.personal-date{font-size:10.5px;padding:5px 9px}
+.personal-card-grid{gap:8px;margin-bottom:11px}
+.personal-stat{padding:12px 11px;min-height:103px}
+.personal-stat-title{font-size:11px}
+.personal-stat-value{font-size:clamp(19px,5.5vw,25px);margin-top:8px}
+.personal-stat-unit{display:block;margin:2px 0 0;font-size:10.5px}
+.personal-stat-meta{font-size:10px}
+.personal-chart-grid{grid-template-columns:minmax(0,1fr);gap:11px}
+.personal-chart-wide{grid-column:1}
+.personal-chart-card{padding:15px 11px 12px}
+.personal-chart-card h3{font-size:15px}
+.personal-plot{min-height:190px}
+}
