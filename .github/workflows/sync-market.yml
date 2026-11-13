@@ -13,7 +13,7 @@ permissions:
   contents: write
   actions: write
 concurrency:
-  group: treasuryiq-github-pages
+  group: treasuryiq-hourly-sync
   cancel-in-progress: false
 jobs:
   refresh:
