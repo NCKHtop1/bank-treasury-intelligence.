@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-16T04:42:49.746Z",
+    "checkedAt": "2026-11-16T13:20:42.075Z",
     "tenors": [
       "ON",
       "1W",
@@ -1560,6 +1560,146 @@
       "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
       "quality": "public_observed",
       "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-12",
+      "tenor": "ON",
+      "rate_pct": 4.76,
+      "published_on": "2026-11-12",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-12",
+      "tenor": "1W",
+      "rate_pct": 4.83,
+      "published_on": "2026-11-12",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-12",
+      "tenor": "2W",
+      "rate_pct": 5.2,
+      "published_on": "2026-11-12",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-12",
+      "tenor": "1M",
+      "rate_pct": 5.53,
+      "published_on": "2026-11-12",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-12",
+      "tenor": "3M",
+      "rate_pct": 7.29,
+      "published_on": "2026-11-12",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-12",
+      "tenor": "6M",
+      "rate_pct": 6.9,
+      "published_on": "2026-11-12",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-12",
+      "tenor": "9M",
+      "rate_pct": 6.96,
+      "published_on": "2026-11-12",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-13",
+      "tenor": "ON",
+      "rate_pct": 5.54,
+      "published_on": "2026-11-13",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-13",
+      "tenor": "1W",
+      "rate_pct": 5.29,
+      "published_on": "2026-11-13",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-13",
+      "tenor": "2W",
+      "rate_pct": 4.41,
+      "published_on": "2026-11-13",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-13",
+      "tenor": "1M",
+      "rate_pct": 5.31,
+      "published_on": "2026-11-13",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-13",
+      "tenor": "3M",
+      "rate_pct": 6.63,
+      "published_on": "2026-11-13",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-13",
+      "tenor": "6M",
+      "rate_pct": 7.45,
+      "published_on": "2026-11-13",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-13",
+      "tenor": "9M",
+      "rate_pct": 6.96,
+      "published_on": "2026-11-13",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
     }
   ],
   "marketQuotes": [
@@ -1601,8 +1741,8 @@
     }
   ],
   "fx": {
-    "date": "2026-11-14",
-    "rate": 25637,
+    "date": "2026-11-16",
+    "rate": 25639,
     "source": "Tỷ giá trung tâm · nguồn tổng hợp",
     "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
     "quality": "third_party_mirror",
@@ -1610,7 +1750,7 @@
   },
   "macro": {
     "SOFR": {
-      "date": "2026-11-12",
+      "date": "2026-11-13",
       "value": 3.9,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/SOFR",
@@ -1685,12 +1825,6 @@
       "source": "Google News"
     },
     {
-      "title": "Tuần 09-13/11: NHNN tiếp tục rút ròng hơn 25,200 tỷ - Fili.vn",
-      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPNWF1Sm5QV05DaFBrdzB3akU5VFVjQTFCRk1aNHd1TktCZTNyTmdMOVZ4czNmbThDbG9NU0w3RklYSzI3NXZFU0dkUUNaa2VMdk5ieEpQdFRCVW5mS0hENEM0VU9DcXNfdmJCTmM0Tm1QSHpQOU9kdDJxeEl5ekpzX1NWSko4eFBLTjRkSFBzUEtOQQ?oc=5",
-      "date": "2026-11-16",
-      "source": "Google News"
-    },
-    {
       "title": "Tuần 9-13/11: Ngân hàng Nhà nước hút ròng 23.235 tỷ đồng, lãi suất qua đêm neo mức 5,6% - nguoiquansat.vn",
       "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOckd3aURTcHRJRks5LUdiWTktRXRndFlRY0R6R0JQTDFNR2M1T2RZU3c1QjhBM3p3SjAwODExMC04bXFOWVV4S0xCSG13RzdrODgwbjlxSzZhblhPQndVb0tGTDF0d3lrNjRoVWYzUHZxSXNpNnBVdVZVRnhmUEZMMGw1aUdoR21XWl8xLS1rZ2p2UmJwb2ZWWjhWODBXbVFsNTlCYkdvS3VqU2laY2dYLW9kUE9tWGg3WFY0cg?oc=5",
       "date": "2026-11-16",
@@ -1700,6 +1834,24 @@
       "title": "NHNN hút ròng ba tuần liên tiếp, hơn 25.000 tỷ được hút về trong tuần qua - VietnamBiz",
       "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQMFVhYlZmYXJnR2Rxa0ZCNnRfbEpoRFR1MTRWMzc2UWF1UElkVDBxNFJZYVF1UXcydmxfTHhjcy1KQ3o1VFo2d0E5UThEenltZVdlMG45WnJFUzE2NGZOQTVLaTY1SG1pRm9zT0x2Z3hNOW9teUZzY0xRRG1LRG1aQ1lUZGZKZVFtRnQ0eFEyaTJNdmxIbzlyX2JGMThEa25Hb0xpaGVmaGZHd3ZRRnFwc1dZQjU?oc=5",
       "date": "2026-11-16",
+      "source": "Google News"
+    },
+    {
+      "title": "Ngân hàng Nhà nước chuyển từ giữ trần sang dựng sàn tỷ giá - Vietstock",
+      "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPMnBGbWk3eWJQOTZpemZfYTBPRjY3TG1Qck95ZTJhTWh6ajVzQWVwVU9nZVVBT3V6S2FCeGtnaW9tMGEzdi1rcmRSczJ1MUp0YWxvMEMyeG9IU05PZnl5ZFlUZ21Kd1hVQ3VHMG5WSVVxVGFONHhybnBnencyUjlPd2o1aDl6RjYwMGdhM19xUGQtbVM0RklacFF4aGtmSXg5VVAyN2ZB?oc=5",
+      "date": "2026-11-16",
+      "source": "Google News"
+    },
+    {
+      "title": "USD chưa được ngân hàng bán cho NHNN: Vì sao cơ chế mua ngoại tệ chưa phát huy tác dụng? - Hangthat.vn",
+      "link": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQazdfdUJGV0pDbzJJUjI0bnlmZE95ZzNpRnhyNDdjMmdsUTRWSWh4T3Q2NWJKZ3BuMzY4SVNYMDBCaXNTYjU3NGk2OFBkUGZCZHAwZlBHYTA4QndMRFV6aVZ2ejQzZmJESnhheDYxdlVibFJwYXdHV0ZsbE1sMkUzU1hFS1pBaVRveThwaFVhTkZyYlpGbjNPVU1admJmUXFaZEpkSXVaYXlhc2JjTF91WHpZdFdMWVZyUEtlVUFSTVNydFRYbWZ5X0oxMHBwemVWTnJ6ajE2cmdSQQ?oc=5",
+      "date": "2026-11-16",
+      "source": "Google News"
+    },
+    {
+      "title": "Tuần 09-13/11: NHNN tiếp tục rút ròng hơn 25,200 tỷ - Fili.vn",
+      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPNWF1Sm5QV05DaFBrdzB3akU5VFVjQTFCRk1aNHd1TktCZTNyTmdMOVZ4czNmbThDbG9NU0w3RklYSzI3NXZFU0dkUUNaa2VMdk5ieEpQdFRCVW5mS0hENEM0VU9DcXNfdmJCTmM0Tm1QSHpQOU9kdDJxeEl5ekpzX1NWSko4eFBLTjRkSFBzUEtOQQ?oc=5",
+      "date": "2026-11-14",
       "source": "Google News"
     },
     {
@@ -1777,18 +1929,6 @@
     {
       "title": "Gần 50.000 tỷ bơm vào hệ thống ngân hàng giúp 'hạ nhiệt' lãi suất? - Báo Tiền Phong",
       "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNdk02bjFrcWtSYlVsenV6akY2ZUxCbDhWb3BtOXA2WWVEelR6RjJuU3R0T0Q0dS1lNUZvM09uUXdWeHRaV3dlV25nNDhtOEhJQUZmZlA0eTl5UjQ2V3VpUE9ITVJ4Znl6OVFqaXk1ZnBiYjBRclhFbGtEdnpEUEc4ZWJJT1JhQ1hQcTIyUmJTUk9ObmRlcTk2dVprMHFHc3VM?oc=5",
-      "date": "2026-11-11",
-      "source": "Google News"
-    },
-    {
-      "title": "\"Tuyệt chiêu\" của Ngân hàng Nhà nước - CafeF",
-      "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBGTnFKaEV5enpfUW5LRS1LaGRDSmFMS0JIVDQ4WnZCbGJlaFRTZlVDYmZOLXppaVNoTGxBM3pjWFZQQUdBSmNIVjBLcHl0anIyN2VVS2c0dmFwUE9Kc0d1Mnh5MHZSYXhaWHd4R1llTEJidFV5WlVhT2ZIU2xHLUk?oc=5",
-      "date": "2026-11-11",
-      "source": "Google News"
-    },
-    {
-      "title": "Giải mã động thái cung ứng tiền đồng mới của Ngân hàng Nhà nước - Báo Dân Việt",
-      "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNbFFUam81eFhSY1lwLVFTLTVIb3JKU3dKLW5pUVQ3eHNEUXFXaHdqWnJxdXRJUUFhY2RqZUYyT0NYeHh3Sm0xN3F6eXhKaFkxcVpxZkRYZktUSFcxMnFqQVZDckh5dEprN1NfTXdSVXRmQXBNTVRPaUw0c0VCZm5CY0NhNkJjWmhkQnBMNVhOUW9vdEY0WTZzU1ZVdlB3VGFNTFJIdg?oc=5",
       "date": "2026-11-11",
       "source": "Google News"
     }
@@ -1944,6 +2084,13 @@
     {
       "date": "2026-11-14",
       "rate": 25637,
+      "source": "Tỷ giá trung tâm · nguồn tổng hợp",
+      "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
+      "quality": "third_party_mirror"
+    },
+    {
+      "date": "2026-11-16",
+      "rate": 25639,
       "source": "Tỷ giá trung tâm · nguồn tổng hợp",
       "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
       "quality": "third_party_mirror"
