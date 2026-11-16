@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-13T18:28:34.220Z",
+    "checkedAt": "2026-11-16T04:42:49.746Z",
     "tenors": [
       "ON",
       "1W",
@@ -1601,7 +1601,7 @@
     }
   ],
   "fx": {
-    "date": "2026-11-13",
+    "date": "2026-11-14",
     "rate": 25637,
     "source": "Tỷ giá trung tâm · nguồn tổng hợp",
     "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
@@ -1617,8 +1617,8 @@
       "quality": "public_observed"
     },
     "DGS10": {
-      "date": "2026-11-10",
-      "value": 4.98,
+      "date": "2026-11-12",
+      "value": 5.1,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/DGS10",
       "quality": "public_observed"
@@ -1673,6 +1673,36 @@
   ],
   "news": [
     {
+      "title": "NHNN hút ròng hơn 23.200 tỷ đồng, lãi suất liên ngân hàng biến động trái chiều - Nhịp sống kinh doanh",
+      "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNTGxZNXdCeUE2eEZZeHlMMHQ4MVVvdVlUc0dMXzV0SFgxTUZjNXYtTlJ3THo1dllOekZOcXhIdElham81THJROWtWUmRJZmNKU2Z0aVFjRHVSRHNIcjQ4VjBsX1NXT3lER2lreXZwQ1VhdkRGd0F5OVBRdmFWYy1INld3UHVlNjROWmZWdTc0bFduNGZvWVNGcTFmWGNzQWtKOHVYRnJhdExHMlFkUlI2emRIMGZkQ3Uw?oc=5",
+      "date": "2026-11-16",
+      "source": "Google News"
+    },
+    {
+      "title": "Ngân hàng Nhà nước chưa mua được USD giao ngay, tỷ giá liên ngân hàng tăng vọt - CafeF",
+      "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOdlo4Mld3UGQ2eVVISl93d3lOWG1Nclp0bVNMZDZZNGhGSXVMVzZRQ0FLRnRKNi1tVXBqQkxEdjRNS0VRdjdOeU1OdEpIMnBWaXBUaTBFcVZ4b3ZiblZnV0xMb3laaDdfWHJfZlpQSFM5TDhjaVdZa0tXcDV4ZkhwVmhUdm9WSExhakVoeXhqWW5GS3M0aWg3OUhoS3dGZlZsejU3bmU0Uy1qN1M0YTRJck9HOHZpbjc3?oc=5",
+      "date": "2026-11-16",
+      "source": "Google News"
+    },
+    {
+      "title": "Tuần 09-13/11: NHNN tiếp tục rút ròng hơn 25,200 tỷ - Fili.vn",
+      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPNWF1Sm5QV05DaFBrdzB3akU5VFVjQTFCRk1aNHd1TktCZTNyTmdMOVZ4czNmbThDbG9NU0w3RklYSzI3NXZFU0dkUUNaa2VMdk5ieEpQdFRCVW5mS0hENEM0VU9DcXNfdmJCTmM0Tm1QSHpQOU9kdDJxeEl5ekpzX1NWSko4eFBLTjRkSFBzUEtOQQ?oc=5",
+      "date": "2026-11-16",
+      "source": "Google News"
+    },
+    {
+      "title": "Tuần 9-13/11: Ngân hàng Nhà nước hút ròng 23.235 tỷ đồng, lãi suất qua đêm neo mức 5,6% - nguoiquansat.vn",
+      "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOckd3aURTcHRJRks5LUdiWTktRXRndFlRY0R6R0JQTDFNR2M1T2RZU3c1QjhBM3p3SjAwODExMC04bXFOWVV4S0xCSG13RzdrODgwbjlxSzZhblhPQndVb0tGTDF0d3lrNjRoVWYzUHZxSXNpNnBVdVZVRnhmUEZMMGw1aUdoR21XWl8xLS1rZ2p2UmJwb2ZWWjhWODBXbVFsNTlCYkdvS3VqU2laY2dYLW9kUE9tWGg3WFY0cg?oc=5",
+      "date": "2026-11-16",
+      "source": "Google News"
+    },
+    {
+      "title": "NHNN hút ròng ba tuần liên tiếp, hơn 25.000 tỷ được hút về trong tuần qua - VietnamBiz",
+      "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQMFVhYlZmYXJnR2Rxa0ZCNnRfbEpoRFR1MTRWMzc2UWF1UElkVDBxNFJZYVF1UXcydmxfTHhjcy1KQ3o1VFo2d0E5UThEenltZVdlMG45WnJFUzE2NGZOQTVLaTY1SG1pRm9zT0x2Z3hNOW9teUZzY0xRRG1LRG1aQ1lUZGZKZVFtRnQ0eFEyaTJNdmxIbzlyX2JGMThEa25Hb0xpaGVmaGZHd3ZRRnFwc1dZQjU?oc=5",
+      "date": "2026-11-16",
+      "source": "Google News"
+    },
+    {
       "date": "2026-11-13",
       "source": "VietnamNet",
       "title": "Thị trường liên ngân hàng: cập nhật lãi suất ngày 12/11 và điều chỉnh huy động",
@@ -1689,6 +1719,12 @@
       "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPejBTSHZqVjZmcm5ibjV4WDlOWGstc19KVEdfWVFBcUN3a1JvWXFQV0EwWHhhSnhMc0RhUnRJa2V1dU00T2ZsMUxhQnJjMXphWTlRSUJyeXVoejBhTVdFT21XSGFwRVpTdlIwbWpzUnI3SmJ2WTF4dUdtMThOcXdLMUFqeEI0Q1g0Qk44UWZWTGRwQU5ZcVJrYTRKRHQ1S2NYTVpVaDNkUEJ4R3ZfTm1qVGNRZmNoelRuU3lv?oc=5",
       "date": "2026-11-13",
       "source": "Google News"
+    },
+    {
+      "title": "Agencies extend comment period for proposed third-party risk management guidance",
+      "link": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261113a.htm",
+      "date": "2026-11-13",
+      "source": "Federal Reserve"
     },
     {
       "date": "2026-11-12",
@@ -1755,42 +1791,6 @@
       "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNbFFUam81eFhSY1lwLVFTLTVIb3JKU3dKLW5pUVQ3eHNEUXFXaHdqWnJxdXRJUUFhY2RqZUYyT0NYeHh3Sm0xN3F6eXhKaFkxcVpxZkRYZktUSFcxMnFqQVZDckh5dEprN1NfTXdSVXRmQXBNTVRPaUw0c0VCZm5CY0NhNkJjWmhkQnBMNVhOUW9vdEY0WTZzU1ZVdlB3VGFNTFJIdg?oc=5",
       "date": "2026-11-11",
       "source": "Google News"
-    },
-    {
-      "title": "Từ hôm nay (11/11), Ngân hàng Nhà nước bắt đầu triển khai kênh bơm tiền VND 2 lần/tuần - CafeF",
-      "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQeUxVaXlJcUZPMzg3c3lXZWdKT0U4R0puZ29NN1NobkdJNWRydkpWZFFVckdUVzR5Q3ZxX2RRX0pTLTlObUdIamFKcndNVGNielMxVVpJM2hMRE5QV1dndWNjT24xTFM2ampib25VemROVjF5VnVEZll2emdwRmlXQWdrb2xwNHBfay0xNWx3eElkQ1BNN1FzLVVpZzRPX3dHMFF3QTg4RDM0QzVzQjdKQlc4N3JEdHB3UjZQQWhjVXY?oc=5",
-      "date": "2026-11-11",
-      "source": "Google News"
-    },
-    {
-      "title": "Ngân hàng Nhà nước sẽ mua USD định kỳ vào thứ Hai và thứ Tư hàng tuần - MoneyF",
-      "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQRk5zQzBuUEJBRFBSQklVNU93bkJvRHh0ZEdabEd0X1dSZWY3clpQLS1DZkNwaXJDSDMwRzc5LWRHRnR4QXBMUkVxVzVPR2UzUTI3ekJ6QUk3ZVpSRWFmaWVvWF9LMWZ6dGRxbV9HdHpPUUtFaEstLVo2UHJNa3NIRDhn?oc=5",
-      "date": "2026-11-10",
-      "source": "Google News"
-    },
-    {
-      "title": "Ngân hàng Nhà nước mua ngoại tệ giao ngay, thêm kênh cung ứng tiền VND, ổn định lãi suất - Vietstock",
-      "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPdmhULVZub1Z2MlBKUVhNeFZmVU56aEJNZGM3d1V3WnRDeDJTUlh1aTFaT05pSkxSYW95WEdRYi1aMnVTMjdHNnVFOUZBand2U0VlVk1qdEdYRWlCYlJCM1RtbGc4MUE0SnRXOE1aU2Z0bGVyN29iY0l4VGRyQUc5TTB3QWhMVzlmSFVvcFVNNU1ndHVvV3JCZWhNejdaanNPNU42Ym80ZlhxSjZ0bzhTM3VOZnZaSl9UWHN4ZEVDRDFSNTFmWXJobTIyNA?oc=5",
-      "date": "2026-11-10",
-      "source": "Google News"
-    },
-    {
-      "title": "NHNN mua vào ngoại tệ: Mở van tiền đồng, lãi suất ngân hàng có hạ nhiệt? - VietnamBiz",
-      "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPb01OcWxDX3lpYXJiR084QzJSbEVJNkZDQmZYNGJsV0RhblVQVzluU3d1dEgySnZ3d2VCckxRZ1dueGtQR1pTSFN2MWNpN1VRS2c3NU85VGdpWmZSV1ZBTzdIR3JYTUFjcGxIRkVLdnRHNWY1WERvcDk4YzVzZHJFd05DSl9ZR1RSdUxPXzdyZktXa002UlVOOXBuRGhZZFlMUUh3cHltV2dzQ0FoX3JScFBB?oc=5",
-      "date": "2026-11-10",
-      "source": "Google News"
-    },
-    {
-      "title": "153.000 tỷ đồng có thể được bơm vào hệ thống qua kênh mua USD - MoneyF",
-      "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPNnBvai1HMTNBcXJQeGhodGoteVBpSU9pRGtjR3Z6TzVlbXhtaWxNaF9sN3R6cm1lS3NnVU9nTXZESzFlQUdmOVdDVlAyZGVGREFxMjVSWGdDT292TllWTDNiZ0Mtazd4T1dyLTVuTE5ld1JtdnNHdk1aRmY5S2stbGxQSQ?oc=5",
-      "date": "2026-11-10",
-      "source": "Google News"
-    },
-    {
-      "title": "Federal Reserve Board announces approval of two applications by Mutual Federal Bancorp, MHC, and MFB Bancorp, Inc.",
-      "link": "https://www.federalreserve.gov/newsevents/pressreleases/orders20261109a.htm",
-      "date": "2026-11-09",
-      "source": "Federal Reserve"
     }
   ],
   "fxHistory": [
@@ -1936,6 +1936,13 @@
     },
     {
       "date": "2026-11-13",
+      "rate": 25637,
+      "source": "Tỷ giá trung tâm · nguồn tổng hợp",
+      "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
+      "quality": "third_party_mirror"
+    },
+    {
+      "date": "2026-11-14",
       "rate": 25637,
       "source": "Tỷ giá trung tâm · nguồn tổng hợp",
       "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
