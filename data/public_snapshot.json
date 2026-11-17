@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-17T06:29:52.001Z",
+    "checkedAt": "2026-11-17T16:40:04.926Z",
     "tenors": [
       "ON",
       "1W",
@@ -1700,6 +1700,76 @@
       "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
       "quality": "public_observed",
       "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-16",
+      "tenor": "ON",
+      "rate_pct": 4.99,
+      "published_on": "2026-11-16",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-16",
+      "tenor": "1W",
+      "rate_pct": 5.08,
+      "published_on": "2026-11-16",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-16",
+      "tenor": "2W",
+      "rate_pct": 5.02,
+      "published_on": "2026-11-16",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-16",
+      "tenor": "1M",
+      "rate_pct": 5.39,
+      "published_on": "2026-11-16",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-16",
+      "tenor": "3M",
+      "rate_pct": 7.57,
+      "published_on": "2026-11-16",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-16",
+      "tenor": "6M",
+      "rate_pct": 8.45,
+      "published_on": "2026-11-16",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-16",
+      "tenor": "9M",
+      "rate_pct": 6.96,
+      "published_on": "2026-11-16",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
     }
   ],
   "marketQuotes": [
@@ -1741,8 +1811,8 @@
     }
   ],
   "fx": {
-    "date": "2026-11-16",
-    "rate": 25639,
+    "date": "2026-11-17",
+    "rate": 25652,
     "source": "Tỷ giá trung tâm · nguồn tổng hợp",
     "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
     "quality": "third_party_mirror",
@@ -1750,8 +1820,8 @@
   },
   "macro": {
     "SOFR": {
-      "date": "2026-11-13",
-      "value": 3.9,
+      "date": "2026-11-16",
+      "value": 3.93,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/SOFR",
       "quality": "public_observed"
@@ -1812,6 +1882,18 @@
     }
   ],
   "news": [
+    {
+      "title": "Phiên 17/11: Ngân hàng Nhà nước hút ròng 640 tỷ đồng, lãi suất qua đêm neo mức 4,99% - nguoiquansat.vn",
+      "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNc0Jxb2U0TGQ0enVORzVWaktBSFp6RlpFN3FQU2VTT0VycDVqRHd0Z09JR05HNmZuZHRuRjVvZFFvTDdncXZIbjlOeHM1cXVMVDhhN1V4UHppZ3YwSkc4TEtZOTBfRWZvWFBzeWJFclpvSy1ydzRVc2lCTTdPOG80Y05FUFpQd1hpaWJMeGd5UUxEbFJlbV84b0FONEo1YWsybndabmp2N0tpV1lDQW1kbGhOb0E4QUZP?oc=5",
+      "date": "2026-11-17",
+      "source": "Google News"
+    },
+    {
+      "title": "Chứng khoán TCBS (TCX): “Nhu cầu vay mượn liên ngân hàng giảm lần đầu tiên sau 5 quý” - Nhịp sống kinh doanh",
+      "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNa2otdXJ1bndHV2FrYUVoQUpMTTFrSU4tbnVWM1JnNlpiRzJiUVJFekpobm9JWnJQTkN3b1Q4c19pZXpwZW9TRHRYRXcwcE84bTNjT2pva1VjaHhsYnJoOHQ0akhOVUFxOGRacjlfeXhUb1g3TEdSeUFwWmpYZ2RqVEVyZEszQWJ4VXFxTnhRWlQtYVdZTzNSdFFFRjZtUFBiTTg2djBpNzFRNU5lb19Eb29UYkdsekh6cnZPdUZ3?oc=5",
+      "date": "2026-11-17",
+      "source": "Google News"
+    },
     {
       "title": "NHNN hút ròng hơn 23.200 tỷ đồng, lãi suất liên ngân hàng biến động trái chiều - Nhịp sống kinh doanh",
       "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNTGxZNXdCeUE2eEZZeHlMMHQ4MVVvdVlUc0dMXzV0SFgxTUZjNXYtTlJ3THo1dllOekZOcXhIdElham81THJROWtWUmRJZmNKU2Z0aVFjRHVSRHNIcjQ4VjBsX1NXT3lER2lreXZwQ1VhdkRGd0F5OVBRdmFWYy1INld3UHVlNjROWmZWdTc0bFduNGZvWVNGcTFmWGNzQWtKOHVYRnJhdExHMlFkUlI2emRIMGZkQ3Uw?oc=5",
@@ -1918,18 +2000,6 @@
       "title": "NHNN mua USD giá 25.500 đồng, mở đường giảm lãi suất huy động trong quý IV - Nhịp sống kinh doanh",
       "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPMHVZZmJnOThzTlpOWjBrVjRkS3hmd1pXVi1mSFhBZWhnWUNwT2FtTzFfNFo0dURFV0FTMnJYZDJPZlYxV2dkYXFuMEo3ZFFMTUxFREtHcjIyZWVfUlB2aXB3SzBUSnBZY0Y5em5fOHBEMGEwbXhmWG0tMk5JTVc4TVV6SXY1anNDS3I5NUxHclZnN0Q1SUN1OWkxT2VIYjJqQlE0RkQxWHhOa3lfRHlNY3VYNA?oc=5",
       "date": "2026-11-12",
-      "source": "Google News"
-    },
-    {
-      "title": "Ngân hàng Nhà nước mua USD, mở thêm dư địa giảm lãi suất ngân hàng - Báo Thanh tra",
-      "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNWFdZbVBScklYMUhFVWhScE1uYklEZkVEV2U2a016M1A3ZjYwT1pzWU1obE5YcWNzQ3FPRzZlOTVmSmFwTTdoTTJCbzR5ZzlWQ3lmSnpKUXVhUEdrRUhGb29ZdkxhVlNfS2lqWlJsMGdKN2FZZWdmdlg4MWRKbHJQc29UMHZBQ1BOcGFRSUYyWkhzQllnY2tETnVFQ2pPQ1dPblNTU25hX3ExaXZjeUJoMlo0Z3l6X1V0aE9HNWEybjRpQQ?oc=5",
-      "date": "2026-11-11",
-      "source": "Google News"
-    },
-    {
-      "title": "Gần 50.000 tỷ bơm vào hệ thống ngân hàng giúp 'hạ nhiệt' lãi suất? - Báo Tiền Phong",
-      "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNdk02bjFrcWtSYlVsenV6akY2ZUxCbDhWb3BtOXA2WWVEelR6RjJuU3R0T0Q0dS1lNUZvM09uUXdWeHRaV3dlV25nNDhtOEhJQUZmZlA0eTl5UjQ2V3VpUE9ITVJ4Znl6OVFqaXk1ZnBiYjBRclhFbGtEdnpEUEc4ZWJJT1JhQ1hQcTIyUmJTUk9ObmRlcTk2dVprMHFHc3VM?oc=5",
-      "date": "2026-11-11",
       "source": "Google News"
     }
   ],
@@ -2091,6 +2161,13 @@
     {
       "date": "2026-11-16",
       "rate": 25639,
+      "source": "Tỷ giá trung tâm · nguồn tổng hợp",
+      "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
+      "quality": "third_party_mirror"
+    },
+    {
+      "date": "2026-11-17",
+      "rate": 25652,
       "source": "Tỷ giá trung tâm · nguồn tổng hợp",
       "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
       "quality": "third_party_mirror"
