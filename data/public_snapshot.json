@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-18T05:52:44.825Z",
+    "checkedAt": "2026-11-18T15:04:51.427Z",
     "tenors": [
       "ON",
       "1W",
@@ -1811,8 +1811,8 @@
     }
   ],
   "fx": {
-    "date": "2026-11-17",
-    "rate": 25652,
+    "date": "2026-11-18",
+    "rate": 25656,
     "source": "Tỷ giá trung tâm · nguồn tổng hợp",
     "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
     "quality": "third_party_mirror",
@@ -1820,8 +1820,8 @@
   },
   "macro": {
     "SOFR": {
-      "date": "2026-11-16",
-      "value": 3.93,
+      "date": "2026-11-17",
+      "value": 3.92,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/SOFR",
       "quality": "public_observed"
@@ -2168,6 +2168,13 @@
     {
       "date": "2026-11-17",
       "rate": 25652,
+      "source": "Tỷ giá trung tâm · nguồn tổng hợp",
+      "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
+      "quality": "third_party_mirror"
+    },
+    {
+      "date": "2026-11-18",
+      "rate": 25656,
       "source": "Tỷ giá trung tâm · nguồn tổng hợp",
       "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
       "quality": "third_party_mirror"
