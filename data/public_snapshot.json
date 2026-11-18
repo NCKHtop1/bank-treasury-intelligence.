@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-17T16:40:04.926Z",
+    "checkedAt": "2026-11-18T05:52:44.825Z",
     "tenors": [
       "ON",
       "1W",
@@ -1827,8 +1827,8 @@
       "quality": "public_observed"
     },
     "DGS10": {
-      "date": "2026-11-13",
-      "value": 5.15,
+      "date": "2026-11-16",
+      "value": 5.12,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/DGS10",
       "quality": "public_observed"
@@ -1883,6 +1883,12 @@
   ],
   "news": [
     {
+      "title": "Từ trần bán USD 25.450 đồng đến sàn mua 25.500 đồng: Bước chuyển trong can thiệp tỷ giá của NHNN - VietnamBiz",
+      "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQUDAzU2VFeHhlUlVOVnMyUlpiOUJiX3hmdWNfc21uVEVPOElCR3dtN0xqWXA4WjdnSmZqeUhtOUUzMlptMnZKc0tpWTFJZi1pQ2pUV0xnaXVDMVZZQV82VV9pbVozR2FwcE1XZk9xX0YwM0lvcGVYSUIzRHZkbjRCMTZRUkVwb1F6YU4wUm1fai0zb0gwT25IRndBeTVQZGlJaFRnVXBXalNUTWhBcEZySGx5eEhFaDV1cHF6Qk5HWlFmYzR3VDM1YS1xUzJoc25TZ3JZ?oc=5",
+      "date": "2026-11-18",
+      "source": "Google News"
+    },
+    {
       "title": "Phiên 17/11: Ngân hàng Nhà nước hút ròng 640 tỷ đồng, lãi suất qua đêm neo mức 4,99% - nguoiquansat.vn",
       "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNc0Jxb2U0TGQ0enVORzVWaktBSFp6RlpFN3FQU2VTT0VycDVqRHd0Z09JR05HNmZuZHRuRjVvZFFvTDdncXZIbjlOeHM1cXVMVDhhN1V4UHppZ3YwSkc4TEtZOTBfRWZvWFBzeWJFclpvSy1ydzRVc2lCTTdPOG80Y05FUFpQd1hpaWJMeGd5UUxEbFJlbV84b0FONEo1YWsybndabmp2N0tpV1lDQW1kbGhOb0E4QUZP?oc=5",
       "date": "2026-11-17",
@@ -1927,6 +1933,12 @@
     {
       "title": "USD chưa được ngân hàng bán cho NHNN: Vì sao cơ chế mua ngoại tệ chưa phát huy tác dụng? - Hangthat.vn",
       "link": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQazdfdUJGV0pDbzJJUjI0bnlmZE95ZzNpRnhyNDdjMmdsUTRWSWh4T3Q2NWJKZ3BuMzY4SVNYMDBCaXNTYjU3NGk2OFBkUGZCZHAwZlBHYTA4QndMRFV6aVZ2ejQzZmJESnhheDYxdlVibFJwYXdHV0ZsbE1sMkUzU1hFS1pBaVRveThwaFVhTkZyYlpGbjNPVU1admJmUXFaZEpkSXVaYXlhc2JjTF91WHpZdFdMWVZyUEtlVUFSTVNydFRYbWZ5X0oxMHBwemVWTnJ6ajE2cmdSQQ?oc=5",
+      "date": "2026-11-16",
+      "source": "Google News"
+    },
+    {
+      "title": "NHNN bơm ròng hơn 5.200 tỷ đồng trong phiên 16/11, lãi suất liên ngân hàng vẫn neo cao - MoneyF",
+      "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNT0t6QXZmdnM5VWVnbGNNUnkzVXNpVmhGVy1IcGE3RkNJUEdUT1MtdjdIRFFjSmlJdHA2eG9SaG9NSWotaXpwdXpGV19YOGZtc0VTWXJDa2N3S29yVng0MnNWd0JYLWt6OXJtc1A3cXE1YU5BUEQ5aFlfX2cxN2xyTDU3bw?oc=5",
       "date": "2026-11-16",
       "source": "Google News"
     },
@@ -1987,18 +1999,6 @@
     {
       "title": "Phiên 12/11: Ngân hàng Nhà nước hút ròng 447 tỷ đồng, lãi suất neo mức 4,3% - nguoiquansat.vn",
       "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQU1ZBUEdWaGxkNDNwZUFIN0JWajdicHRhVWFvX1pEY013cGNyTFM4bG0wQ0VvRWs4TkdOWXhvZXVJaUtzQmc5MDBPWjNibTg0aWlyYVk1ZEd6Q1VCVVhYUTdVVFNGZEtYODQzREhSR0RNVkxPcHoxcXM0cWNMZ3l3bVZuVlR6cEhlaDltSmJjNlRzckJwVFc1WFEya19GU08temNvZENWMWZQZkZt?oc=5",
-      "date": "2026-11-12",
-      "source": "Google News"
-    },
-    {
-      "title": "Điểm tin tài chính - ngân hàng 12/11: NHNN bơm thêm VND qua kênh mua USD - PetroTimes",
-      "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNQzVqRFJUM2g3bUNtMGlLV0Fnc3lPX3pXTlY3MmplM19WTmxTZVp0b2hXMEVTRWhxYU9sWjFFZ3p2VmF5TmVYMGZzV3J4M1V0R1RPTGpyeW9DZHlvRTAta1h4aWRwOWlGY2taaUVsNUtMcUdmbU43dEZJa2ljd0N0RXB0LW84Ti1PTW0xeHlFaTBFOGFSalE5SFl5TlVZYnFsdVd1TlRGQVlId3hPS3l3Z2c0dV9lWEdI?oc=5",
-      "date": "2026-11-12",
-      "source": "Google News"
-    },
-    {
-      "title": "NHNN mua USD giá 25.500 đồng, mở đường giảm lãi suất huy động trong quý IV - Nhịp sống kinh doanh",
-      "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPMHVZZmJnOThzTlpOWjBrVjRkS3hmd1pXVi1mSFhBZWhnWUNwT2FtTzFfNFo0dURFV0FTMnJYZDJPZlYxV2dkYXFuMEo3ZFFMTUxFREtHcjIyZWVfUlB2aXB3SzBUSnBZY0Y5em5fOHBEMGEwbXhmWG0tMk5JTVc4TVV6SXY1anNDS3I5NUxHclZnN0Q1SUN1OWkxT2VIYjJqQlE0RkQxWHhOa3lfRHlNY3VYNA?oc=5",
       "date": "2026-11-12",
       "source": "Google News"
     }
