@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-18T15:04:51.427Z",
+    "checkedAt": "2026-11-19T05:53:00.861Z",
     "tenors": [
       "ON",
       "1W",
@@ -1827,8 +1827,8 @@
       "quality": "public_observed"
     },
     "DGS10": {
-      "date": "2026-11-16",
-      "value": 5.12,
+      "date": "2026-11-17",
+      "value": 5.1,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/DGS10",
       "quality": "public_observed"
@@ -1883,10 +1883,28 @@
   ],
   "news": [
     {
+      "title": "Lãi suất hoán đổi ngoại tệ giảm sau động thái của NHNN - MoneyF",
+      "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQOXRpSk4wWkpjcWltLXBjcTROeE1BNnNzaWJvM0p4b29kOWFReTZKUXJwaHNhcmt0SkhlM0pzWEhmNDl4RWllcUVkRTF3Uk50cThabkdkcUdJRHRGQTlKbVNLbmJieG5zRWlUQWxacG14U3FiaGhMQ1F3YWNYczJ3YzJR?oc=5",
+      "date": "2026-11-19",
+      "source": "Google News"
+    },
+    {
+      "title": "28 ngân hàng nắm hơn 863.000 tỷ đồng trái phiếu Chính phủ giữa lúc lượng OMO giảm gần 80% từ đỉnh - VietnamBiz",
+      "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPNmpLbVo4bVdmb2tkNFNyYzFHU1hGOHR5NEVFNzU1ZG01cjF1OXFmLWFETTB4Y2ZBNDF6Ri1BcXhOMGkzV1BXSlhSbnhBUEJFUVlEYl9HZTJ4LUhrU1g1MXhUc1ZtYVhkYlE1cmRyRWROZzV4VVhEbnlNWjFocHVqQ1FMLUhJWkpBWXVIT2t4dU1tek4wNG91dFJjZGktRnhfWTBndFZnSENQLV9sTS1TU1hUY1NFTjY5TVRFZjlZWDVYbUY0Z0p6blR1TTFmWmRTZkNzWU1B?oc=5",
+      "date": "2026-11-19",
+      "source": "Google News"
+    },
+    {
       "title": "Từ trần bán USD 25.450 đồng đến sàn mua 25.500 đồng: Bước chuyển trong can thiệp tỷ giá của NHNN - VietnamBiz",
       "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQUDAzU2VFeHhlUlVOVnMyUlpiOUJiX3hmdWNfc21uVEVPOElCR3dtN0xqWXA4WjdnSmZqeUhtOUUzMlptMnZKc0tpWTFJZi1pQ2pUV0xnaXVDMVZZQV82VV9pbVozR2FwcE1XZk9xX0YwM0lvcGVYSUIzRHZkbjRCMTZRUkVwb1F6YU4wUm1fai0zb0gwT25IRndBeTVQZGlJaFRnVXBXalNUTWhBcEZySGx5eEhFaDV1cHF6Qk5HWlFmYzR3VDM1YS1xUzJoc25TZ3JZ?oc=5",
       "date": "2026-11-18",
       "source": "Google News"
+    },
+    {
+      "title": "Minutes of the Federal Open Market Committee, October 27-28, 2026",
+      "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm",
+      "date": "2026-11-18",
+      "source": "Federal Reserve"
     },
     {
       "title": "Phiên 17/11: Ngân hàng Nhà nước hút ròng 640 tỷ đồng, lãi suất qua đêm neo mức 4,99% - nguoiquansat.vn",
@@ -1983,24 +2001,6 @@
       "link": "https://www.federalreserve.gov/newsevents/pressreleases/other20261112a.htm",
       "date": "2026-11-12",
       "source": "Federal Reserve"
-    },
-    {
-      "title": "Federal Reserve announces revised tentative schedule of Federal Open Market Committee meetings in 2027",
-      "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261112a.htm",
-      "date": "2026-11-12",
-      "source": "Federal Reserve"
-    },
-    {
-      "title": "Federal Reserve Board issues enforcement action with former employee of United Community Bank",
-      "link": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20261112a.htm",
-      "date": "2026-11-12",
-      "source": "Federal Reserve"
-    },
-    {
-      "title": "Phiên 12/11: Ngân hàng Nhà nước hút ròng 447 tỷ đồng, lãi suất neo mức 4,3% - nguoiquansat.vn",
-      "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQU1ZBUEdWaGxkNDNwZUFIN0JWajdicHRhVWFvX1pEY013cGNyTFM4bG0wQ0VvRWs4TkdOWXhvZXVJaUtzQmc5MDBPWjNibTg0aWlyYVk1ZEd6Q1VCVVhYUTdVVFNGZEtYODQzREhSR0RNVkxPcHoxcXM0cWNMZ3l3bVZuVlR6cEhlaDltSmJjNlRzckJwVFc1WFEya19GU08temNvZENWMWZQZkZt?oc=5",
-      "date": "2026-11-12",
-      "source": "Google News"
     }
   ],
   "fxHistory": [
