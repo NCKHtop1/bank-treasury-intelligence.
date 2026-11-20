@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-20T05:41:07.570Z",
+    "checkedAt": "2026-11-20T14:53:37.052Z",
     "tenors": [
       "ON",
       "1W",
@@ -1840,6 +1840,146 @@
       "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
       "quality": "public_observed",
       "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-18",
+      "tenor": "ON",
+      "rate_pct": 4.47,
+      "published_on": "2026-11-18",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-18",
+      "tenor": "1W",
+      "rate_pct": 4.77,
+      "published_on": "2026-11-18",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-18",
+      "tenor": "2W",
+      "rate_pct": 5.31,
+      "published_on": "2026-11-18",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-18",
+      "tenor": "1M",
+      "rate_pct": 5.76,
+      "published_on": "2026-11-18",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-18",
+      "tenor": "3M",
+      "rate_pct": 7.66,
+      "published_on": "2026-11-18",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-18",
+      "tenor": "6M",
+      "rate_pct": 6.87,
+      "published_on": "2026-11-18",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-18",
+      "tenor": "9M",
+      "rate_pct": 8.8,
+      "published_on": "2026-11-18",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-19",
+      "tenor": "ON",
+      "rate_pct": 4.68,
+      "published_on": "2026-11-19",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-19",
+      "tenor": "1W",
+      "rate_pct": 4.8,
+      "published_on": "2026-11-19",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-19",
+      "tenor": "2W",
+      "rate_pct": 5.33,
+      "published_on": "2026-11-19",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-19",
+      "tenor": "1M",
+      "rate_pct": 5.36,
+      "published_on": "2026-11-19",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-19",
+      "tenor": "3M",
+      "rate_pct": 7.85,
+      "published_on": "2026-11-19",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-19",
+      "tenor": "6M",
+      "rate_pct": 7.29,
+      "published_on": "2026-11-19",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-19",
+      "tenor": "9M",
+      "rate_pct": 8.16,
+      "published_on": "2026-11-19",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
     }
   ],
   "marketQuotes": [
@@ -1881,8 +2021,8 @@
     }
   ],
   "fx": {
-    "date": "2026-11-19",
-    "rate": 25646,
+    "date": "2026-11-20",
+    "rate": 25659,
     "source": "Tỷ giá trung tâm · nguồn tổng hợp",
     "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
     "quality": "third_party_mirror",
@@ -1890,8 +2030,8 @@
   },
   "macro": {
     "SOFR": {
-      "date": "2026-11-18",
-      "value": 3.9,
+      "date": "2026-11-19",
+      "value": 3.91,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/SOFR",
       "quality": "public_observed"
@@ -1955,6 +2095,12 @@
     {
       "title": "Lãi suất qua đêm hạ nhiệt, lượng vay liên ngân hàng tăng 17%: Bài toán kỳ hạn phía sau dòng vốn của 28 ngân hàng - VietnamBiz",
       "link": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPUTMtX3BUVHh1ZUNQN25PRVJsSkJaUWRZaW9kVWR0UU1IdGl6UjBUSnpNVVRfbnFveFlUOEsxdTl1bi1EenV5cFNfVVM0NXFDZnF6Y1dQOGtGdEpGbmVlV2lURDdrN2VtSGZheWNuclhub05oMTczaHZfempHMHV0TnhuNWhxSG00RTdxejVaR1ZhVE5hYm9BV1JFaFFxckVrY3hLMzFhbEtkQTJsUUdmUHV1b0w0NW9Ua3ItcUxNS0tIMFRXN0R2QThoN1dDYU4xVGhuNGdOOWw3YmUzLXJTYjJsUUhobnc3?oc=5",
+      "date": "2026-11-20",
+      "source": "Google News"
+    },
+    {
+      "title": "Hệ thống ngân hàng tiếp tục giảm lãi suất huy động, tạo dư địa giảm lãi vay - Nhịp sống kinh doanh",
+      "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPdWZ6QWxqbERCQjBibTM4clRhN2J1T0hPNXpHaWsxQTJTUDlzd2JTYVRtbGt2d0hFc2g4Z1BveG5RRFdfZl9SclFQSDczTERXWkxydG5UdjFYMjZ0MDhtRGZVTGZXNEItNDIxbVJBbTJILWlYcnpZbVktU0dJQ3ZNakZjdHBSY0sweTlmT01rRnc1YlFDUHpSVk5iTUFSTHE1TzRRMjJuU3ZTNGhXYlVjZ2NSZ2g?oc=5",
       "date": "2026-11-20",
       "source": "Google News"
     },
@@ -2065,12 +2211,6 @@
       "source": "VietnamNet",
       "title": "Thị trường liên ngân hàng: cập nhật lãi suất ngày 12/11 và điều chỉnh huy động",
       "link": "https://vietnamnet.vn/lai-suat-ngan-hang-hom-nay-13-11-2026-ong-lon-big4-giam-ky-han-15-18-thang-2574504.html"
-    },
-    {
-      "date": "2026-11-13",
-      "source": "NCB",
-      "title": "Bảng tỷ giá USD/VND và tỷ giá trung tâm ngày 13/11",
-      "link": "https://www.ncb-bank.vn/vi/ty-gia-tien-te"
     }
   ],
   "fxHistory": [
@@ -2252,6 +2392,13 @@
     {
       "date": "2026-11-19",
       "rate": 25646,
+      "source": "Tỷ giá trung tâm · nguồn tổng hợp",
+      "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
+      "quality": "third_party_mirror"
+    },
+    {
+      "date": "2026-11-20",
+      "rate": 25659,
       "source": "Tỷ giá trung tâm · nguồn tổng hợp",
       "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
       "quality": "third_party_mirror"
