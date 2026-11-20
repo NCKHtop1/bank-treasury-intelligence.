@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-19T15:14:39.574Z",
+    "checkedAt": "2026-11-20T05:41:07.570Z",
     "tenors": [
       "ON",
       "1W",
@@ -1897,8 +1897,8 @@
       "quality": "public_observed"
     },
     "DGS10": {
-      "date": "2026-11-17",
-      "value": 5.1,
+      "date": "2026-11-18",
+      "value": 5.07,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/DGS10",
       "quality": "public_observed"
@@ -1953,6 +1953,12 @@
   ],
   "news": [
     {
+      "title": "Lãi suất qua đêm hạ nhiệt, lượng vay liên ngân hàng tăng 17%: Bài toán kỳ hạn phía sau dòng vốn của 28 ngân hàng - VietnamBiz",
+      "link": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPUTMtX3BUVHh1ZUNQN25PRVJsSkJaUWRZaW9kVWR0UU1IdGl6UjBUSnpNVVRfbnFveFlUOEsxdTl1bi1EenV5cFNfVVM0NXFDZnF6Y1dQOGtGdEpGbmVlV2lURDdrN2VtSGZheWNuclhub05oMTczaHZfempHMHV0TnhuNWhxSG00RTdxejVaR1ZhVE5hYm9BV1JFaFFxckVrY3hLMzFhbEtkQTJsUUdmUHV1b0w0NW9Ua3ItcUxNS0tIMFRXN0R2QThoN1dDYU4xVGhuNGdOOWw3YmUzLXJTYjJsUUhobnc3?oc=5",
+      "date": "2026-11-20",
+      "source": "Google News"
+    },
+    {
       "title": "Lãi suất hoán đổi ngoại tệ giảm sau động thái của NHNN - MoneyF",
       "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQOXRpSk4wWkpjcWltLXBjcTROeE1BNnNzaWJvM0p4b29kOWFReTZKUXJwaHNhcmt0SkhlM0pzWEhmNDl4RWllcUVkRTF3Uk50cThabkdkcUdJRHRGQTlKbVNLbmJieG5zRWlUQWxacG14U3FiaGhMQ1F3YWNYczJ3YzJR?oc=5",
       "date": "2026-11-19",
@@ -1963,6 +1969,12 @@
       "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPNmpLbVo4bVdmb2tkNFNyYzFHU1hGOHR5NEVFNzU1ZG01cjF1OXFmLWFETTB4Y2ZBNDF6Ri1BcXhOMGkzV1BXSlhSbnhBUEJFUVlEYl9HZTJ4LUhrU1g1MXhUc1ZtYVhkYlE1cmRyRWROZzV4VVhEbnlNWjFocHVqQ1FMLUhJWkpBWXVIT2t4dU1tek4wNG91dFJjZGktRnhfWTBndFZnSENQLV9sTS1TU1hUY1NFTjY5TVRFZjlZWDVYbUY0Z0p6blR1TTFmWmRTZkNzWU1B?oc=5",
       "date": "2026-11-19",
       "source": "Google News"
+    },
+    {
+      "title": "Federal Reserve Board issues enforcement action with former employee of First Security Bancorp",
+      "link": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20261119a.htm",
+      "date": "2026-11-19",
+      "source": "Federal Reserve"
     },
     {
       "title": "Từ trần bán USD 25.450 đồng đến sàn mua 25.500 đồng: Bước chuyển trong can thiệp tỷ giá của NHNN - VietnamBiz",
@@ -1985,6 +1997,12 @@
     {
       "title": "Chứng khoán TCBS (TCX): “Nhu cầu vay mượn liên ngân hàng giảm lần đầu tiên sau 5 quý” - Nhịp sống kinh doanh",
       "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNa2otdXJ1bndHV2FrYUVoQUpMTTFrSU4tbnVWM1JnNlpiRzJiUVJFekpobm9JWnJQTkN3b1Q4c19pZXpwZW9TRHRYRXcwcE84bTNjT2pva1VjaHhsYnJoOHQ0akhOVUFxOGRacjlfeXhUb1g3TEdSeUFwWmpYZ2RqVEVyZEszQWJ4VXFxTnhRWlQtYVdZTzNSdFFFRjZtUFBiTTg2djBpNzFRNU5lb19Eb29UYkdsekh6cnZPdUZ3?oc=5",
+      "date": "2026-11-17",
+      "source": "Google News"
+    },
+    {
+      "title": "Chứng khoán TCBS (TCX): “Nhu cầu vay mượn liên ngân hàng giảm lần đầu tiên sau 5 quý” - thitruongtaichinhtiente.vn",
+      "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPYlAtV1RiY1dOYUhtaHdQWlppeERtS0lYbFJIWVVsZ0xSM0VnT01taHpfbzBZZFJFU2t4cEVUOW14bmgwdzFIaUlINzl0Sy13MnMyRUswMGZHMmRCZGFEUS04c2pDcGROUnUwenhsUl9HM0x6MWNCYnFxQThqUGgteVNfVTc0R2ZXdEdQcWpVOVpVOEg1dFd4OU11RjBjcGpMZzAtZUM5M2NwOFhnYlRLYVdQSkxBYTdYMWpqc0JJNVl5ZEFL?oc=5",
       "date": "2026-11-17",
       "source": "Google News"
     },
@@ -2031,14 +2049,14 @@
       "source": "Google News"
     },
     {
-      "title": "Tuần 09-13/11: NHNN tiếp tục rút ròng hơn 25,200 tỷ - Fili.vn",
-      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPNWF1Sm5QV05DaFBrdzB3akU5VFVjQTFCRk1aNHd1TktCZTNyTmdMOVZ4czNmbThDbG9NU0w3RklYSzI3NXZFU0dkUUNaa2VMdk5ieEpQdFRCVW5mS0hENEM0VU9DcXNfdmJCTmM0Tm1QSHpQOU9kdDJxeEl5ekpzX1NWSko4eFBLTjRkSFBzUEtOQQ?oc=5",
-      "date": "2026-11-14",
+      "title": "Ngân hàng Nhà nước chuyển từ giữ trần sang dựng sàn tỷ giá - Fili.vn",
+      "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQV1daMmRzRXJ5NlVuMnZWYjQwSDdud3o5bUpvMmM2Y0lXcTVoaHZ5R19jc2w2T0drb0hoYWlOS01xNUNTSFlYenJRb09TRWdqbE9iZzBLYU83VTdiQ19sUVZFVVliVUdaaXY4eGF1VjBUSFpDeUtaVzlVU3plUFQ0MW9DNXVpR2Jxcm05OWFndGhueU5BREg5RjdvV3NYZFU?oc=5",
+      "date": "2026-11-16",
       "source": "Google News"
     },
     {
-      "title": "Ngân hàng Nhà nước chuyển từ giữ trần sang dựng sàn tỷ giá - Fili.vn",
-      "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQV1daMmRzRXJ5NlVuMnZWYjQwSDdud3o5bUpvMmM2Y0lXcTVoaHZ5R19jc2w2T0drb0hoYWlOS01xNUNTSFlYenJRb09TRWdqbE9iZzBLYU83VTdiQ19sUVZFVVliVUdaaXY4eGF1VjBUSFpDeUtaVzlVU3plUFQ0MW9DNXVpR2Jxcm05OWFndGhueU5BREg5RjdvV3NYZFU?oc=5",
+      "title": "Tuần 09-13/11: NHNN tiếp tục rút ròng hơn 25,200 tỷ - Fili.vn",
+      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPNWF1Sm5QV05DaFBrdzB3akU5VFVjQTFCRk1aNHd1TktCZTNyTmdMOVZ4czNmbThDbG9NU0w3RklYSzI3NXZFU0dkUUNaa2VMdk5ieEpQdFRCVW5mS0hENEM0VU9DcXNfdmJCTmM0Tm1QSHpQOU9kdDJxeEl5ekpzX1NWSko4eFBLTjRkSFBzUEtOQQ?oc=5",
       "date": "2026-11-14",
       "source": "Google News"
     },
@@ -2053,24 +2071,6 @@
       "source": "NCB",
       "title": "Bảng tỷ giá USD/VND và tỷ giá trung tâm ngày 13/11",
       "link": "https://www.ncb-bank.vn/vi/ty-gia-tien-te"
-    },
-    {
-      "title": "Phiên 13/11: NHNN hút ròng 18.153 tỷ đồng từ thị trường, lãi suất qua đêm neo mức 4,8% - nguoiquansat.vn",
-      "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPejBTSHZqVjZmcm5ibjV4WDlOWGstc19KVEdfWVFBcUN3a1JvWXFQV0EwWHhhSnhMc0RhUnRJa2V1dU00T2ZsMUxhQnJjMXphWTlRSUJyeXVoejBhTVdFT21XSGFwRVpTdlIwbWpzUnI3SmJ2WTF4dUdtMThOcXdLMUFqeEI0Q1g0Qk44UWZWTGRwQU5ZcVJrYTRKRHQ1S2NYTVpVaDNkUEJ4R3ZfTm1qVGNRZmNoelRuU3lv?oc=5",
-      "date": "2026-11-13",
-      "source": "Google News"
-    },
-    {
-      "title": "Agencies extend comment period for proposed third-party risk management guidance",
-      "link": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261113a.htm",
-      "date": "2026-11-13",
-      "source": "Federal Reserve"
-    },
-    {
-      "date": "2026-11-12",
-      "source": "AAS Research",
-      "title": "Bản tin thị trường 12/11: lãi suất liên ngân hàng, OMO và trái phiếu",
-      "link": "https://phantich.aas.com.vn/insights/2026-11-12"
     }
   ],
   "fxHistory": [
