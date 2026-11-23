@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-20T14:53:37.052Z",
+    "checkedAt": "2026-11-23T05:43:05.796Z",
     "tenors": [
       "ON",
       "1W",
@@ -2021,8 +2021,8 @@
     }
   ],
   "fx": {
-    "date": "2026-11-20",
-    "rate": 25659,
+    "date": "2026-11-23",
+    "rate": 25668,
     "source": "Tỷ giá trung tâm · nguồn tổng hợp",
     "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
     "quality": "third_party_mirror",
@@ -2037,8 +2037,8 @@
       "quality": "public_observed"
     },
     "DGS10": {
-      "date": "2026-11-18",
-      "value": 5.07,
+      "date": "2026-11-19",
+      "value": 5.04,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/DGS10",
       "quality": "public_observed"
@@ -2103,6 +2103,18 @@
       "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPdWZ6QWxqbERCQjBibTM4clRhN2J1T0hPNXpHaWsxQTJTUDlzd2JTYVRtbGt2d0hFc2g4Z1BveG5RRFdfZl9SclFQSDczTERXWkxydG5UdjFYMjZ0MDhtRGZVTGZXNEItNDIxbVJBbTJILWlYcnpZbVktU0dJQ3ZNakZjdHBSY0sweTlmT01rRnc1YlFDUHpSVk5iTUFSTHE1TzRRMjJuU3ZTNGhXYlVjZ2NSZ2g?oc=5",
       "date": "2026-11-20",
       "source": "Google News"
+    },
+    {
+      "title": "Federal Reserve announces College Fed Challenge winners",
+      "link": "https://www.federalreserve.gov/newsevents/pressreleases/other20261120b.htm",
+      "date": "2026-11-20",
+      "source": "Federal Reserve"
+    },
+    {
+      "title": "Federal Reserve Board releases results from survey of senior financial officers at banks about their strategies and practices for managing reserve balances",
+      "link": "https://www.federalreserve.gov/newsevents/pressreleases/other20261120a.htm",
+      "date": "2026-11-20",
+      "source": "Federal Reserve"
     },
     {
       "title": "Lãi suất hoán đổi ngoại tệ giảm sau động thái của NHNN - MoneyF",
@@ -2199,18 +2211,6 @@
       "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQV1daMmRzRXJ5NlVuMnZWYjQwSDdud3o5bUpvMmM2Y0lXcTVoaHZ5R19jc2w2T0drb0hoYWlOS01xNUNTSFlYenJRb09TRWdqbE9iZzBLYU83VTdiQ19sUVZFVVliVUdaaXY4eGF1VjBUSFpDeUtaVzlVU3plUFQ0MW9DNXVpR2Jxcm05OWFndGhueU5BREg5RjdvV3NYZFU?oc=5",
       "date": "2026-11-16",
       "source": "Google News"
-    },
-    {
-      "title": "Tuần 09-13/11: NHNN tiếp tục rút ròng hơn 25,200 tỷ - Fili.vn",
-      "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPNWF1Sm5QV05DaFBrdzB3akU5VFVjQTFCRk1aNHd1TktCZTNyTmdMOVZ4czNmbThDbG9NU0w3RklYSzI3NXZFU0dkUUNaa2VMdk5ieEpQdFRCVW5mS0hENEM0VU9DcXNfdmJCTmM0Tm1QSHpQOU9kdDJxeEl5ekpzX1NWSko4eFBLTjRkSFBzUEtOQQ?oc=5",
-      "date": "2026-11-14",
-      "source": "Google News"
-    },
-    {
-      "date": "2026-11-13",
-      "source": "VietnamNet",
-      "title": "Thị trường liên ngân hàng: cập nhật lãi suất ngày 12/11 và điều chỉnh huy động",
-      "link": "https://vietnamnet.vn/lai-suat-ngan-hang-hom-nay-13-11-2026-ong-lon-big4-giam-ky-han-15-18-thang-2574504.html"
     }
   ],
   "fxHistory": [
@@ -2399,6 +2399,13 @@
     {
       "date": "2026-11-20",
       "rate": 25659,
+      "source": "Tỷ giá trung tâm · nguồn tổng hợp",
+      "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
+      "quality": "third_party_mirror"
+    },
+    {
+      "date": "2026-11-23",
+      "rate": 25668,
       "source": "Tỷ giá trung tâm · nguồn tổng hợp",
       "source_url": "https://raw.githubusercontent.com/AllRates-Today/central-bank-exchange-rates/main/data/sbv/latest.json",
       "quality": "third_party_mirror"
