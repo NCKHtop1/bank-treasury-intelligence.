@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-24T08:21:16.027Z",
+    "checkedAt": "2026-11-24T19:55:37.145Z",
     "tenors": [
       "ON",
       "1W",
@@ -2100,7 +2100,7 @@
   },
   "macro": {
     "SOFR": {
-      "date": "2026-11-20",
+      "date": "2026-11-23",
       "value": 3.92,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/SOFR",
@@ -2162,6 +2162,12 @@
     }
   ],
   "news": [
+    {
+      "title": "Minutes of the Board's discount rate meetings on October 19 and October 28, 2026",
+      "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261124a.htm",
+      "date": "2026-11-24",
+      "source": "Federal Reserve"
+    },
     {
       "title": "Tuần 16-20/11: Lãi suất liên ngân hàng biến động trái chiều, NHNN hút ròng hơn 10.800 tỷ đồng - Nhịp sống kinh doanh",
       "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNV1dDckxmbG1Bc2ZWdXBHMTZsSndQdHlVcWlOVzl4azhmZkxmQmF5aXJxM0R0R2JPNHVSQ1JFZVVRWVdzVGw2SFNKSFZVZ18zV1J1NHpkdjBsejZCYzFqTWNLOVhPRk14YU45NVdOYkJFbXh0aFMwLTBiVldqQkNlUE94NXA2S2FnNGlDTmJXVkR6ekxDNkdiR2NWaEYwN0txYVBaX2Zyd1lHOGNFcDdLVWxKMWRndUpDbFlHV0U2c0JlckROZUpKVFpsUXM?oc=5",
@@ -2273,12 +2279,6 @@
     {
       "title": "NHNN hút ròng hơn 23.200 tỷ đồng, lãi suất liên ngân hàng biến động trái chiều - Nhịp sống kinh doanh",
       "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNTGxZNXdCeUE2eEZZeHlMMHQ4MVVvdVlUc0dMXzV0SFgxTUZjNXYtTlJ3THo1dllOekZOcXhIdElham81THJROWtWUmRJZmNKU2Z0aVFjRHVSRHNIcjQ4VjBsX1NXT3lER2lreXZwQ1VhdkRGd0F5OVBRdmFWYy1INld3UHVlNjROWmZWdTc0bFduNGZvWVNGcTFmWGNzQWtKOHVYRnJhdExHMlFkUlI2emRIMGZkQ3Uw?oc=5",
-      "date": "2026-11-16",
-      "source": "Google News"
-    },
-    {
-      "title": "Ngân hàng Nhà nước chưa mua được USD giao ngay, tỷ giá liên ngân hàng tăng vọt - CafeF",
-      "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOdlo4Mld3UGQ2eVVISl93d3lOWG1Nclp0bVNMZDZZNGhGSXVMVzZRQ0FLRnRKNi1tVXBqQkxEdjRNS0VRdjdOeU1OdEpIMnBWaXBUaTBFcVZ4b3ZiblZnV0xMb3laaDdfWHJfZlpQSFM5TDhjaVdZa0tXcDV4ZkhwVmhUdm9WSExhakVoeXhqWW5GS3M0aWg3OUhoS3dGZlZsejU3bmU0Uy1qN1M0YTRJck9HOHZpbjc3?oc=5",
       "date": "2026-11-16",
       "source": "Google News"
     }
