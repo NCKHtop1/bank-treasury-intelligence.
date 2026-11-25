@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-24T19:55:37.145Z",
+    "checkedAt": "2026-11-25T06:57:13.360Z",
     "tenors": [
       "ON",
       "1W",
@@ -2107,7 +2107,7 @@
       "quality": "public_observed"
     },
     "DGS10": {
-      "date": "2026-11-20",
+      "date": "2026-11-23",
       "value": 4.92,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/DGS10",
