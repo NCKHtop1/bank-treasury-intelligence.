@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-25T06:57:13.360Z",
+    "checkedAt": "2026-11-25T17:51:30.211Z",
     "tenors": [
       "ON",
       "1W",
@@ -2050,6 +2050,76 @@
       "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
       "quality": "public_observed",
       "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-23",
+      "tenor": "ON",
+      "rate_pct": 4.69,
+      "published_on": "2026-11-23",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-23",
+      "tenor": "1W",
+      "rate_pct": 4.73,
+      "published_on": "2026-11-23",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-23",
+      "tenor": "2W",
+      "rate_pct": 5.35,
+      "published_on": "2026-11-23",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-23",
+      "tenor": "1M",
+      "rate_pct": 5.72,
+      "published_on": "2026-11-23",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-23",
+      "tenor": "3M",
+      "rate_pct": 8.01,
+      "published_on": "2026-11-23",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-23",
+      "tenor": "6M",
+      "rate_pct": 8.21,
+      "published_on": "2026-11-23",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-23",
+      "tenor": "9M",
+      "rate_pct": 8.31,
+      "published_on": "2026-11-23",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
     }
   ],
   "marketQuotes": [
@@ -2100,8 +2170,8 @@
   },
   "macro": {
     "SOFR": {
-      "date": "2026-11-23",
-      "value": 3.92,
+      "date": "2026-11-24",
+      "value": 3.94,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/SOFR",
       "quality": "public_observed"
@@ -2163,6 +2233,12 @@
   ],
   "news": [
     {
+      "title": "Nguồn cung tích cực, tỷ giá được dự đoán ổn định cuối năm - Tin nhanh chứng khoán",
+      "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQd2V4TjZNVXM0XzY2VnRqdXB4UVd6YXhmbnRhakl5dUt3aGFMNWlDYmM5c2lnQWloeXdHRURzWTV2TzQwWmpQazFEaDJyemtsZGFkWVhjNnRHODBSN2lQZDlGd1UyWDZ6bWZIU0g1cmRQZUQ4RU5feG5CM2hNNVlVTG5zay13LXVreFFySDI2UG1Qc2V0WkZhOGlqRDV6ZVBUcjVaYnVR0gGmAUFVX3lxTFB3ZXhONk1VczRfNjZWdGp1cHhRV3pheGZudGFqSXl1S3doYUw1aUNiYzlzaWdBaWh5d0dFRHNZNXZPNDBaalBrMURoMnJ6a2xkYWRZWGM2dEc4MFI3aVBkOUZ3VTJYNnptZkhTSDVyZFBlRDhFTl94bkIzaE01WVVMbnNrLXctdWt4UXJIMjZQbVBzZXRaRmE4aWpENXplUFRyNVpidVE?oc=5",
+      "date": "2026-11-25",
+      "source": "Google News"
+    },
+    {
       "title": "Minutes of the Board's discount rate meetings on October 19 and October 28, 2026",
       "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261124a.htm",
       "date": "2026-11-24",
@@ -2189,6 +2265,12 @@
     {
       "title": "Tuần (16-20/11): Ngân hàng Nhà nước hút ròng 10.825 tỷ đồng, lãi suất qua đêm neo mức 4,5% - nguoiquansat.vn",
       "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNbk1SX1VWcHpmaXBiNmpZQk5sZlhmTUJHX0kyTU9tS29kZlY0MFlqejl1ai0tandKTFhGUDk1LWI0RUx5cGtyd3dUWHUwSUVOZS1KZDNaZGJ1Z0Fva1Btcl9qR3J5T3lMN2lzR0xVNW9uY05QNWpMeV80eHFFZ1c0Q3c0X1RtcjR5ek1Eck5nblVyQlY1SzNIc0xSLVBMSjFBZnliTXhnbV95dlp4d0FYYnVGa2gtOXFTR0Nid0tB?oc=5",
+      "date": "2026-11-23",
+      "source": "Google News"
+    },
+    {
+      "title": "Tuần 16-20/11: Lãi suất liên ngân hàng biến động trái chiều, NHNN hút ròng hơn 10.800 tỷ đồng - Tạp chí Nhịp sống thị trường",
+      "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNUFVQelBCNllwVVV6Uk43c1BzeTJCZHdtOFI4Q3hiMV9taVVBWlBzYmpQT1ZJRWdxaU9BWWo1Q2pYaUQ5dFFvQkYwY2VQVXhqVjgyOTNfLWw5Ymw2VkQ1dUg0dUloQWM1NnExWVdRdllvUndVYmFhQTV2SUgyVWN4bGl5eUM3Qjg3b0o3MHViVTB3c0g1YzR0ekt6MmRWTndFakxhZGltdjlHMjBKUXQ5MGxoLUhtYXNoVFJjZUZxb0h6OXZP?oc=5",
       "date": "2026-11-23",
       "source": "Google News"
     },
@@ -2268,18 +2350,6 @@
       "title": "Chứng khoán TCBS (TCX): “Nhu cầu vay mượn liên ngân hàng giảm lần đầu tiên sau 5 quý” - Nhịp sống kinh doanh",
       "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNa2otdXJ1bndHV2FrYUVoQUpMTTFrSU4tbnVWM1JnNlpiRzJiUVJFekpobm9JWnJQTkN3b1Q4c19pZXpwZW9TRHRYRXcwcE84bTNjT2pva1VjaHhsYnJoOHQ0akhOVUFxOGRacjlfeXhUb1g3TEdSeUFwWmpYZ2RqVEVyZEszQWJ4VXFxTnhRWlQtYVdZTzNSdFFFRjZtUFBiTTg2djBpNzFRNU5lb19Eb29UYkdsekh6cnZPdUZ3?oc=5",
       "date": "2026-11-17",
-      "source": "Google News"
-    },
-    {
-      "title": "Chứng khoán TCBS (TCX): “Nhu cầu vay mượn liên ngân hàng giảm lần đầu tiên sau 5 quý” - thitruongtaichinhtiente.vn",
-      "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPYlAtV1RiY1dOYUhtaHdQWlppeERtS0lYbFJIWVVsZ0xSM0VnT01taHpfbzBZZFJFU2t4cEVUOW14bmgwdzFIaUlINzl0Sy13MnMyRUswMGZHMmRCZGFEUS04c2pDcGROUnUwenhsUl9HM0x6MWNCYnFxQThqUGgteVNfVTc0R2ZXdEdQcWpVOVpVOEg1dFd4OU11RjBjcGpMZzAtZUM5M2NwOFhnYlRLYVdQSkxBYTdYMWpqc0JJNVl5ZEFL?oc=5",
-      "date": "2026-11-17",
-      "source": "Google News"
-    },
-    {
-      "title": "NHNN hút ròng hơn 23.200 tỷ đồng, lãi suất liên ngân hàng biến động trái chiều - Nhịp sống kinh doanh",
-      "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNTGxZNXdCeUE2eEZZeHlMMHQ4MVVvdVlUc0dMXzV0SFgxTUZjNXYtTlJ3THo1dllOekZOcXhIdElham81THJROWtWUmRJZmNKU2Z0aVFjRHVSRHNIcjQ4VjBsX1NXT3lER2lreXZwQ1VhdkRGd0F5OVBRdmFWYy1INld3UHVlNjROWmZWdTc0bFduNGZvWVNGcTFmWGNzQWtKOHVYRnJhdExHMlFkUlI2emRIMGZkQ3Uw?oc=5",
-      "date": "2026-11-16",
       "source": "Google News"
     }
   ],
