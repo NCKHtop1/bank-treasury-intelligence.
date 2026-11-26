@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-25T17:51:30.211Z",
+    "checkedAt": "2026-11-26T06:48:55.851Z",
     "tenors": [
       "ON",
       "1W",
@@ -2177,8 +2177,8 @@
       "quality": "public_observed"
     },
     "DGS10": {
-      "date": "2026-11-23",
-      "value": 4.92,
+      "date": "2026-11-24",
+      "value": 4.91,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/DGS10",
       "quality": "public_observed"
@@ -2239,6 +2239,18 @@
       "source": "Google News"
     },
     {
+      "title": "Agencies announce dollar thresholds for applicability of truth in lending and consumer leasing rules for consumer credit and lease transactions",
+      "link": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261125b.htm",
+      "date": "2026-11-25",
+      "source": "Federal Reserve"
+    },
+    {
+      "title": "Agencies announce dollar thresholds for smaller loan exemption from appraisal requirements for higher-priced mortgage loans",
+      "link": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261125a.htm",
+      "date": "2026-11-25",
+      "source": "Federal Reserve"
+    },
+    {
       "title": "Minutes of the Board's discount rate meetings on October 19 and October 28, 2026",
       "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261124a.htm",
       "date": "2026-11-24",
@@ -2271,6 +2283,12 @@
     {
       "title": "Tuần 16-20/11: Lãi suất liên ngân hàng biến động trái chiều, NHNN hút ròng hơn 10.800 tỷ đồng - Tạp chí Nhịp sống thị trường",
       "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNUFVQelBCNllwVVV6Uk43c1BzeTJCZHdtOFI4Q3hiMV9taVVBWlBzYmpQT1ZJRWdxaU9BWWo1Q2pYaUQ5dFFvQkYwY2VQVXhqVjgyOTNfLWw5Ymw2VkQ1dUg0dUloQWM1NnExWVdRdllvUndVYmFhQTV2SUgyVWN4bGl5eUM3Qjg3b0o3MHViVTB3c0g1YzR0ekt6MmRWTndFakxhZGltdjlHMjBKUXQ5MGxoLUhtYXNoVFJjZUZxb0h6OXZP?oc=5",
+      "date": "2026-11-23",
+      "source": "Google News"
+    },
+    {
+      "title": "Phiên 23/11: Ngân hàng Nhà nước bơm ròng 7.260 tỷ đồng, lãi suất qua đêm neo mức 4,5% - TradingView",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5MaS13UDIxNWJXU1FId3QybkxnM3dKRnBXNnEwdzhLcy1nSjUwTGxBREVXeGN6cXhuOHRiODZ5MEdEREItLVRHQUVMQnVidksyWEFlMWswa3NGMW9TakxvQThlVEdlMEZLN3RlcGZR?oc=5",
       "date": "2026-11-23",
       "source": "Google News"
     },
@@ -2332,24 +2350,6 @@
       "title": "Từ trần bán USD 25.450 đồng đến sàn mua 25.500 đồng: Bước chuyển trong can thiệp tỷ giá của NHNN - VietnamBiz",
       "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQUDAzU2VFeHhlUlVOVnMyUlpiOUJiX3hmdWNfc21uVEVPOElCR3dtN0xqWXA4WjdnSmZqeUhtOUUzMlptMnZKc0tpWTFJZi1pQ2pUV0xnaXVDMVZZQV82VV9pbVozR2FwcE1XZk9xX0YwM0lvcGVYSUIzRHZkbjRCMTZRUkVwb1F6YU4wUm1fai0zb0gwT25IRndBeTVQZGlJaFRnVXBXalNUTWhBcEZySGx5eEhFaDV1cHF6Qk5HWlFmYzR3VDM1YS1xUzJoc25TZ3JZ?oc=5",
       "date": "2026-11-18",
-      "source": "Google News"
-    },
-    {
-      "title": "Minutes of the Federal Open Market Committee, October 27-28, 2026",
-      "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm",
-      "date": "2026-11-18",
-      "source": "Federal Reserve"
-    },
-    {
-      "title": "Phiên 17/11: Ngân hàng Nhà nước hút ròng 640 tỷ đồng, lãi suất qua đêm neo mức 4,99% - nguoiquansat.vn",
-      "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNc0Jxb2U0TGQ0enVORzVWaktBSFp6RlpFN3FQU2VTT0VycDVqRHd0Z09JR05HNmZuZHRuRjVvZFFvTDdncXZIbjlOeHM1cXVMVDhhN1V4UHppZ3YwSkc4TEtZOTBfRWZvWFBzeWJFclpvSy1ydzRVc2lCTTdPOG80Y05FUFpQd1hpaWJMeGd5UUxEbFJlbV84b0FONEo1YWsybndabmp2N0tpV1lDQW1kbGhOb0E4QUZP?oc=5",
-      "date": "2026-11-17",
-      "source": "Google News"
-    },
-    {
-      "title": "Chứng khoán TCBS (TCX): “Nhu cầu vay mượn liên ngân hàng giảm lần đầu tiên sau 5 quý” - Nhịp sống kinh doanh",
-      "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNa2otdXJ1bndHV2FrYUVoQUpMTTFrSU4tbnVWM1JnNlpiRzJiUVJFekpobm9JWnJQTkN3b1Q4c19pZXpwZW9TRHRYRXcwcE84bTNjT2pva1VjaHhsYnJoOHQ0akhOVUFxOGRacjlfeXhUb1g3TEdSeUFwWmpYZ2RqVEVyZEszQWJ4VXFxTnhRWlQtYVdZTzNSdFFFRjZtUFBiTTg2djBpNzFRNU5lb19Eb29UYkdsekh6cnZPdUZ3?oc=5",
-      "date": "2026-11-17",
       "source": "Google News"
     }
   ],
