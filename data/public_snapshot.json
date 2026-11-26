@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-26T06:48:55.851Z",
+    "checkedAt": "2026-11-26T17:31:32.239Z",
     "tenors": [
       "ON",
       "1W",
@@ -2120,6 +2120,76 @@
       "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
       "quality": "public_observed",
       "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-25",
+      "tenor": "ON",
+      "rate_pct": 4.84,
+      "published_on": "2026-11-25",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-25",
+      "tenor": "1W",
+      "rate_pct": 5.3,
+      "published_on": "2026-11-25",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-25",
+      "tenor": "2W",
+      "rate_pct": 5.41,
+      "published_on": "2026-11-25",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-25",
+      "tenor": "1M",
+      "rate_pct": 3.48,
+      "published_on": "2026-11-25",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-25",
+      "tenor": "3M",
+      "rate_pct": 7.86,
+      "published_on": "2026-11-25",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-25",
+      "tenor": "6M",
+      "rate_pct": 8.4,
+      "published_on": "2026-11-25",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
+    },
+    {
+      "date": "2026-11-25",
+      "tenor": "9M",
+      "rate_pct": 7.85,
+      "published_on": "2026-11-25",
+      "source": "NHNN · Dữ Liệu Kinh Tế",
+      "source_url": "https://dulieukinhte.com/du-lieu/lai-suat-dieu-hanh-lien-ngan-hang-391",
+      "quality": "public_observed",
+      "source_type": "sbv_daily_average"
     }
   ],
   "marketQuotes": [
@@ -2233,6 +2303,12 @@
   ],
   "news": [
     {
+      "title": "Phiên 26/11: Ngân hàng Nhà nước bơm ròng 20.667 tỷ đồng, lãi suất qua đêm neo mức 4,9% - nguoiquansat.vn",
+      "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOM0lxODdiNFpsektvUVVydzFsWnFDYlNRbVRrdWVhVGd3dWFfTk43b2VadlcxMVVEOGtxT1lIN25KcENJLXowMVp1dUFQT2piTG02WUhRVU9xNDN5dW54X1lpRUV2REplc3gxdXREQXRGb3pRWDRMMVAxMWRKczdDZThRZENsN24xblhlaWpMZktaTTRScmxNNzdKaXIzMWxlYXZwN21IOFQwUzBSU0JmS3B2M0hZYXZURGcw?oc=5",
+      "date": "2026-11-26",
+      "source": "Google News"
+    },
+    {
       "title": "Nguồn cung tích cực, tỷ giá được dự đoán ổn định cuối năm - Tin nhanh chứng khoán",
       "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQd2V4TjZNVXM0XzY2VnRqdXB4UVd6YXhmbnRhakl5dUt3aGFMNWlDYmM5c2lnQWloeXdHRURzWTV2TzQwWmpQazFEaDJyemtsZGFkWVhjNnRHODBSN2lQZDlGd1UyWDZ6bWZIU0g1cmRQZUQ4RU5feG5CM2hNNVlVTG5zay13LXVreFFySDI2UG1Qc2V0WkZhOGlqRDV6ZVBUcjVaYnVR0gGmAUFVX3lxTFB3ZXhONk1VczRfNjZWdGp1cHhRV3pheGZudGFqSXl1S3doYUw1aUNiYzlzaWdBaWh5d0dFRHNZNXZPNDBaalBrMURoMnJ6a2xkYWRZWGM2dEc4MFI3aVBkOUZ3VTJYNnptZkhTSDVyZFBlRDhFTl94bkIzaE01WVVMbnNrLXctdWt4UXJIMjZQbVBzZXRaRmE4aWpENXplUFRyNVpidVE?oc=5",
       "date": "2026-11-25",
@@ -2249,6 +2325,12 @@
       "link": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261125a.htm",
       "date": "2026-11-25",
       "source": "Federal Reserve"
+    },
+    {
+      "title": "Nguồn cung tích cực, tỷ giá được dự đoán ổn định cuối năm - baodautu",
+      "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOUEgxbE9IN2VfNmp0QW1UTTlKQlFHV1FMRjJNQUpoSENhZWQ2S2pNWFlEWTdxaDFCcFgtVEphTDh4eVhvX0dUbHM3TjNFUWJERTlJZGxxbF9GOVRMMml2UGMtTnl3bU9ETHR6bnYxQUUtdEloYkpFX29vSTlZbjYycWNQVHdCT0RUQ2xKYWRlRGRnVE0?oc=5",
+      "date": "2026-11-25",
+      "source": "Google News"
     },
     {
       "title": "Minutes of the Board's discount rate meetings on October 19 and October 28, 2026",
@@ -2338,18 +2420,6 @@
       "title": "28 ngân hàng nắm hơn 863.000 tỷ đồng trái phiếu Chính phủ giữa lúc lượng OMO giảm gần 80% từ đỉnh - VietnamBiz",
       "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPNmpLbVo4bVdmb2tkNFNyYzFHU1hGOHR5NEVFNzU1ZG01cjF1OXFmLWFETTB4Y2ZBNDF6Ri1BcXhOMGkzV1BXSlhSbnhBUEJFUVlEYl9HZTJ4LUhrU1g1MXhUc1ZtYVhkYlE1cmRyRWROZzV4VVhEbnlNWjFocHVqQ1FMLUhJWkpBWXVIT2t4dU1tek4wNG91dFJjZGktRnhfWTBndFZnSENQLV9sTS1TU1hUY1NFTjY5TVRFZjlZWDVYbUY0Z0p6blR1TTFmWmRTZkNzWU1B?oc=5",
       "date": "2026-11-19",
-      "source": "Google News"
-    },
-    {
-      "title": "Federal Reserve Board issues enforcement action with former employee of First Security Bancorp",
-      "link": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20261119a.htm",
-      "date": "2026-11-19",
-      "source": "Federal Reserve"
-    },
-    {
-      "title": "Từ trần bán USD 25.450 đồng đến sàn mua 25.500 đồng: Bước chuyển trong can thiệp tỷ giá của NHNN - VietnamBiz",
-      "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQUDAzU2VFeHhlUlVOVnMyUlpiOUJiX3hmdWNfc21uVEVPOElCR3dtN0xqWXA4WjdnSmZqeUhtOUUzMlptMnZKc0tpWTFJZi1pQ2pUV0xnaXVDMVZZQV82VV9pbVozR2FwcE1XZk9xX0YwM0lvcGVYSUIzRHZkbjRCMTZRUkVwb1F6YU4wUm1fai0zb0gwT25IRndBeTVQZGlJaFRnVXBXalNUTWhBcEZySGx5eEhFaDV1cHF6Qk5HWlFmYzR3VDM1YS1xUzJoc25TZ3JZ?oc=5",
-      "date": "2026-11-18",
       "source": "Google News"
     }
   ],
