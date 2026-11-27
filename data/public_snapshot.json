@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-26T17:31:32.239Z",
+    "checkedAt": "2026-11-27T06:41:07.897Z",
     "tenors": [
       "ON",
       "1W",
@@ -2303,6 +2303,12 @@
   ],
   "news": [
     {
+      "title": "Tín dụng cuối năm tăng tốc, lãi suất liên ngân hàng tiếp đà đi lên - VietnamFinance",
+      "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPQmgzN2tzS25Sb2JhanpQS3loM014R0dQa21rTG1UX2I3b1dGa1Z6c2xCT0Y2TTFuY3VwNjBLUG5jOEh6MzdMdXlJLUR3clZ0X0Z5VTJsLWRBSVBMSXNMN2JQWnB1bjh2Nk9xQldNeE9HV2MzbG5hc2JocVJTdFVlV3Nfbm1aUWgteDZGbEU2RnZZTzdheXNfREIzSXVfSnBEVzE2WHFLNA?oc=5",
+      "date": "2026-11-27",
+      "source": "Google News"
+    },
+    {
       "title": "Phiên 26/11: Ngân hàng Nhà nước bơm ròng 20.667 tỷ đồng, lãi suất qua đêm neo mức 4,9% - nguoiquansat.vn",
       "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOM0lxODdiNFpsektvUVVydzFsWnFDYlNRbVRrdWVhVGd3dWFfTk43b2VadlcxMVVEOGtxT1lIN25KcENJLXowMVp1dUFQT2piTG02WUhRVU9xNDN5dW54X1lpRUV2REplc3gxdXREQXRGb3pRWDRMMVAxMWRKczdDZThRZENsN24xblhlaWpMZktaTTRScmxNNzdKaXIzMWxlYXZwN21IOFQwUzBSU0JmS3B2M0hZYXZURGcw?oc=5",
       "date": "2026-11-26",
@@ -2375,6 +2381,12 @@
       "source": "Google News"
     },
     {
+      "title": "Phiên 23/11: Ngân hàng Nhà nước bơm ròng 7.260 tỷ đồng, lãi suất qua đêm neo mức 4,5% - TradingView",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE80UjU4NWk0ZnIzY1JxcTRMNDE4U1BRVlhjRkVUXzJhbnNuUGRWZU5PVm11N3dkMmZJeW54Mm1mMmpGZXVsNFZxUlBSa0JPZXpjZllqX3pqQ2tTbnE0T1hhWHFEd2FXWkdYX0dMUEdB?oc=5",
+      "date": "2026-11-23",
+      "source": "Google News"
+    },
+    {
       "title": "Thanh khoản ngân hàng cải thiện, lãi suất qua đêm giảm: Dư địa hạ nhiệt lãi suất đang rộng mở? - thitruongtaichinhtiente.vn",
       "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOeFBpNlpuZzJnRVROWE9iVENpWC1tS0ZQSzhucXplMFVsYWp3WWloN216R3lIajVQWW9UYzlSazZSQkVoeXYwNXJwTUNmQ2VhemprWHlDQ00zUnZ5N1RmN0RUUndScU5GUlRidnN1X0FScmMwWjJoaGk3VW05bkRGTHNPUGxqdWZTV0ZkdUlVS0lhelpBZGtlLTNERFFSUS1Ick5wSk9hMi1oUFdiUFh4RzVCYmgwSHZYeG5vUUVsNjJtZkRNOFdYWG5hNGltZEVYU1lZ?oc=5",
       "date": "2026-11-22",
@@ -2383,6 +2395,12 @@
     {
       "title": "Tỷ giá USD/VND tăng áp sát 26.000 đồng, lãi suất liên ngân hàng phân hóa - Tạp chí điện tử Thương Trường",
       "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNWC0yOVNvMGJYcXB2R3ZEVmlESnRjcFFpeWZPenFxUldUYzRMS0dpVHdYN0l4NUxaSDhSYXZGS2NKRXJOX2l5bzAyXzdjZDdpXzhoMXowcExJZXExbTJ5eGRteE5HdFc4VUJCb2wwYnNZbzRMU0JNSVJxWmNHZGNPQzFCUFA5ME9jOHNERzhOaDJoUEJ2ZFpEQ09YSTdwbXBteW0waDhBMFdQYi16UU8tOEJDcF8?oc=5",
+      "date": "2026-11-22",
+      "source": "Google News"
+    },
+    {
+      "title": "Tuần (16-20/11): Ngân hàng Nhà nước hút ròng 10.825 tỷ đồng, lãi suất qua đêm neo mức 4,5% - TradingView",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5VeEktcUc3MUJBdng4T2ozT1hkQ19WdENZQnJkeUVkbzNfOWdlMWlpZ3ZUX0stbExiT0hFNklaNFl3U2FyYTBfMHpOS2lkLU9VbWl1Z3FQV1B4ZVZqM1g0emdKeTZtUUxvS2xiNWVn?oc=5",
       "date": "2026-11-22",
       "source": "Google News"
     },
@@ -2403,24 +2421,6 @@
       "link": "https://www.federalreserve.gov/newsevents/pressreleases/other20261120b.htm",
       "date": "2026-11-20",
       "source": "Federal Reserve"
-    },
-    {
-      "title": "Federal Reserve Board releases results from survey of senior financial officers at banks about their strategies and practices for managing reserve balances",
-      "link": "https://www.federalreserve.gov/newsevents/pressreleases/other20261120a.htm",
-      "date": "2026-11-20",
-      "source": "Federal Reserve"
-    },
-    {
-      "title": "Lãi suất hoán đổi ngoại tệ giảm sau động thái của NHNN - MoneyF",
-      "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQOXRpSk4wWkpjcWltLXBjcTROeE1BNnNzaWJvM0p4b29kOWFReTZKUXJwaHNhcmt0SkhlM0pzWEhmNDl4RWllcUVkRTF3Uk50cThabkdkcUdJRHRGQTlKbVNLbmJieG5zRWlUQWxacG14U3FiaGhMQ1F3YWNYczJ3YzJR?oc=5",
-      "date": "2026-11-19",
-      "source": "Google News"
-    },
-    {
-      "title": "28 ngân hàng nắm hơn 863.000 tỷ đồng trái phiếu Chính phủ giữa lúc lượng OMO giảm gần 80% từ đỉnh - VietnamBiz",
-      "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPNmpLbVo4bVdmb2tkNFNyYzFHU1hGOHR5NEVFNzU1ZG01cjF1OXFmLWFETTB4Y2ZBNDF6Ri1BcXhOMGkzV1BXSlhSbnhBUEJFUVlEYl9HZTJ4LUhrU1g1MXhUc1ZtYVhkYlE1cmRyRWROZzV4VVhEbnlNWjFocHVqQ1FMLUhJWkpBWXVIT2t4dU1tek4wNG91dFJjZGktRnhfWTBndFZnSENQLV9sTS1TU1hUY1NFTjY5TVRFZjlZWDVYbUY0Z0p6blR1TTFmWmRTZkNzWU1B?oc=5",
-      "date": "2026-11-19",
-      "source": "Google News"
     }
   ],
   "fxHistory": [
