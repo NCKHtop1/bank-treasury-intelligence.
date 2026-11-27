@@ -3,7 +3,7 @@
   "meta": {
     "kind": "public_snapshot",
     "description": "Last verified public observations, refresh does not change observation dates",
-    "checkedAt": "2026-11-27T06:41:07.897Z",
+    "checkedAt": "2026-11-27T17:13:23.013Z",
     "tenors": [
       "ON",
       "1W",
@@ -2240,8 +2240,8 @@
   },
   "macro": {
     "SOFR": {
-      "date": "2026-11-24",
-      "value": 3.94,
+      "date": "2026-11-25",
+      "value": 3.95,
       "source": "FRED",
       "source_url": "https://fred.stlouisfed.org/series/SOFR",
       "quality": "public_observed"
